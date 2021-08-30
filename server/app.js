@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
+const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
@@ -46,7 +47,7 @@ app.use("/graphql", graphqlHTTP({
 
         type RootQuery {
             events: [Event!]!
-            user: user
+            users: [User!]!
         }
 
         type RootMutation {
@@ -60,6 +61,14 @@ app.use("/graphql", graphqlHTTP({
         }
     `),
     rootValue: {
+        users: () => {
+            return User.find()
+            .then((users) => users.map(user => ({ ...user._doc })))
+            .catch(err => {
+                console.log(`ERROR: ${err}`);
+                throw err;
+            });
+        },
         events: () => {
             return Event.find()
             .then((events) => events.map(event => ({ ...event._doc })))
@@ -76,8 +85,7 @@ app.use("/graphql", graphqlHTTP({
                 date: new Date().toISOString()
             });
 
-            return event
-                .save()
+            return event.save()
                 .then((res) => {
                     console.log("event created", res);
                     return { ...res._doc };
@@ -90,10 +98,35 @@ app.use("/graphql", graphqlHTTP({
             return event;
         },
         createUser: ({ userInput: { email, password }}) => {
-            const user = new User({
-                email,
-                password
-            })
+            // make sure user doesn't already exist in database
+            return User.findOne({ email })
+                .then((user) => {
+                    if (user) {
+                        throw new Error("A user with that email already exists!");
+                    }
+
+                    return bcrypt.hash(password, 12);
+                })
+                .then((safePass) => {
+                    const user = new User({
+                        email,
+                        password: safePass
+                    });
+
+                    return user.save()
+                    .then((res) => {
+                        console.log("user created", res);
+                        return { ...res._doc, password: null };
+                    })
+                    .catch(err => {
+                        console.log(`ERROR: ${err}`);
+                        throw err;
+                    });
+                })
+                .catch(err => {
+                    console.log(`ERROR: ${err}`);
+                    throw err;
+                });
         }
     },
     graphiql: true
