@@ -1,7 +1,10 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
+
+dotenv.config({ path: './.env.local' });
 
 const app = express();
 
@@ -61,4 +64,4 @@ app.use("/graphql", graphqlHTTP({
     graphiql: true
 }));
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
