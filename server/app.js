@@ -3,14 +3,13 @@ const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
 const mongoose = require("mongoose");
-
 const dotenv = require("dotenv");
+
 dotenv.config({ path: "./.env.local"});
 
-const app = express();
+const Event = require("../models/event");
 
-// temporary, pretend db
-let events = [];
+const app = express();
 
 // app.use(express.urlencoded({ extended: true }));
 // app.use(express.json());
@@ -47,17 +46,32 @@ app.use("/graphql", graphqlHTTP({
         }
     `),
     rootValue: {
-        events: () => events,
+        events: () => {
+            return Event.find()
+            .then((events) => events.map(event => ({ ...event._doc })))
+            .catch(err => {
+                console.log(`ERROR: ${err}`);
+                throw err;
+            });
+        },
         createEvent: ({ eventInput: { title, description, price } }) => {
-            const event = {
-                _id: Math.random().toString(), // temp, db will generate later
+            const event = new Event({
                 title,
                 description,
                 price: +price,
                 date: new Date().toISOString()
-            }
+            });
 
-            events = [ ...events, event ];
+            return event
+                .save()
+                .then((res) => {
+                    console.log("event created", res);
+                    return { ...res._doc };
+                })
+                .catch(err => {
+                    console.log(`ERROR: ${err}`);
+                    throw err;
+                });
 
             return event;
         }
