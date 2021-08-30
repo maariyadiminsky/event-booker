@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon server/app.js"
+  },
+  "nodemonConfig": {
+    "ext": "js,html"
+  },
   "dependencies": {
-    "body-parser": "^1.19.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodeman": "^1.1.2"
+    "nodemon": "^2.0.12"
   }
 }
