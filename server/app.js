@@ -24,6 +24,7 @@ app.use("/graphql", graphqlHTTP({
             _id: ID!
             email: String!
             password: String
+            createdEvents: [Event]
         }
 
         type Event {
@@ -32,6 +33,7 @@ app.use("/graphql", graphqlHTTP({
             description: String!
             price: Float!
             date: String!
+            user: User!
         }
 
         input EventInput {
@@ -82,14 +84,28 @@ app.use("/graphql", graphqlHTTP({
                 title,
                 description,
                 price: +price,
-                date: new Date().toISOString()
+                date: new Date().toISOString(),
+                user: "612d43fa7858eae664785e47" // note: temporary created for testing
             });
+
+            let createdEvent;
 
             return event.save()
                 .then((res) => {
-                    console.log("event created", res);
-                    return { ...res._doc };
+                    createdEvent = { ...res._doc };
+
+                    return User.findById("612d43fa7858eae664785e47");
                 })
+                .then(user => {
+                    if (!user) {
+                        throw new Error("A user with that id doesn't exist!");
+                    }
+
+                    user.createdEvents = [ ...user.createdEvents, event ];
+                    
+                    return user.save();
+                })
+                .then(() => createdEvent)
                 .catch(err => {
                     console.log(`ERROR: ${err}`);
                     throw err;
