@@ -7,8 +7,6 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: "./.env.local"});
 
-const Event = require("../models/event");
-
 const app = express();
 
 // app.use(express.urlencoded({ extended: true }));
@@ -16,8 +14,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const Event = require("../models/event");
+const User = require("../models/user");
+
 app.use("/graphql", graphqlHTTP({
     schema: buildSchema(`
+        type User {
+            _id: ID!
+            email: String!
+            password: String
+        }
+
         type Event {
             _id: ID!
             title: String!
@@ -32,12 +39,19 @@ app.use("/graphql", graphqlHTTP({
             price: Float!
         }
 
+        input UserInput {
+            email: String!
+            password: String!
+        }
+
         type RootQuery {
             events: [Event!]!
+            user: user
         }
 
         type RootMutation {
             createEvent(eventInput: EventInput): Event
+            createUser(userInput: UserInput): User
         }
 
         schema {
@@ -74,6 +88,12 @@ app.use("/graphql", graphqlHTTP({
                 });
 
             return event;
+        },
+        createUser: ({ userInput: { email, password }}) => {
+            const user = new User({
+                email,
+                password
+            })
         }
     },
     graphiql: true
