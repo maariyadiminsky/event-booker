@@ -24,7 +24,7 @@ app.use("/graphql", graphqlHTTP({
             _id: ID!
             email: String!
             password: String
-            createdEvents: [Event]
+            createdEvents: [Event!]
         }
 
         type Event {
@@ -72,8 +72,18 @@ app.use("/graphql", graphqlHTTP({
             });
         },
         events: () => {
-            return Event.find()
-            .then((events) => events.map(event => ({ ...event._doc })))
+            return Event.find().populate("user")
+            .then((events) => {
+                return events.map(event => {
+                    return { 
+                        ...event._doc,
+                        user: {
+                            ...event.user._doc,
+                            password: null
+                        }
+                    };
+                })
+            })
             .catch(err => {
                 console.log(`ERROR: ${err}`);
                 throw err;
@@ -102,7 +112,7 @@ app.use("/graphql", graphqlHTTP({
                     }
 
                     user.createdEvents = [ ...user.createdEvents, event ];
-                    
+
                     return user.save();
                 })
                 .then(() => createdEvent)
