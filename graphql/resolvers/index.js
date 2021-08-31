@@ -3,34 +3,36 @@ const bcrypt = require("bcryptjs");
 const Event = require("../../models/event");
 const User = require("../../models/user");
 
-const findUserData = (userId) => {
-    return User.findById(userId)
-        .then((user) => ({ 
+const findUserData = async(userId) => {
+    try {
+        const user = await User.findById(userId);
+        return { 
             ...user._doc,
-            password: null
-        }))
-        .catch(err => {
-            console.log(`ERROR: ${err}`);
-            throw err;
-        });
+            password: null,
+        }
+    } catch(err) {
+        console.log(`ERROR: ${err}`);
+        throw err;
+    }
 }
 
-const findEventData = (eventIds) => {
-    return Event.find({
+const findEventData = async(eventIds) => {
+    try {
+        const events = await Event.find({
             _id: { $in: eventIds }
         })
-        .then((events) => {
-            return events.map(event => {
-                return { 
-                    ...event._doc,
-                    user: findUserData(event.user._id)
-                }
-            })
+
+        return events.map(event => {
+            return { 
+                ...event._doc,
+                date: new Date(event.date).toISOString(),
+                user: findUserData(event.user._id)
+            }
         })
-        .catch(err => {
-            console.log(`ERROR: ${err}`);
-            throw err;
-        });
+    } catch(err) {
+        console.log(`ERROR: ${err}`);
+        throw err;
+    }
 }
 
 module.exports = {
@@ -53,6 +55,7 @@ module.exports = {
             return events.map(event => {
                 return { 
                     ...event._doc,
+                    date: new Date(event.date).toISOString(),
                     user: findUserData(event.user._id)
                 };
             })
