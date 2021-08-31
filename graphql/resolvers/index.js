@@ -17,11 +17,19 @@ const findUserData = async(userId) => {
     }
 }
 
-const findEventData = async(eventIds) => {
+const findEventData = async(eventId) => {
     try {
-        const events = await Event.find({
-            _id: { $in: eventIds }
-        })
+        const event = await Event.findOne({ _id: eventId });
+        return event;
+    } catch(err) {
+        console.log(`ERROR: ${err}`);
+        throw err;
+    }
+}
+
+const findEventsData = async(eventIds) => {
+    try {
+        const events = await Event.find({ _id: { $in: eventIds }})
 
         return events.map(event => {
             return { 
@@ -42,7 +50,7 @@ module.exports = {
         .then((users) => (
             users.map(user => ({ 
                 ...user._doc,
-                createdEvents: findEventData(user._doc.createdEvents)
+                createdEvents: findEventsData(user._doc.createdEvents)
             })))
         )
         .catch(err => {
@@ -65,6 +73,41 @@ module.exports = {
             console.log(`ERROR: ${err}`);
             throw err;
         });
+    },
+    bookings: () => {
+        return Booking.find()
+            .then((bookings) => {
+                return bookings.map(booking => {
+                    return {
+                        ...booking._doc,
+                        createdAt: new Date(booking.createdAt).toISOString(),
+                        updatedAt: new Date(booking.updatedAt).toISOString(),
+                    }
+                });
+            })
+            .catch(err => {
+                console.log(`ERROR: ${err}`);
+                throw err;
+            });
+    },
+    createBooking: async ({ eventId }) => {
+        const booking = new Booking({
+            user: "612d43fa7858eae664785e47", // wip temp until I add auth
+            event: await findEventData(eventId)
+        })
+
+        return booking.save()
+            .then((res) => {
+                return {
+                    ...res._doc,
+                    createdAt: new Date(res.createdAt).toISOString(),
+                    updatedAt: new Date(res.updatedAt).toISOString()
+                }
+            })
+            .catch(err => {
+                console.log(`ERROR: ${err}`);
+                throw err;
+            });
     },
     createEvent: ({ eventInput: { title, description, price } }) => {
         const event = new Event({
