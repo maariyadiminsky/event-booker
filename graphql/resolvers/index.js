@@ -17,12 +17,37 @@ const findUserData = async(userId) => {
     }
 }
 
+const findBookingData = async(bookingId) => {
+    try {
+        const booking = await Booking.findById(bookingId);
+        return { 
+            ...booking._doc,
+            user: await findUserData(booking.user._id),
+            event: await findEventData(booking.event._id),
+            createdAt: new Date(booking.createdAt).toISOString(),
+            updatedAt: new Date(booking.updatedAt).toISOString(),
+        }
+    } catch(err) {
+        console.log(`ERROR: ${err}`);
+        throw err;
+    }
+}
+
+const deleteBooking = async (bookingId) => {
+    try {
+        return await Booking.deleteOne({ _id: bookingId });
+    } catch(err) {
+        console.log(`ERROR: ${err}`);
+        throw err;
+    }
+}
+
 const findEventData = async(eventId) => {
     try {
         const event = await Event.findById(eventId);
         return { 
             ...event._doc, 
-            user: findUserData(event.user._id)
+            user: await findUserData(event.user._id)
         }
     } catch(err) {
         console.log(`ERROR: ${err}`);
@@ -48,139 +73,149 @@ const findEventsData = async(eventIds) => {
 }
 
 module.exports = {
-    users: () => {
-        return User.find()
-        .then((users) => (
-            users.map(user => ({ 
+    users: async() => {
+        try {
+            const users = await User.find();
+
+            return users.map(user => ({ 
                 ...user._doc,
                 createdEvents: findEventsData(user._doc.createdEvents)
-            })))
-        )
-        .catch(err => {
+            }));
+
+        } catch(err) {
             console.log(`ERROR: ${err}`);
             throw err;
-        });
+        };
     },
-    events: () => {
-        return Event.find()
-        .then((events) => {
+    events: async() => {
+        try {
+            const events = await Event.find();
+
             return events.map(event => {
                 return { 
                     ...event._doc,
                     date: new Date(event.date).toISOString(),
                     user: findUserData(event.user._id)
                 };
-            })
-        })
-        .catch(err => {
+            });
+
+        } catch(err) {
             console.log(`ERROR: ${err}`);
             throw err;
-        });
+        };
     },
-    bookings: () => {
-        return Booking.find()
-            .then((bookings) => {
-                return bookings.map(booking => {
-                    return {
-                        ...booking._doc,
-                        user: findUserData(booking.user._id),
-                        event: findEventData(booking.event._id),
-                        createdAt: new Date(booking.createdAt).toISOString(),
-                        updatedAt: new Date(booking.updatedAt).toISOString(),
-                    }
-                });
-            })
-            .catch(err => {
-                console.log(`ERROR: ${err}`);
-                throw err;
+    bookings: async() => {
+        try {
+            const bookings = await Booking.find();
+
+            return bookings.map(booking => {
+                return {
+                    ...booking._doc,
+                    user: findUserData(booking.user._id),
+                    event: findEventData(booking.event._id),
+                    createdAt: new Date(booking.createdAt).toISOString(),
+                    updatedAt: new Date(booking.updatedAt).toISOString(),
+                }
             });
+        } catch(err) {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        };
     },
     createBooking: async ({ eventId }) => {
-        const booking = new Booking({
-            user: "612d43fa7858eae664785e47", // wip temp until I add auth
-            event: await findEventData(eventId)
-        })
-
-        return booking.save()
-            .then((res) => {
-                return {
-                    ...res._doc,
-                    user: findUserData(res.user._id),
-                    event: findEventData(res.event._id),
-                    createdAt: new Date(res.createdAt).toISOString(),
-                    updatedAt: new Date(res.updatedAt).toISOString()
-                }
+        try {
+            const booking = await new Booking({
+                user: "612d43fa7858eae664785e47", // wip temp until I add auth
+                event: await findEventData(eventId)
             })
-            .catch(err => {
-                console.log(`ERROR: ${err}`);
-                throw err;
-            });
+
+            await booking.save();
+
+            return {
+                ...booking._doc,
+                user: findUserData(booking.user._id),
+                event: findEventData(booking.event._id),
+                createdAt: new Date(booking.createdAt).toISOString(),
+                updatedAt: new Date(booking.updatedAt).toISOString()
+            }
+
+        } catch(err) {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        };
     },
-    createEvent: ({ eventInput: { title, description, price } }) => {
-        const event = new Event({
-            title,
-            description,
-            price: +price,
-            date: new Date().toISOString(),
-            user: "612d43fa7858eae664785e47" // note: temporary created for testing
-        });
+    cancelBooking: async ({ bookingId }) => {
+        try {
+            const booking = await findBookingData(bookingId);
+            const event = await findEventData(booking.event._id);
 
-        let createdEvent;
+            await deleteBooking(bookingId);
 
-        return event.save()
-            .then((res) => {
-                createdEvent = { 
-                    ...res._doc,
-                    user: findUserData(res.user._id)
-                };
+            return { ...event };
+        } catch(err) {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        };
+    },
+    createEvent: async ({ eventInput: { title, description, price } }) => {
+        try {
+            let createdEvent;
 
-                return User.findById("612d43fa7858eae664785e47");
-            })
-            .then(user => {
-                if (!user) {
-                    throw new Error("A user with that id doesn't exist!");
-                }
-
-                user.createdEvents = [ ...user.createdEvents, event ];
-
-                return user.save();
-            })
-            .then(() => createdEvent)
-            .catch(err => {
-                console.log(`ERROR: ${err}`);
-                throw err;
+            const event = await new Event({
+                title,
+                description,
+                price: +price,
+                date: new Date().toISOString(),
+                user: "612d43fa7858eae664785e47" // note: temporary created for testing
             });
 
-        return event;
+            await event.save();
+
+            createdEvent = { 
+                ...event._doc,
+                user: findUserData(event.user._id)
+            };
+
+            const user = await User.findById("612d43fa7858eae664785e47");
+
+            if (!user) {
+                throw new Error("A user with that id doesn't exist!");
+            }
+
+            user.createdEvents = [ ...user.createdEvents, event ];
+
+            await user.save();
+
+            return createdEvent;
+        } catch(err) {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        };
     },
-    createUser: ({ userInput: { email, password }}) => {
+    createUser: async ({ userInput: { email, password }}) => {
         // make sure user doesn't already exist in database
-        return User.findOne({ email })
-            .then((user) => {
-                if (user) {
-                    throw new Error("A user with that email already exists!");
-                }
+        try {
+            const hasUserExist = await User.findOne({ email });
 
-                return bcrypt.hash(password, 12);
-            })
-            .then((safePass) => {
-                const user = new User({
-                    email,
-                    password: safePass
-                });
+            if (hasUserExist) {
+                throw new Error("A user with that email already exists!");
+            }
 
-                return user.save()
-                .then((res) => {
-                    return { ...res._doc, password: null };
-                })
-                .catch(err => {
-                    console.log(`ERROR: ${err}`);
-                    throw err;
-                });
-            })
-            .catch(err => {
-                console.log(`ERROR: ${err}`);
-                throw err;
+            const user = await new User({
+                email,
+                password: await bcrypt.hash(password, 12)
             });
+
+            await user.save();
+
+            return { 
+                ...user._doc, 
+                password: null 
+            };
+
+        } catch(err) {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        };
     }
 };
