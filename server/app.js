@@ -18,6 +18,36 @@ app.use(bodyParser.json());
 const Event = require("../models/event");
 const User = require("../models/user");
 
+const findUserData = (userId) => {
+    return User.findById(userId)
+        .then((user) => ({ 
+            ...user._doc,
+            password: null
+        }))
+        .catch(err => {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        });
+}
+
+const findEventData = (eventIds) => {
+    return Event.find({
+            _id: { $in: eventIds }
+        })
+        .then((events) => {
+            return events.map(event => {
+                return { 
+                    ...event._doc,
+                    user: findUserData(event.user._id)
+                }
+            })
+        })
+        .catch(err => {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        });
+}
+
 app.use("/graphql", graphqlHTTP({
     schema: buildSchema(`
         type User {
@@ -65,22 +95,24 @@ app.use("/graphql", graphqlHTTP({
     rootValue: {
         users: () => {
             return User.find()
-            .then((users) => users.map(user => ({ ...user._doc })))
+            .then((users) => (
+                users.map(user => ({ 
+                    ...user._doc,
+                    createdEvents: findEventData(user._doc.createdEvents)
+                })))
+            )
             .catch(err => {
                 console.log(`ERROR: ${err}`);
                 throw err;
             });
         },
         events: () => {
-            return Event.find().populate("user")
+            return Event.find()
             .then((events) => {
                 return events.map(event => {
                     return { 
                         ...event._doc,
-                        user: {
-                            ...event.user._doc,
-                            password: null
-                        }
+                        user: findUserData(event.user._id)
                     };
                 })
             })
