@@ -19,8 +19,11 @@ const findUserData = async(userId) => {
 
 const findEventData = async(eventId) => {
     try {
-        const event = await Event.findOne({ _id: eventId });
-        return event;
+        const event = await Event.findById(eventId);
+        return { 
+            ...event._doc, 
+            user: findUserData(event.user._id)
+        }
     } catch(err) {
         console.log(`ERROR: ${err}`);
         throw err;
@@ -80,6 +83,8 @@ module.exports = {
                 return bookings.map(booking => {
                     return {
                         ...booking._doc,
+                        user: findUserData(booking.user._id),
+                        event: findEventData(booking.event._id),
                         createdAt: new Date(booking.createdAt).toISOString(),
                         updatedAt: new Date(booking.updatedAt).toISOString(),
                     }
@@ -100,6 +105,8 @@ module.exports = {
             .then((res) => {
                 return {
                     ...res._doc,
+                    user: findUserData(res.user._id),
+                    event: findEventData(res.event._id),
                     createdAt: new Date(res.createdAt).toISOString(),
                     updatedAt: new Date(res.updatedAt).toISOString()
                 }
