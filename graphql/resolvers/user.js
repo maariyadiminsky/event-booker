@@ -7,9 +7,9 @@ const {
 const { findEventsData } = require("../../utils/event");
 
 module.exports = {
-    login: async({ email, password }) => {
+    signIn: async({ email, password }) => {
         try {
-            validateUser(email, password);
+            return validateUser(email, password);
         } catch(err) {
             console.log(`ERROR: ${err}`);
             throw err;
