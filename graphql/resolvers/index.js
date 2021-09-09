@@ -1,8 +1,37 @@
 const bcrypt = require("bcryptjs");
+const { findDate } = require("../../utils");
 
 const Event = require("../../models/event");
 const User = require("../../models/user");
 const Booking = require("../../models/booking");
+
+const eventData = async(event) => {
+    try {
+        return { 
+            ...event._doc,
+            date: findDate(event.date),
+            user: await findUserData(event.user._id)
+        }
+    } catch(err) {
+        console.log(`ERROR: ${err}`);
+        throw err;
+    }
+}
+
+const bookingData = async(booking) => {
+    try {
+        return { 
+            ...booking._doc,
+            user: await findUserData(booking.user._id),
+            event: await findEventData(booking.event._id),
+            createdAt: findDate(booking.createdAt),
+            updatedAt: findDate(booking.updatedAt),
+        }
+    } catch(err) {
+        console.log(`ERROR: ${err}`);
+        throw err;
+    }
+}
 
 const findUserData = async(userId) => {
     try {
@@ -20,13 +49,7 @@ const findUserData = async(userId) => {
 const findBookingData = async(bookingId) => {
     try {
         const booking = await Booking.findById(bookingId);
-        return { 
-            ...booking._doc,
-            user: await findUserData(booking.user._id),
-            event: await findEventData(booking.event._id),
-            createdAt: new Date(booking.createdAt).toISOString(),
-            updatedAt: new Date(booking.updatedAt).toISOString(),
-        }
+        return bookingData(booking);
     } catch(err) {
         console.log(`ERROR: ${err}`);
         throw err;
@@ -43,12 +66,12 @@ const deleteBooking = async (bookingId) => {
 }
 
 const findEventData = async(eventId) => {
+    console.log("event id is..", eventId);
     try {
         const event = await Event.findById(eventId);
-        return { 
-            ...event._doc, 
-            user: await findUserData(event.user._id)
-        }
+
+        console.log("event is..", event);
+        return eventData(event);
     } catch(err) {
         console.log(`ERROR: ${err}`);
         throw err;
@@ -59,13 +82,7 @@ const findEventsData = async(eventIds) => {
     try {
         const events = await Event.find({ _id: { $in: eventIds }})
 
-        return events.map(event => {
-            return { 
-                ...event._doc,
-                date: new Date(event.date).toISOString(),
-                user: findUserData(event.user._id)
-            }
-        })
+        return events.map(event => eventData(event));
     } catch(err) {
         console.log(`ERROR: ${err}`);
         throw err;
@@ -91,14 +108,7 @@ module.exports = {
         try {
             const events = await Event.find();
 
-            return events.map(event => {
-                return { 
-                    ...event._doc,
-                    date: new Date(event.date).toISOString(),
-                    user: findUserData(event.user._id)
-                };
-            });
-
+            return events.map(event => eventData(event));
         } catch(err) {
             console.log(`ERROR: ${err}`);
             throw err;
@@ -108,15 +118,7 @@ module.exports = {
         try {
             const bookings = await Booking.find();
 
-            return bookings.map(booking => {
-                return {
-                    ...booking._doc,
-                    user: findUserData(booking.user._id),
-                    event: findEventData(booking.event._id),
-                    createdAt: new Date(booking.createdAt).toISOString(),
-                    updatedAt: new Date(booking.updatedAt).toISOString(),
-                }
-            });
+            return bookings.map(booking => bookingData(booking));
         } catch(err) {
             console.log(`ERROR: ${err}`);
             throw err;
@@ -131,13 +133,7 @@ module.exports = {
 
             await booking.save();
 
-            return {
-                ...booking._doc,
-                user: findUserData(booking.user._id),
-                event: findEventData(booking.event._id),
-                createdAt: new Date(booking.createdAt).toISOString(),
-                updatedAt: new Date(booking.updatedAt).toISOString()
-            }
+            return bookingData(booking);
 
         } catch(err) {
             console.log(`ERROR: ${err}`);
@@ -165,16 +161,13 @@ module.exports = {
                 title,
                 description,
                 price: +price,
-                date: new Date().toISOString(),
+                date: findDate(),
                 user: "612d43fa7858eae664785e47" // note: temporary created for testing
             });
 
             await event.save();
 
-            createdEvent = { 
-                ...event._doc,
-                user: findUserData(event.user._id)
-            };
+            createdEvent = eventData(event);
 
             const user = await User.findById("612d43fa7858eae664785e47");
 
