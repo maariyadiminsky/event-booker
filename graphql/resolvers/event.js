@@ -29,9 +29,7 @@ module.exports = {
 
             const user = await findUserById("612d43fa7858eae664785e47");
 
-            if (!user) {
-                throw new Error("A user with that id doesn't exist!");
-            }
+            if (!user) throw new Error("A user with that id doesn't exist!");
 
             user.createdEvents = [ ...user.createdEvents, event ];
 
