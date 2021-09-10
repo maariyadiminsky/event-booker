@@ -12,6 +12,7 @@ import {
     SWITCH_SIGN_UP_TEXT,
     SWITCH_SIGN_IN_TEXT,
     SIGN_IN_FORM,
+    SIGN_UP_FORM,
     GRAPHQL_ENDPOINT
 } from "../const";
 
@@ -27,30 +28,37 @@ const signUpMutation = (email, password) => `
 const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
 
-    const handleOnSubmit = async(formValues) => {
-        console.log("Submitted!", formValues);
+    const handleOnSubmit = async(formValues, formType) => {
+        console.log("Submitted!", formValues, formType);
 
-        // try {
-        //     const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
-        //         signUpMutation
-        //     });
+        try {
+            if (isSignInForm) {
 
-        //     console.log("in response!", response);
-        // } catch(err) {
-        //     console.log(`ERROR: ${err}`);
-        //     throw err;
-        // }
+            } else {
+                const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
+                    signUpMutation
+                });
+    
+                console.log("in response!", response);
+            }
+        } catch(err) {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        }
     }
 
     const toggleAuthForm = () => setIsSignInForm(!isSignInForm);
+
+    const findFormType = () => isSignInForm ? SIGN_IN_FORM : SIGN_UP_FORM;
     
     const renderText = () => isSignInForm ? SIGN_IN : SIGN_UP;
+
     const renderSecondButtonText = () => isSignInForm ? SWITCH_SIGN_UP_TEXT : SWITCH_SIGN_IN_TEXT;
 
     return (
         <Form 
-            validate={(fields) => validateForm(fields, SIGN_IN_FORM)}
-            onSubmit={handleOnSubmit}
+            validate={(fields) => validateForm(fields, findFormType())}
+            onSubmit={(formValues) => handleOnSubmit(formValues, findFormType())}
         >
         {({ handleSubmit }) => (
             <div className="w-full max-w-lg mx-auto">
