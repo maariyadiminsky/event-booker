@@ -19,11 +19,11 @@ const App = () => {
       <Fragment>
           <NavBar />
           <Switch>
-            <Redirect from={ROOT_PATH} to={AUTH_PATH} exact component={null} />
-            <Route path={AUTH_PATH} component={Auth} />
-            <Route path={EVENTS_PATH} component={Events} />
-            <Route path={BOOKINGS_PATH} component={Bookings} />
-        </Switch>
+              <Redirect from={ROOT_PATH} to={AUTH_PATH} exact component={null} />
+              <Route path={AUTH_PATH} component={Auth} />
+              <Route path={EVENTS_PATH} component={Events} />
+              <Route path={BOOKINGS_PATH} component={Bookings} />
+          </Switch>
       </Fragment>
   );
 }
