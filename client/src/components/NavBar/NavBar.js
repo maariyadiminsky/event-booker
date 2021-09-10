@@ -1,22 +1,169 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
-// import AuthButton from "../AuthButton";
+import NavItem from "./NavItem";
+
+import {
+    ROOT_PATH,
+    EVENTS_PATH,
+    BOOKINGS_PATH,
+    AUTH_PATH,
+    EVENTS,
+    BOOKINGS,
+    SIGN_IN,
+    HOME
+} from "../../const";
+
+import "./NavBar.css";
 
 import logo from "./logo.png";
 
+const isActiveNavItem = (navItemState, isMobile = false) => {
+    if (isMobile) return navItemState ? "active-mobile-nav-item" : "mobile-nav-item";
+
+    return navItemState ? "active-nav-item" : "nav-item";
+}
 const NavBar = () => {
+    const { pathname } = useLocation();
+    const [shouldOpenMobileMenu, setShouldOpenMobileMenu] = useState(false);
+    const [navItemsActive, setNavItemsActive] = useState({
+        home: false,
+        bookings: false,
+        events: false
+    });
+
+    useEffect(() => {
+        switch(pathname) {
+            case ROOT_PATH:
+                setNavItemsActive({
+                    home: true,
+                    bookings: false,
+                    events: false
+                });
+                break;
+            case EVENTS_PATH:
+                setNavItemsActive({
+                    home: false,
+                    bookings: false,
+                    events: true
+                });
+                break;
+            case BOOKINGS_PATH:
+                setNavItemsActive({
+                    home: false,
+                    bookings: true,
+                    events: false
+                });
+                break;
+            default:
+                break;
+        }
+
+    }, [pathname])
+
+    const toggleMobileMenu = () => setShouldOpenMobileMenu(!shouldOpenMobileMenu);
+
+    const renderMobileButton = () => (
+        <div className="md:hidden flex px-10">
+            <button 
+                className="outline-none"
+                onClick={toggleMobileMenu}
+            >
+                <svg className="w-10 h-10 text-green-400 hover:text-green-300"
+                    x-show="!showMenu"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    );
+
+    const renderMobileMenu = () => (shouldOpenMobileMenu && (
+        <div className="md:hidden mobile-menu">
+            <ul className="">
+                <li>
+                    <NavItem 
+                        className={isActiveNavItem(navItemsActive.home, true)}
+                        buttonPath={ROOT_PATH}
+                    >
+                        {HOME}
+                    </NavItem>
+                </li>
+                <li>
+                    <NavItem 
+                        className={isActiveNavItem(navItemsActive.events, true)}
+                        buttonPath={EVENTS_PATH}
+                    >
+                        {EVENTS}
+                    </NavItem>
+                </li>
+                <li>
+                    <NavItem 
+                        className={isActiveNavItem(navItemsActive.bookings, true)}
+                        buttonPath={BOOKINGS_PATH}
+                    >
+                        {BOOKINGS}
+                    </NavItem>
+                </li>
+                <li>
+                    <NavItem 
+                        className="py-4 px-4 font-bold text-white bg-green-400"
+                        buttonPath={AUTH_PATH}
+                    >
+                        {SIGN_IN}
+                    </NavItem>
+                </li>
+            </ul>
+        </div>
+    ));
+
     return (
-        <nav className="p-3 bg-indigo-600">
-            <div className="md:container px-4 md:px-0 mx-auto flex justify-between">
-                <NavLink to="/">
-                    <img 
-                        className="transform scale-75" 
-                        src={logo} 
-                        alt="logo"
-                    />
-                </NavLink>
-                {/* <AuthButton /> */}
+        <nav className="bg-white shadow-lg">
+            <div className="md:container mx-auto">
+                <div className="md:px-0 mx-auto flex flex-wrap justify-between">
+                    <NavItem buttonPath={ROOT_PATH}>
+                        <img 
+                            className="transform scale-90 p-5" 
+                            src={logo} 
+                            alt="logo"
+                        />
+                    </NavItem>
+                    <div className="my-auto hidden md:flex md:flex-wrap items-center space-x-6">
+                        <NavItem 
+                            className={isActiveNavItem(navItemsActive.home)}
+                            buttonPath={ROOT_PATH}
+                        >
+                            {HOME}
+                        </NavItem>
+                        <NavItem 
+                            className={isActiveNavItem(navItemsActive.events)}
+                            buttonPath={EVENTS_PATH}
+                        >
+                            {EVENTS}
+                        </NavItem>
+                        <NavItem 
+                            className={isActiveNavItem(navItemsActive.bookings)}
+                            buttonPath={BOOKINGS_PATH}
+                        >
+                            {BOOKINGS}
+                        </NavItem>
+                        <NavItem 
+                            className="py-3 px-10 font-semibold text-white bg-green-400 rounded hover:bg-green-300 transition duration-300"
+                            buttonPath={AUTH_PATH}
+                        >
+                            {SIGN_IN}
+                        </NavItem>
+                    </div>
+                    {renderMobileButton()}
+                </div>
+                {/* <!-- mobile menu --> */}
+                {renderMobileMenu()}
             </div>
         </nav>
     );
