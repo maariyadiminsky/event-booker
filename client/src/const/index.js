@@ -7,7 +7,12 @@ export const AUTH_PATH = "/auth";
 export const EVENTS = "Events";
 export const BOOKINGS = "Bookings";
 export const SIGN_IN = "Sign In";
+export const SIGN_UP = "Sign Up";
 export const HOME = "Home";
+
+// text
+export const SWITCH_SIGN_UP_TEXT = "Don't have an account yet?";
+export const SWITCH_SIGN_IN_TEXT = "Already have an account?";
 
 // server endpoint
 export const GRAPHQL_ENDPOINT = "/graphql";
