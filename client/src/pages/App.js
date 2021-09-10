@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import Auth from "./Auth";
@@ -16,7 +16,7 @@ import {
 
 const App = () => {
   return (
-      <Fragment>
+      <div className="bg-gray-100 min-h-screen">
           <NavBar />
           <Switch>
               <Redirect from={ROOT_PATH} to={AUTH_PATH} exact component={null} />
@@ -24,7 +24,7 @@ const App = () => {
               <Route path={EVENTS_PATH} component={Events} />
               <Route path={BOOKINGS_PATH} component={Bookings} />
           </Switch>
-      </Fragment>
+      </div>
   );
 }
 
