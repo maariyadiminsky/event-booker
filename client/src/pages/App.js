@@ -1,10 +1,12 @@
 import React from "react";
+import { Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <div className="app">
-      App!
-    </div>
+    <Route path="/" component={() => <div>test</div>} />
+    <Route path="/auth" component={() => <div>test</div>} />
+    <Route path="/events" component={() => <div>test</div>} />
+    <Route path="/bookings" component={() => <div>test</div>} />
   );
 }
 
