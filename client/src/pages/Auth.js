@@ -18,11 +18,10 @@ const Auth = () => {
         <Form 
             validate={(fields) => validateForm(fields, SIGN_IN_FORM)}
             onSubmit={handleOnSubmit}
-            className="error"
         >
         {({ handleSubmit }) => (
             <div className="w-full max-w-lg mx-auto">
-                <form onSubmit={handleSubmit} className="error bg-green-400 container shadow-xl rounded px-8 pb-8 mt-12">
+                <form onSubmit={handleSubmit} className="bg-green-400 container shadow-xl rounded px-8 pb-8 mt-12">
                     <div className="pt-12 pb-6 text-center text-3xl text-white font-semibold">{SIGN_IN}</div>
                     <Field name="email" component={FormInput} label="Email"/>
                     <Field name="password" component={FormInput} label="Password" />
