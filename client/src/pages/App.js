@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import Auth from "./Auth";
@@ -16,13 +16,15 @@ import {
 
 const App = () => {
   return (
-    <Switch> 
-      <NavBar />
-      <Redirect from={ROOT_PATH} to={AUTH_PATH} exact component={null} />
-      <Route path={AUTH_PATH} component={Auth} />
-      <Route path={EVENTS_PATH} component={Events} />
-      <Route path={BOOKINGS_PATH} component={Bookings} />
-    </Switch>
+      <Fragment>
+          <NavBar />
+          <Switch>
+            <Redirect from={ROOT_PATH} to={AUTH_PATH} exact component={null} />
+            <Route path={AUTH_PATH} component={Auth} />
+            <Route path={EVENTS_PATH} component={Events} />
+            <Route path={BOOKINGS_PATH} component={Bookings} />
+        </Switch>
+      </Fragment>
   );
 }
 
