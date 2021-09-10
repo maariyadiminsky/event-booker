@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import NavItem from "./NavItem";
 
@@ -162,7 +162,6 @@ const NavBar = () => {
                     </div>
                     {renderMobileButton()}
                 </div>
-                {/* <!-- mobile menu --> */}
                 {renderMobileMenu()}
             </div>
         </nav>
