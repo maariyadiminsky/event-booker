@@ -1,12 +1,16 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
+
+import Auth from "./Auth";
 
 const App = () => {
   return (
-    <Route path="/" component={() => <div>test</div>} />
-    <Route path="/auth" component={() => <div>test</div>} />
-    <Route path="/events" component={() => <div>test</div>} />
-    <Route path="/bookings" component={() => <div>test</div>} />
+    <Switch> 
+      <Redirect from="/" to="/auth" exact component={null} />
+      <Route path="/auth" component={Auth} />
+      <Route path="/events" component={null} />
+      <Route path="/bookings" component={null} />
+    </Switch>
   );
 }
 
