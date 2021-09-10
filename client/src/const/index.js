@@ -9,6 +9,13 @@ export const BOOKINGS = "Bookings";
 export const SIGN_IN = "Sign In";
 export const HOME = "Home";
 
+// server endpoint
+export const GRAPHQL_ENDPOINT = "/graphql";
+
 // form type
 export const SIGN_IN_FORM = "Sign In Form";
 export const SIGN_UP_FORM = "Sign Up Form";
+
+// other
+export const DEVELOPMENT = "development";
+export const PRODUCTION = "production";

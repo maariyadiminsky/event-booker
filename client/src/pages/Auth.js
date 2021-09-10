@@ -1,17 +1,40 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
 
+import eventBookerAPI from "../api/eventBookerAPI";
+
 import FormInput from "../components/Form/FormInput";
 import { validateForm } from "../utils/auth";
 
 import { 
     SIGN_IN,
-    SIGN_IN_FORM
+    SIGN_IN_FORM,
+    GRAPHQL_ENDPOINT
 } from "../const";
 
+const signUpMutation = (email, password) => `
+    mutation {
+        createUser(userInput: { email: "${email}", password: "${password}"" }) {
+            _id
+            email
+        }
+    }
+`;
+
 const Auth = () => {
-    const handleOnSubmit = (formValues) => {
+    const handleOnSubmit = async(formValues) => {
         console.log("Submitted!", formValues);
+
+        try {
+            const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
+                signUpMutation
+            });
+
+            console.log("in response!", response);
+        } catch(err) {
+            console.log(`ERROR: ${err}`);
+            throw err;
+        }
     }
 
     return (
