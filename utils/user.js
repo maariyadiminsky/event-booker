@@ -28,7 +28,7 @@ const findUserById = (id) => User.findById(id);
 
 const createNewUser = async(email, password) => {
     try {
-        new User({
+        return new User({
             email,
             password: await bcrypt.hash(password, 12)
         })
