@@ -1,17 +1,17 @@
 @layer components {
     .nav-item {
-        @apply py-4 px-2 font-semibold text-gray-500  hover:text-green-400 transition duration-300 border-none
+        @apply py-4 font-semibold text-lg text-gray-500  hover:text-green-400 transition duration-300 border-none
     }
 
     .active-nav-item {
-        @apply py-4 px-2 font-semibold text-green-500 border-b-4 border-green-500
+        @apply py-4 font-semibold text-lg text-green-500 border-b-4 border-green-500
     }
 
     .mobile-nav-item {
-        @apply py-4 px-4 font-semibold text-gray-500
+        @apply py-4 px-4 font-semibold text-lg text-gray-500
     }
 
     .active-mobile-nav-item {
-        @apply py-4 px-4 font-semibold text-green-400
+        @apply py-4 px-4 font-semibold text-lg text-green-400
     }
 }

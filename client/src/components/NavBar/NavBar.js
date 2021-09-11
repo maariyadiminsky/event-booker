@@ -113,7 +113,7 @@ const NavBar = () => {
                 </li>
                 <li>
                     <NavItem 
-                        className="py-4 px-4 font-bold text-white bg-green-400"
+                        className="py-4 px-4 font-bold text-white bg-green-400 text-lg"
                         buttonPath={AUTH_PATH}
                     >
                         {SIGN_IN}
@@ -134,7 +134,7 @@ const NavBar = () => {
                             alt="logo"
                         />
                     </NavItem>
-                    <div className="my-auto hidden md:flex md:flex-wrap items-center space-x-6">
+                    <div className="my-auto hidden md:flex md:flex-wrap items-center space-x-10 mr-10">
                         <NavItem 
                             className={isActiveNavItem(navItemsActive.home)}
                             buttonPath={ROOT_PATH}
@@ -154,7 +154,7 @@ const NavBar = () => {
                             {BOOKINGS}
                         </NavItem>
                         <NavItem 
-                            className="py-3 px-10 font-semibold text-white bg-green-400 rounded hover:bg-green-300 transition duration-300"
+                            className="py-3 px-12 text-lg text-white bg-green-400 rounded hover:bg-green-300 transition duration-300"
                             buttonPath={AUTH_PATH}
                         >
                             {SIGN_IN}
