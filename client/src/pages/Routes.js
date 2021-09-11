@@ -18,8 +18,6 @@ import {
 const Routes = () => {
   const { token } = useContext(AuthContext);
 
-  console.log("token", token);
-
   const goToHomePageTry = () => (token ?
     <Route path={ROOT_PATH} exact component={Home}/> :
     <Redirect from={ROOT_PATH} to={AUTH_PATH} exact component={null} />

@@ -126,7 +126,7 @@ const NavBar = () => {
                 <li>
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.home, true)}
-                        buttonPath={ROOT_PATH}
+                        buttonPath={() => setPathIfUserSignsInSuccessfully(ROOT_PATH)}
                     >
                         {HOME}
                     </NavItem>
@@ -166,7 +166,7 @@ const NavBar = () => {
         <nav className="bg-white shadow-lg">
             <div className="md:container mx-auto">
                 <div className="md:px-0 mx-auto flex flex-wrap justify-between">
-                    <NavItem buttonPath={ROOT_PATH}>
+                    <NavItem buttonPath={() => setPathIfUserSignsInSuccessfully(ROOT_PATH)}>
                         <img 
                             className="transform scale-90 p-5" 
                             src={logo} 
@@ -176,7 +176,7 @@ const NavBar = () => {
                     <div className="my-auto hidden md:flex md:flex-wrap items-center space-x-10 mr-10">
                         <NavItem 
                             className={isActiveNavItem(navItemsActive.home)}
-                            buttonPath={ROOT_PATH}
+                            buttonPath={() => setPathIfUserSignsInSuccessfully(ROOT_PATH)}
                         >
                             {HOME}
                         </NavItem>
