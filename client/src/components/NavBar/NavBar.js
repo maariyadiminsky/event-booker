@@ -36,7 +36,11 @@ const NavBar = () => {
         events: false
     });
 
-    const { token, signOutUser } = useContext(AuthContext);
+    const { 
+        token, 
+        signOutUser,
+        path: [path, setPath]
+    } = useContext(AuthContext);
 
     useEffect(() => {
         switch(pathname) {
@@ -80,13 +84,20 @@ const NavBar = () => {
         }
     }, [token, hasUserSignedIn])
 
-    const toggleMobileMenu = () => setShouldOpenMobileMenu(!shouldOpenMobileMenu);
-
-    const renderAuthButtonText = () => hasUserSignedIn ? SIGN_OUT : SIGN_IN;
-
     const signOutUserTry = () => hasUserSignedIn ? signOutUser() : null;
 
     const setDirectPathTry = (path) => token ? path : AUTH_PATH;
+
+    const setPathIfUserSignsInSuccessfully = (pathToSet) => {
+        // no need to set since this means they are signing out
+        if (hasUserSignedIn) return;
+
+        setPath(pathToSet);
+    }
+
+    const renderAuthButtonText = () => hasUserSignedIn ? SIGN_OUT : SIGN_IN;
+
+    const toggleMobileMenu = () => setShouldOpenMobileMenu(!shouldOpenMobileMenu);
 
     const renderMobileButton = () => (
         <div className="md:hidden flex px-10">
@@ -124,6 +135,7 @@ const NavBar = () => {
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.events, true)}
                         buttonPath={setDirectPathTry(EVENTS_PATH)}
+                        handleOnClick={() => setPathIfUserSignsInSuccessfully(EVENTS_PATH)}
                     >
                         {EVENTS}
                     </NavItem>
@@ -132,6 +144,7 @@ const NavBar = () => {
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.bookings, true)}
                         buttonPath={setDirectPathTry(BOOKINGS_PATH)}
+                        handleOnClick={() => setPathIfUserSignsInSuccessfully(BOOKINGS_PATH)}
                     >
                         {BOOKINGS}
                     </NavItem>
@@ -170,12 +183,14 @@ const NavBar = () => {
                         <NavItem 
                             className={isActiveNavItem(navItemsActive.events)}
                             buttonPath={setDirectPathTry(EVENTS_PATH)}
+                            handleOnClick={() => setPathIfUserSignsInSuccessfully(EVENTS_PATH)}
                         >
                             {EVENTS}
                         </NavItem>
                         <NavItem 
                             className={isActiveNavItem(navItemsActive.bookings)}
                             buttonPath={setDirectPathTry(BOOKINGS_PATH)}
+                            handleOnClick={() => setPathIfUserSignsInSuccessfully(BOOKINGS_PATH)}
                         >
                             {BOOKINGS}
                         </NavItem>

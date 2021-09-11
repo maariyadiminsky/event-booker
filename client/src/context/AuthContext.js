@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -6,6 +7,9 @@ export const AuthContextProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [tokenExpiration, setTokenExpiration] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [path, setPath] = useState("");
+
+    const history = useHistory();
     
     const signInUser = (userId, token, tokenExpiration) => {
         console.log("in sign in!", token);
@@ -13,6 +17,10 @@ export const AuthContextProvider = ({ children }) => {
         setUserId(userId);
         setToken(token);
         setTokenExpiration(tokenExpiration);
+
+        if (path) {
+            history.push(path);
+        }
     }
 
     const signOutUser = () => {
@@ -30,7 +38,8 @@ export const AuthContextProvider = ({ children }) => {
                 token,
                 tokenExpiration,
                 signInUser,
-                signOutUser
+                signOutUser,
+                path: [path, setPath]
             }}
         >
             {children}
