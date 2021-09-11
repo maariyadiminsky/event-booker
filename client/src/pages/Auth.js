@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Field } from "react-final-form";
+
+import { AuthContext } from "../context/AuthContext";
 
 import FormInput from "../components/Form/FormInput";
 import FormError from "../components/Form/FormError";
@@ -39,6 +41,14 @@ const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [serverErrors, setServerErrors] = useState([]);
 
+    const { 
+        token: [token, setToken],
+        tokenExpiration: [tokenExpiration, setTokenExpiration],
+        userId: [userId, setUserId],
+        signIn,
+        signOut
+    } = useContext(AuthContext);
+
     const handleOnSubmit = async({ email, password }, formType) => {
         console.log("Submitted!", email, password, formType);
 
@@ -56,6 +66,10 @@ const Auth = () => {
             } else if (response.status !== 200 && response.status !== 201) {
                 throw new Error(`${formType} failed! Check your network connection.`);
             }
+
+            // const data = response.data.data.createUser;
+
+            // console.log("data:", data);
         } catch(err) {
             console.log(err);
             throw err;
@@ -90,7 +104,7 @@ const Auth = () => {
                     <Field name="password" component={FormInput} label="Password" />
                     <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
                         <button 
-                            className="animate-float shadow-lg align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
+                            className="animate-float shadow-xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
                             {renderText()}
