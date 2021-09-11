@@ -22,18 +22,6 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
-// fixes CORS policy issues
-// app.use((req, res, next) => {
-//     res.setHeader("Access-Control-Allow-Origin", "*");
-//     res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
-//     res.setHeader("Access-Control-Allow-Headers", "X-Powered-By", "Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization");
-
-//     console.log("In request", req);
-//     if (req.method === "OPTIONS") {
-//         return res.sendStatus(200);
-//     } else next();
-// });
-
 app.use(authentication);
 
 app.use("/graphql", graphqlHTTP({
