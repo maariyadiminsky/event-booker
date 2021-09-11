@@ -116,9 +116,14 @@ const Auth = () => {
             validate={(fields) => validateForm(fields, findFormType())}
             onSubmit={(formValues) => handleOnSubmit(formValues, findFormType())}
         >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, form }) => (
             <div className="w-full max-w-lg mx-auto">
-                <form onSubmit={handleSubmit} className="bg-green-400 container shadow-2xl rounded px-8 pb-8 mt-12">
+                <form  
+                    onSubmit={async(event) => {
+                        await handleSubmit(event);
+                        form.reset();
+                    }} 
+                    className="bg-green-400 container shadow-2xl rounded px-8 pb-8 mt-12">
                     <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
                     <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
                     {renderServerErrors()}
