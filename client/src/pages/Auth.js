@@ -41,13 +41,7 @@ const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [serverErrors, setServerErrors] = useState([]);
 
-    const { 
-        token: [token, setToken],
-        tokenExpiration: [tokenExpiration, setTokenExpiration],
-        userId: [userId, setUserId],
-        signIn,
-        signOut
-    } = useContext(AuthContext);
+    const { signInUser } = useContext(AuthContext);
 
     const handleOnSubmit = async({ email, password }, formType) => {
         console.log("Submitted!", email, password, formType);
@@ -67,9 +61,13 @@ const Auth = () => {
                 throw new Error(`${formType} failed! Check your network connection.`);
             }
 
-            // const data = response.data.data.createUser;
+            if (isSignInForm) {
+                const { data: { data: { signIn: { userId, token, tokenExpiration} }} } = response;
 
-            // console.log("data:", data);
+                signInUser(userId, token, tokenExpiration);
+            } else {
+                console.log("Successfully created a user!");
+            }
         } catch(err) {
             console.log(err);
             throw err;

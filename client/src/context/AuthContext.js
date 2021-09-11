@@ -7,22 +7,28 @@ export const AuthContextProvider = ({ children }) => {
     const [tokenExpiration, setTokenExpiration] = useState(null);
     const [userId, setUserId] = useState(null);
     
-    const signIn = () => {
+    const signInUser = (userId, token, tokenExpiration) => {
+        console.log("in sign in!", token, tokenExpiration, userId);
 
+        setUserId(userId);
+        setToken(token);
+        setTokenExpiration(tokenExpiration);
     }
 
-    const signOut = () => {
-
+    const signOutUser = () => {
+        setUserId(null);
+        setToken(null);
+        setTokenExpiration(null);
     }
 
     return (
         <AuthContext.Provider
             value={{
-                token: [token, setToken],
-                tokenExpiration: [tokenExpiration, setTokenExpiration],
-                userId: [userId, setUserId],
-                signIn,
-                signOut
+                userId,
+                token,
+                tokenExpiration,
+                signInUser,
+                signOutUser
             }}
         >
             {children}
