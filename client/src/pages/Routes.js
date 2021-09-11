@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 
-import { AuthContext } from "../context/AuthContext";
-
+import ProtectedRoute from "../components/Auth/hoc/ProtectedRoute";
 import Home from "./Home";
 import Auth from "./Auth";
 import Events from "./Events";
@@ -16,22 +15,14 @@ import {
 } from "../const";
 
 const Routes = () => {
-  const { token } = useContext(AuthContext);
 
-  const goToHomePageTry = () => (token ?
-    <Route path={ROOT_PATH} exact component={Home}/> :
-    <Redirect from={ROOT_PATH} to={AUTH_PATH} exact component={null} />
-  );
-
-  const goToAuthPageTry = () => (!token && <Route path={AUTH_PATH} component={Auth} />);
-  
   return (
-      <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
         <Switch>
-            {goToHomePageTry()}
-            {goToAuthPageTry()}
-            <Route path={EVENTS_PATH} component={Events} />
-            <Route path={BOOKINGS_PATH} component={Bookings} />
+            <Route path={ROOT_PATH} exact component={Home}/> 
+            <ProtectedRoute path={AUTH_PATH} component={Auth} isAuthRoute />
+            <ProtectedRoute path={EVENTS_PATH} component={Events} />
+            <ProtectedRoute path={BOOKINGS_PATH} component={Bookings} />
         </Switch>
       </div>
   );

@@ -1,6 +1,8 @@
 import React, { createContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
+import { ROOT_PATH } from "../const";
+
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -12,15 +14,11 @@ export const AuthContextProvider = ({ children }) => {
     const history = useHistory();
     
     const signInUser = (userId, token, tokenExpiration) => {
-        console.log("in sign in!", token);
-
         setUserId(userId);
         setToken(token);
         setTokenExpiration(tokenExpiration);
 
-        if (path) {
-            history.push(path);
-        }
+        history.push(path ? path : ROOT_PATH);
     }
 
     const signOutUser = () => {
