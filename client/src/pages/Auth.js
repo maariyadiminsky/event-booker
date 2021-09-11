@@ -48,6 +48,9 @@ const Auth = () => {
                 // set errors if there are any from the servers
                 if (response.data && response.data.errors && response.data.errors.length > 0) {
                     setServerErrors(response.data.errors);
+                    return;
+                } else if (response.status !== 200 && response.status !== 201) {
+                    throw new Error(`ERROR: ${formType} failed! Check your network connection.`);
                 }
             }
         } catch(err) {
