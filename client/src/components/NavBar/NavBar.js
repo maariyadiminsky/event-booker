@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
+
+import { AuthContext } from "../../context/AuthContext";
 
 import NavItem from "./NavItem";
 
@@ -11,6 +13,7 @@ import {
     EVENTS,
     BOOKINGS,
     SIGN_IN,
+    SIGN_OUT,
     HOME
 } from "../../const";
 
@@ -25,12 +28,15 @@ const isActiveNavItem = (navItemState, isMobile = false) => {
 }
 const NavBar = () => {
     const { pathname } = useLocation();
+    const [hasUserSignedIn, setHasUserSignedIn] = useState(false);
     const [shouldOpenMobileMenu, setShouldOpenMobileMenu] = useState(false);
     const [navItemsActive, setNavItemsActive] = useState({
         home: false,
         bookings: false,
         events: false
     });
+
+    const { token, signOutUser } = useContext(AuthContext);
 
     useEffect(() => {
         switch(pathname) {
@@ -56,12 +62,29 @@ const NavBar = () => {
                 });
                 break;
             default:
+                setNavItemsActive({
+                    home: false,
+                    bookings: false,
+                    events: false
+                });
                 break;
         }
 
     }, [pathname])
 
+    useEffect(() => {
+        if (token && !hasUserSignedIn) {
+            setHasUserSignedIn(true);
+        } else if (!token && hasUserSignedIn) {
+            setHasUserSignedIn(false);
+        }
+    }, [token, hasUserSignedIn])
+
     const toggleMobileMenu = () => setShouldOpenMobileMenu(!shouldOpenMobileMenu);
+
+    const renderAuthButtonText = () => hasUserSignedIn ? SIGN_OUT : SIGN_IN;
+
+    const signOutUserTry = () => hasUserSignedIn ? signOutUser() : null;
 
     const renderMobileButton = () => (
         <div className="md:hidden flex px-10">
@@ -113,10 +136,11 @@ const NavBar = () => {
                 </li>
                 <li>
                     <NavItem 
-                        className="py-4 px-4 font-bold text-white bg-green-400 text-lg"
+                        className="py-4 px-4 text-white bg-green-400 text-lg"
                         buttonPath={AUTH_PATH}
+                        handleOnClick={signOutUserTry}
                     >
-                        {SIGN_IN}
+                        {renderAuthButtonText()}
                     </NavItem>
                 </li>
             </ul>
@@ -156,8 +180,9 @@ const NavBar = () => {
                         <NavItem 
                             className="py-3 px-12 text-lg text-white bg-green-400 rounded hover:bg-green-300 transition duration-300"
                             buttonPath={AUTH_PATH}
+                            handleOnClick={signOutUserTry}
                         >
-                            {SIGN_IN}
+                            {renderAuthButtonText()}
                         </NavItem>
                     </div>
                     {renderMobileButton()}

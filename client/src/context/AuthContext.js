@@ -8,7 +8,7 @@ export const AuthContextProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
     
     const signInUser = (userId, token, tokenExpiration) => {
-        console.log("in sign in!", token, tokenExpiration, userId);
+        console.log("in sign in!", token);
 
         setUserId(userId);
         setToken(token);
@@ -19,6 +19,8 @@ export const AuthContextProvider = ({ children }) => {
         setUserId(null);
         setToken(null);
         setTokenExpiration(null);
+
+        console.log("user signed out!", token);
     }
 
     return (

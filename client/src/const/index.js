@@ -7,6 +7,7 @@ export const AUTH_PATH = "/auth";
 export const EVENTS = "Events";
 export const BOOKINGS = "Bookings";
 export const SIGN_IN = "Sign In";
+export const SIGN_OUT = "Sign Out";
 export const SIGN_UP = "Sign Up";
 export const HOME = "Home";
 
