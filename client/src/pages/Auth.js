@@ -95,7 +95,8 @@ const Auth = () => {
         if (hasCreatedNewUser) {
             return (
                 <div>
-                    <span className="font-semibold">Account successfully created!</span>
+                    <p className="lh-10">🎉</p>
+                    <p className="font-bold">Account successfully created!</p>
                     <p>Please sign in to continue.</p>
                 </div>
             );
