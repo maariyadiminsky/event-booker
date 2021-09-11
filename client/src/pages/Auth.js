@@ -118,12 +118,12 @@ const Auth = () => {
         >
         {({ handleSubmit, form }) => (
             <div className="w-full max-w-lg mx-auto">
-                <form  
+                <form
                     onSubmit={async(event) => {
                         await handleSubmit(event);
                         form.reset();
                     }} 
-                    className="bg-green-400 container shadow-2xl rounded px-8 pb-8 mt-12">
+                    className="bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 pb-8 mt-12">
                     <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
                     <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
                     {renderServerErrors()}
