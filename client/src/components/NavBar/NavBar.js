@@ -84,7 +84,8 @@ const NavBar = () => {
         }
     }, [token, hasUserSignedIn])
 
-    const signOutUserTry = () => hasUserSignedIn ? signOutUser() : null;
+    // either sign them in or set the path to route them too if signed in successfully
+    const handleAuthButton = () => hasUserSignedIn ? signOutUser() : setPathIfUserSignsInSuccessfully(ROOT_PATH);
 
     const setDirectPathTry = (path) => token ? path : AUTH_PATH;
 
@@ -153,7 +154,7 @@ const NavBar = () => {
                     <NavItem 
                         className="py-4 px-4 text-white bg-green-400 text-lg"
                         buttonPath={AUTH_PATH}
-                        handleOnClick={signOutUserTry}
+                        handleOnClick={handleAuthButton}
                     >
                         {renderAuthButtonText()}
                     </NavItem>
@@ -197,7 +198,7 @@ const NavBar = () => {
                         <NavItem 
                             className="py-3 px-12 text-lg text-white bg-green-400 rounded hover:bg-green-300 transition duration-300"
                             buttonPath={AUTH_PATH}
-                            handleOnClick={signOutUserTry}
+                            handleOnClick={handleAuthButton}
                         >
                             {renderAuthButtonText()}
                         </NavItem>
