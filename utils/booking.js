@@ -14,7 +14,7 @@ const bookingData = async(booking) => {
             updatedAt: findDate(booking.updatedAt),
         }
     } catch(err) {
-        console.log(`ERROR: ${err}`);
+        console.log(err);
         throw err;
     }
 }
@@ -24,7 +24,7 @@ const findBookingData = async(bookingId) => {
         const booking = await Booking.findById(bookingId);
         return bookingData(booking);
     } catch(err) {
-        console.log(`ERROR: ${err}`);
+        console.log(err);
         throw err;
     }
 }
@@ -33,7 +33,7 @@ const deleteBooking = async (bookingId) => {
     try {
         return await Booking.deleteOne({ _id: bookingId });
     } catch(err) {
-        console.log(`ERROR: ${err}`);
+        console.log(err);
         throw err;
     }
 }
@@ -47,7 +47,7 @@ const createNewBooking = async(eventId) => {
             event: await findEventData(eventId)
         })
     } catch(err) {
-        console.log(`ERROR: ${err}`);
+        console.log(err);
         throw err;
     }
 };

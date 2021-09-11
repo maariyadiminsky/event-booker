@@ -13,7 +13,7 @@ module.exports = {
 
             return events.map(event => eventData(event));
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     },
@@ -39,7 +39,7 @@ module.exports = {
 
             return createdEvent;
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     },

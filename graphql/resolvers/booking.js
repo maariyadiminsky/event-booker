@@ -16,7 +16,7 @@ module.exports = {
 
             return bookings.map(booking => bookingData(booking));
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     },
@@ -31,7 +31,7 @@ module.exports = {
             return bookingData(booking);
 
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     },
@@ -46,7 +46,7 @@ module.exports = {
 
             return { ...event };
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     },

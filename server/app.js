@@ -32,4 +32,4 @@ app.use("/graphql", graphqlHTTP({
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.zlv4u.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`)
     .then(() => app.listen(process.env.PORT || 3001))
-    .catch(err => console.log(`ERROR: ${err}`));
+    .catch(err => console.log(err));

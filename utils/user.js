@@ -60,8 +60,8 @@ const validateUser = async(email, password) => {
             tokenExpiration: process.env.JTW_TOKEN_EXPIRE_TIME
         }
     } catch(err) {
-        console.log(`ERROR: ${err}`);
-        throw err;
+        console.log(err);
+        return err;
     }
 }
 

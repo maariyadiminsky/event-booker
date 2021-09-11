@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
         decryptedToken = jwt.verify(JWTToken, process.env.JWT_SECRET_KEY);
     } catch(err) {
         skipAuth(req, next);
-        console.log(`ERROR: ${err}`);
+        console.log(err);
     }
 
     // make sure decrypted token exists

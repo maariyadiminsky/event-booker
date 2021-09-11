@@ -11,7 +11,7 @@ const eventData = async(event) => {
             user: await findUserData(event.user._id)
         }
     } catch(err) {
-        console.log(`ERROR: ${err}`);
+        console.log(err);
         throw err;
     }
 }
@@ -22,7 +22,7 @@ const findEventData = async(eventId) => {
 
         return eventData(event);
     } catch(err) {
-        console.log(`ERROR: ${err}`);
+        console.log(err);
         throw err;
     }
 }
@@ -33,7 +33,7 @@ const findEventsData = async(eventIds) => {
 
         return events.map(event => eventData(event));
     } catch(err) {
-        console.log(`ERROR: ${err}`);
+        console.log(err);
         throw err;
     }
 }

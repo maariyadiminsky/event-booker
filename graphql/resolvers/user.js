@@ -9,9 +9,9 @@ const { findEventsData } = require("../../utils/event");
 module.exports = {
     signIn: async({ email, password }) => {
         try {
-            return validateUser(email, password);
+            return await validateUser(email, password);
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     },
@@ -25,15 +25,14 @@ module.exports = {
             }));
 
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     },
 
-    createUser: async({ userInput: { email, password }}) => {
+    createUser: async ({ userInput: { email, password }}) => {
         // make sure user doesn't already exist in database
         try {
-            console.log("In create user", email, password);
             const hasUserExist = await findUserByEmail(email);
 
             if (hasUserExist) throw new Error("A user with that email already exists!");
@@ -48,7 +47,7 @@ module.exports = {
             };
 
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         };
     }
