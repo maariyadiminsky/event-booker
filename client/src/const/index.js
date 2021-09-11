@@ -21,6 +21,9 @@ export const GRAPHQL_ENDPOINT = "/graphql";
 // form type
 export const SIGN_IN_FORM = "Sign In Form";
 export const SIGN_UP_FORM = "Sign Up Form";
+export const CREATE_EVENT_FORM = "Create Event Form";
+export const CREATE_BOOKING_FORM = "Create Booking Form";
+export const DELETE_BOOKING_FORM = "Delete Booking Form";
 
 // other
 export const DEVELOPMENT = "development";

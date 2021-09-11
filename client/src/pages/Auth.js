@@ -19,7 +19,7 @@ import {
     GRAPHQL_ENDPOINT
 } from "../const";
 
-const signUpQuery = (email, password) => `
+const signUpMutation = (email, password) => `
     mutation {
         createUser(userInput: { email: "${email}", password: "${password}" }) {
             _id
@@ -46,11 +46,9 @@ const Auth = () => {
     const { signInUser } = useContext(AuthContext);
 
     const handleOnSubmit = async({ email, password }, formType) => {
-        console.log("Submitted!", email, password, formType);
-
         try {
             const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
-                query: isSignInForm ? signInQuery(email, password) : signUpQuery(email, password)
+                query: isSignInForm ? signInQuery(email, password) : signUpMutation(email, password)
             });
 
             // handle errors from the server
@@ -116,38 +114,39 @@ const Auth = () => {
             validate={(fields) => validateForm(fields, findFormType())}
             onSubmit={(formValues) => handleOnSubmit(formValues, findFormType())}
         >
-        {({ handleSubmit, form }) => (
-            <div className="w-full max-w-lg mx-auto">
-                <form
-                    onSubmit={async(event) => {
-                        await handleSubmit(event);
-                        form.reset();
-                    }} 
-                    className="bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 pb-8 mt-12">
-                    <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
-                    <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
-                    {renderServerErrors()}
-                    <Field name="email" component={FormInput} label="Email"/>
-                    <Field name="password" component={FormInput} label="Password" />
-                    <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
-                        <button 
-                            className="animate-float shadow-2xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
-                            type="submit"
-                        >
-                            {renderText()}
-                        </button>
-                        <button 
-                            type="button"
-                            className="text-center align-center font-light text-lg text-white hover:text-gray-100"
-                            onClick={toggleAuthForm}
-                        >
-                            {renderSecondButtonText()}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        )}
-    </Form>
+            {({ handleSubmit, form }) => (
+                <div className="w-full max-w-lg mx-auto">
+                    <form
+                        onSubmit={async(event) => {
+                            await handleSubmit(event);
+                            form.reset();
+                        }} 
+                        className="bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 pb-8 mt-12"
+                    >
+                        <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
+                        <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
+                        {renderServerErrors()}
+                        <Field name="email" component={FormInput} label="Email"/>
+                        <Field name="password" component={FormInput} label="Password" />
+                        <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
+                            <button 
+                                className="animate-float shadow-2xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
+                                type="submit"
+                            >
+                                {renderText()}
+                            </button>
+                            <button 
+                                type="button"
+                                className="text-center align-center font-light text-lg text-white hover:text-gray-100"
+                                onClick={toggleAuthForm}
+                            >
+                                {renderSecondButtonText()}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            )}
+        </Form>
     );
 }
 
