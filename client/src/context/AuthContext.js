@@ -25,8 +25,6 @@ export const AuthContextProvider = ({ children }) => {
         setUserId(null);
         setToken(null);
         setTokenExpiration(null);
-
-        console.log("user signed out!", token);
     }
 
     return (

@@ -22,6 +22,7 @@ import {
 const signUpQuery = (email, password) => `
     mutation {
         createUser(userInput: { email: "${email}", password: "${password}" }) {
+            _id
             email
         }
     }
@@ -40,6 +41,7 @@ const signInQuery = (email, password) => `
 const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [serverErrors, setServerErrors] = useState([]);
+    const [hasCreatedNewUser, setHasCreatedNewUser] = useState(false);
 
     const { signInUser } = useContext(AuthContext);
 
@@ -66,7 +68,14 @@ const Auth = () => {
 
                 signInUser(userId, token, tokenExpiration);
             } else {
-                console.log("Successfully created a user!");
+                const { data: { data : { createUser: { _id }}}} = response;
+
+                if (_id) {
+                    setHasCreatedNewUser(true);
+                    setIsSignInForm(true);
+                } else {
+                    throw new Error(`${formType} failed! User not created! Please try again.`);
+                }
             }
         } catch(err) {
             console.log(err);
@@ -81,6 +90,19 @@ const Auth = () => {
     const renderText = () => isSignInForm ? SIGN_IN : SIGN_UP;
 
     const renderSecondButtonText = () => isSignInForm ? SWITCH_SIGN_UP_TEXT : SWITCH_SIGN_IN_TEXT;
+
+    const renderTopText = () => {
+        if (hasCreatedNewUser) {
+            return (
+                <div>
+                    <span className="font-semibold">Account successfully created!</span>
+                    <p>Please sign in to continue.</p>
+                </div>
+            );
+        } 
+
+        return "Please sign in or create an account.";
+    }
 
     const renderServerErrors = () => {
         if (serverErrors.length > 0) {
@@ -97,7 +119,7 @@ const Auth = () => {
             <div className="w-full max-w-lg mx-auto">
                 <form onSubmit={handleSubmit} className="bg-green-400 container shadow-2xl rounded px-8 pb-8 mt-12">
                     <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
-                    <div className="text-center pb-6 font-light text-lg text-white">Please sign in or create an account.</div>
+                    <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
                     {renderServerErrors()}
                     <Field name="email" component={FormInput} label="Email"/>
                     <Field name="password" component={FormInput} label="Password" />
