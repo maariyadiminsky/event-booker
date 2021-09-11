@@ -6,6 +6,6 @@ export default axios.create({
     baseURL: findBaseURL(),
     headers: {
         "Content-Type": "application/json",
-         Accept: "application/json"
+        //  Accept: "application/json"
     }
 });

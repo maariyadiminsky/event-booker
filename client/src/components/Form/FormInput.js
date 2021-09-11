@@ -1,8 +1,8 @@
 import React from "react";
 
-const FormInput = ({ label, input, meta: { touched, submitFailed, error }}) => {
-    const renderInputError = (error) => (<div className="mt-2 text-red-500 text-md italic">{error}</div>);
+import FormError from "./FormError";
 
+const FormInput = ({ label, input, meta: { touched, submitFailed, error }}) => {
     let hasBeenTouchedAndHasError = (touched || submitFailed) && error;
 
     return (
@@ -13,7 +13,7 @@ const FormInput = ({ label, input, meta: { touched, submitFailed, error }}) => {
                 className="bg-gray-100 shadow-md text-green-600 appearance-none text-center text-2xl border rounded w-full py-4 px-3 leading-tight focus:outline-none focus:shadow-outline" {...input} 
                 autoComplete="off" 
             />
-            {hasBeenTouchedAndHasError && renderInputError(error)}
+            {hasBeenTouchedAndHasError && <FormError error={error} />}
         </div>
     );
 }

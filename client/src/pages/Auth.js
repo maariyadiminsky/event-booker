@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Form, Field } from "react-final-form";
 
-import eventBookerAPI from "../api/eventBookerAPI";
-
 import FormInput from "../components/Form/FormInput";
+import FormError from "../components/Form/FormError";
+
+import eventBookerAPI from "../api/eventBookerAPI";
 import { validateForm } from "../utils/auth";
 
 import { 
@@ -18,28 +19,36 @@ import {
 
 const signUpMutation = (email, password) => `
     mutation {
-        createUser(userInput: { email: "${email}", password: "${password}"" }) {
-            _id
+        createUser(userInput: { email: "${email}", password: "${password}" }) {
             email
         }
     }
 `;
 
+const signUpMutationVariables = (email, password) => ({
+    email,
+    password
+});
+
 const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
+    const [serverErrors, setServerErrors] = useState([]);
 
-    const handleOnSubmit = async(formValues, formType) => {
-        console.log("Submitted!", formValues, formType);
+    const handleOnSubmit = async({ email, password }, formType) => {
+        console.log("Submitted!", email, password, formType);
 
         try {
             if (isSignInForm) {
 
             } else {
                 const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
-                    signUpMutation
+                    query: signUpMutation(email, password)
                 });
-    
-                console.log("in response!", response);
+
+                // set errors if there are any from the servers
+                if (response.data && response.data.errors && response.data.errors.length > 0) {
+                    setServerErrors(response.data.errors);
+                }
             }
         } catch(err) {
             console.log(`ERROR: ${err}`);
@@ -55,6 +64,12 @@ const Auth = () => {
 
     const renderSecondButtonText = () => isSignInForm ? SWITCH_SIGN_UP_TEXT : SWITCH_SIGN_IN_TEXT;
 
+    const renderServerErrors = () => {
+        if (serverErrors.length > 0) {
+            return serverErrors.map(({ message }) => <FormError error={message} />);
+        }
+    }
+
     return (
         <Form 
             validate={(fields) => validateForm(fields, findFormType())}
@@ -64,6 +79,7 @@ const Auth = () => {
             <div className="w-full max-w-lg mx-auto">
                 <form onSubmit={handleSubmit} className="bg-green-400 container shadow-xl rounded px-8 pb-8 mt-12">
                     <div className="pt-12 pb-6 text-center text-3xl text-white font-semibold">{renderText()}</div>
+                    {renderServerErrors()}
                     <Field name="email" component={FormInput} label="Email"/>
                     <Field name="password" component={FormInput} label="Password" />
                     <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
