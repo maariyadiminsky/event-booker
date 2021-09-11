@@ -25,6 +25,16 @@ const signUpQuery = (email, password) => `
     }
 `;
 
+const signInQuery = (email, password) => `
+    query {
+        signIn(email: "${email}", password: "${password}") {
+            userId
+            token
+            tokenExpiration
+        }
+    }
+`;
+
 const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [serverErrors, setServerErrors] = useState([]);
@@ -33,23 +43,21 @@ const Auth = () => {
         console.log("Submitted!", email, password, formType);
 
         try {
-            if (isSignInForm) {
+            const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
+                query: isSignInForm ? signInQuery(email, password) : signUpQuery(email, password)
+            });
 
-            } else {
-                const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
-                    query: signUpQuery(email, password)
-                });
-
-                // handle errors from the server
-                if (response.data && response.data.errors && response.data.errors.length > 0) {
-                    setServerErrors(response.data.errors);
-                    return;
-                } else if (response.status !== 200 && response.status !== 201) {
-                    throw new Error(`ERROR: ${formType} failed! Check your network connection.`);
-                }
+            // handle errors from the server
+            if (!response) {
+                throw new Error(`${formType} failed! Response returned empty.`);
+            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+                setServerErrors(response.data.errors);
+                return;
+            } else if (response.status !== 200 && response.status !== 201) {
+                throw new Error(`${formType} failed! Check your network connection.`);
             }
         } catch(err) {
-            console.log(`ERROR: ${err}`);
+            console.log(err);
             throw err;
         }
     }
