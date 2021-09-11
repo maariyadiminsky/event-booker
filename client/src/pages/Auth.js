@@ -17,18 +17,13 @@ import {
     GRAPHQL_ENDPOINT
 } from "../const";
 
-const signUpMutation = (email, password) => `
+const signUpQuery = (email, password) => `
     mutation {
         createUser(userInput: { email: "${email}", password: "${password}" }) {
             email
         }
     }
 `;
-
-const signUpMutationVariables = (email, password) => ({
-    email,
-    password
-});
 
 const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
@@ -42,10 +37,10 @@ const Auth = () => {
 
             } else {
                 const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
-                    query: signUpMutation(email, password)
+                    query: signUpQuery(email, password)
                 });
 
-                // set errors if there are any from the servers
+                // handle errors from the server
                 if (response.data && response.data.errors && response.data.errors.length > 0) {
                     setServerErrors(response.data.errors);
                     return;
