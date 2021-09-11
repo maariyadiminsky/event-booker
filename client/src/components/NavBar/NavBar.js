@@ -86,6 +86,8 @@ const NavBar = () => {
 
     const signOutUserTry = () => hasUserSignedIn ? signOutUser() : null;
 
+    const setDirectPathTry = (path) => token ? path : AUTH_PATH;
+
     const renderMobileButton = () => (
         <div className="md:hidden flex px-10">
             <button 
@@ -121,7 +123,7 @@ const NavBar = () => {
                 <li>
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.events, true)}
-                        buttonPath={EVENTS_PATH}
+                        buttonPath={setDirectPathTry(EVENTS_PATH)}
                     >
                         {EVENTS}
                     </NavItem>
@@ -129,7 +131,7 @@ const NavBar = () => {
                 <li>
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.bookings, true)}
-                        buttonPath={BOOKINGS_PATH}
+                        buttonPath={setDirectPathTry(BOOKINGS_PATH)}
                     >
                         {BOOKINGS}
                     </NavItem>
@@ -167,13 +169,13 @@ const NavBar = () => {
                         </NavItem>
                         <NavItem 
                             className={isActiveNavItem(navItemsActive.events)}
-                            buttonPath={EVENTS_PATH}
+                            buttonPath={setDirectPathTry(EVENTS_PATH)}
                         >
                             {EVENTS}
                         </NavItem>
                         <NavItem 
                             className={isActiveNavItem(navItemsActive.bookings)}
-                            buttonPath={BOOKINGS_PATH}
+                            buttonPath={setDirectPathTry(BOOKINGS_PATH)}
                         >
                             {BOOKINGS}
                         </NavItem>

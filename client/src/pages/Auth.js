@@ -95,14 +95,15 @@ const Auth = () => {
         >
         {({ handleSubmit }) => (
             <div className="w-full max-w-lg mx-auto">
-                <form onSubmit={handleSubmit} className="bg-green-400 container shadow-xl rounded px-8 pb-8 mt-12">
-                    <div className="pt-12 pb-6 text-center text-3xl text-white font-semibold">{renderText()}</div>
+                <form onSubmit={handleSubmit} className="bg-green-400 container shadow-2xl rounded px-8 pb-8 mt-12">
+                    <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
+                    <div className="text-center pb-6 font-light text-lg text-white">Please sign in or create an account to use this app.</div>
                     {renderServerErrors()}
                     <Field name="email" component={FormInput} label="Email"/>
                     <Field name="password" component={FormInput} label="Password" />
                     <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
                         <button 
-                            className="animate-float shadow-xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
+                            className="animate-float shadow-2xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
                             {renderText()}
