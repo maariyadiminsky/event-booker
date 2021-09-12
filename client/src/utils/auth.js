@@ -12,7 +12,8 @@ export const validateForm = ({
     // create event form
     title, 
     description, 
-    price
+    price, 
+    date
 }, formType) => {
     let errors = {};
 
@@ -39,6 +40,10 @@ export const validateForm = ({
 
             if (!price) {
                 errors.price = "Price is required.";
+            }
+            
+            if (!date) {
+                errors.date = "Date is required.";
             }
             break;
         default:

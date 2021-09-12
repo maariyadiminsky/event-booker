@@ -14,7 +14,7 @@ const FormInput = ({
     const defaultInputClass = inputClass ? inputClass : "text-center text-green-600 text-2xl py-4 px-3";
     
     return (
-        <div className={`mb-6 ${hasBeenTouchedAndHasError && "error"}`}>
+        <div className={`mb-4 ${hasBeenTouchedAndHasError && "error"}`}>
             <label className={`block ${defaultLabelClass}`}>{label}</label>
             <input 
                 {...input}

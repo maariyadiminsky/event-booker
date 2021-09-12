@@ -6,7 +6,7 @@ import FormError from "../components/Form/FormError";
 
 import Modal from "../components/Modal/Modal";
 
-import { shouldStopEventPropagationTry } from "../utils";
+import { getTodaysDate } from "../utils/date";
 
 import { 
     GRAPHQL_ENDPOINT,
@@ -16,9 +16,9 @@ import {
 import eventBookerAPI from "../api/eventBookerAPI";
 import { validateForm } from "../utils/auth";
 
-const createEventMutation = (title, description, price) => `
+const createEventMutation = (title, description, price, date) => `
     mutation {
-        createEvent(eventInput: { title: "${title}", description: "${description}", price: ${price}}) {
+        createEvent(eventInput: { title: "${title}", description: "${description}", price: ${price}, date: "${date}"}) {
             _id
             title
             date
@@ -30,16 +30,18 @@ const createEventMutation = (title, description, price) => `
     }
 `;
 
+const todaysDate = getTodaysDate();
+
 const Events = () => {
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
 
-    const handleOnSubmit = async({ title, description, price}) => {
-        console.log("Submitted!", title, description, price );
+    const handleOnSubmit = async({ title, description, price, date }) => {
+        console.log("Submitted!", title, description, price, date);
 
         try {
             const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
-                query: createEventMutation(title, description, price)
+                query: createEventMutation(title, description, price, date)
             });
 
             // handle errors from the server
@@ -82,11 +84,13 @@ const Events = () => {
             </button>
             <button 
                 type="submit"
-                className="py-3 px-12 rounded-md text-lg text-white bg-purple-400 font-semibold hover:bg-green-400 transition duration-300">
+                className="py-3 px-12 rounded-md text-lg text-white font-semibold bg-green-400 hover:bg-green-500 transition duration-300">
                     Submit
             </button>
         </div>
     );
+
+    console.log("yo", todaysDate); 
 
     const renderModalContent = () => (
         <Form 
@@ -96,7 +100,7 @@ const Events = () => {
                 <div className="w-full max-w-lg mx-auto">
                     <form
                         onSubmit={handleSubmit} 
-                        className="bg-white container rounded-lg px-8 pb-8 mt-3"
+                        className="bg-white container rounded-lg px-8 pb-4 mt-3"
                     >
                         {renderServerErrors()}
                         <Field 
@@ -104,16 +108,30 @@ const Events = () => {
                             name="title" 
                             type="text"
                             label="Title"
-                            labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
+                            labelClass={"text-left font-semibold text-green-400 text-xl font-light mb-2"} 
                             inputClass={"text-lg py-2 px-4 text-gray-600"}
+                            required
                         />
                         <Field 
                             component={FormInput} 
                             name="description" 
                             type="text"
                             label="Description"
-                            labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
+                            labelClass={"text-left font-semibold text-green-400 text-xl font-light mb-2"} 
                             inputClass={"text-lg py-2 px-4 text-gray-600"}
+                            required
+                        />
+                        <Field 
+                            component={FormInput} 
+                            name="date" 
+                            type="date"
+                            label="Date"
+                            value={todaysDate}
+                            min={todaysDate}
+                            step="any"
+                            labelClass={"text-left font-semibold text-green-400 text-xl font-light mb-2"} 
+                            inputClass={"text-lg py-2 px-4 text-gray-600"}
+                            required
                         />
                         <Field 
                             component={FormInput}
@@ -122,8 +140,9 @@ const Events = () => {
                             min="1" 
                             step="any"  
                             label="Price"
-                            labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
+                            labelClass={"text-left font-semibold text-green-400 text-xl font-light mb-2"} 
                             inputClass={"text-lg py-2 px-4 text-gray-600"}
+                            required
                         />
                         {renderModalActionButtons()}
                     </form>
@@ -137,7 +156,7 @@ const Events = () => {
             header="Create an Event"
             content={renderModalContent()}
             handleCancelModal={toggleModal}
-            headerClass={"pb-3 text-center text-3xl text-purple-400 font-semibold"}
+            headerClass={"pb-3 text-center text-3xl text-green-400 font-semibold"}
             hideSubmitButtons
         />
     );
@@ -146,7 +165,7 @@ const Events = () => {
         <div>
             <div className="w-full max-w-3xl mx-auto">
                 <div 
-                    className="bg-gradient-to-r from-green-400 to-green-300 hover:from-purple-400 hover:to-purple-300 container shadow-xl rounded px-8 py-8 mt-12 cursor-pointer"
+                    className={`${!shouldShowModal && "animate-float"} bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-500 container shadow-lg rounded px-8 py-8 mt-12 cursor-pointer`}
                     onClick={toggleModal}
                 >
                     <div className="flex flex-wrap justify-center items-center text-center">

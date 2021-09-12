@@ -11,7 +11,7 @@ const Modal = ({
     customSubmitButtons,
     hideSubmitButtons = false,
     headerClass, buttonClass,
-    startHeight = 32
+    startHeight = 20
 }) => {
     const handleCancel = (event) => {
         if (shouldStopEventPropagationTry(event)) {
