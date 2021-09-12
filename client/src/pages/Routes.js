@@ -21,7 +21,6 @@ const Routes = () => {
         <Switch>
             <Route path={ROOT_PATH} exact component={Home}/> 
             <ProtectedRoute path={AUTH_PATH} component={Auth} isAuthRoute />
-            {/* <Route path={EVENTS_PATH} exact component={Events}/> temporary while I create this page */}
             <ProtectedRoute path={EVENTS_PATH} component={Events} />
             <ProtectedRoute path={BOOKINGS_PATH} component={Bookings} />
         </Switch>

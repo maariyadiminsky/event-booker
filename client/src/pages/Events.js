@@ -27,6 +27,17 @@ const createEventMutation = (userId, title, description, price, date) => `
     }
 `;
 
+const eventsQuery = `
+    query {
+        events {
+            title
+            description
+            price
+            date
+        }
+    }
+`;
+
 const todaysDate = getTodaysDate();
 
 const Events = () => {
@@ -34,8 +45,45 @@ const Events = () => {
     const [shouldRenderSuccessEventMessage, setShouldRenderSuccessEventMessage] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
     const [eventCreatedTitle, setEventCreatedTitle] = useState("");
+    const [events, setEvents] = useState([]);
 
     const { token, userId } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (!events || events.length === 0) {
+            // user should be verified to hit endpoint
+            if (!token || !userId) return;
+
+            const fetchEvents = async() => {
+                try {
+                    const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
+                        query: eventsQuery
+                    });
+    
+                    // handle errors from the server
+                    if (!response) {
+                        throw new Error("Event retrieval failed with no response!");
+                    } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+                        setServerErrors(response.data.errors);
+                        return;
+                    } else if (response.status !== 200 && response.status !== 201) {
+                        throw new Error(`Event retrieval failed with server status code: ${response.status}.`);
+                    }
+    
+                    const { data: { data }} = response;
+    
+                    if (data.events) {
+                        setEvents(data.events);
+                    }
+                } catch(err) {
+                    console.log(err);
+                    throw err;
+                }
+            }
+
+            fetchEvents();
+        }
+    }, []);
 
     useEffect(() => {
         if (eventCreatedTitle && shouldRenderSuccessEventMessage) {
@@ -73,6 +121,10 @@ const Events = () => {
             const { data: { data : { createEvent }}} = response;
 
             if (createEvent._id && createEvent.title) {
+                setEvents([
+                    ...events,
+                    createEvent
+                ]);
                 setEventCreatedTitle(createEvent.title);
                 setShouldRenderSuccessEventMessage(true);
                 toggleModal();
