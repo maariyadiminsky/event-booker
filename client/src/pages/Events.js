@@ -244,7 +244,7 @@ const Events = () => {
     // todo: create reusable alert component
     const renderEventCreatedConfirmation = () => shouldRenderSuccessEventMessage && (
         <div 
-            className="bg-green-100 border-t-4 border-green-500 rounded-b-lg text-green-900 px-4 py-3 shadow-md" 
+            className="bg-green-100 border-t-4 max-w-2xl m-auto border-green-500 rounded-b-lg text-green-900 px-4 py-3 shadow-md" 
             role="alert"
         >
             <div className="flex">
