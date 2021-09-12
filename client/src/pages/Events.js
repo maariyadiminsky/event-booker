@@ -81,7 +81,16 @@ const Events = () => {
     
                     if (data.events) {
                         // sort upcoming events at the top
-                        data.events.sort((eventOne, eventTwo) => new Date(eventOne.date) - new Date(eventTwo.date));
+                        data.events.sort((eventOne, eventTwo) => {
+                            // make sure expired events are always at the bottom
+                            if (isDateBeforeToday(eventOne.date) && !isDateBeforeToday(eventTwo.date)) {
+                                return 1;
+                            } else if (!isDateBeforeToday(eventOne.date) && isDateBeforeToday(eventTwo.date)) {
+                                return -1;
+                            }
+
+                            return new Date(eventOne.date) - new Date(eventTwo.date)
+                        });
 
                         // set events for ui
                         setEvents(data.events);
