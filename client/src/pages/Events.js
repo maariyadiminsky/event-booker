@@ -26,7 +26,7 @@ const createEventMutation = (title, description, price) => `
 `;
 
 const Events = () => {
-    const [shouldShouldModal, setShouldShowModal] = useState(true);
+    const [shouldShowModal, setShouldShowModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
 
     const handleOnSubmit = async({ title, description, price }) => {
@@ -47,12 +47,18 @@ const Events = () => {
                 throw new Error(`${CREATE_EVENT_FORM} failed! Check your network connection.`);
             }
 
-            const { data: { data: { signIn: { userId, token, tokenExpiration} }} } = response;
+            // close modal if no errors
+            toggleModal();
+            const { data: { data: { createEvent: { title, user, date } }} } = response;
+
+            console.log("in events success", title, user, date);
         } catch(err) {
             console.log(err);
             throw err;
         }
     }
+
+    const toggleModal = () => setShouldShowModal(!shouldShowModal);
 
     const renderServerErrors = () => {
         if (serverErrors.length > 0) {
@@ -72,32 +78,59 @@ const Events = () => {
                             await handleSubmit(event);
                             form.reset();
                         }} 
-                        className="bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 pb-8 mt-12"
+                        className="bg-white container shadow-2xl rounded px-8 pb-8 mt-3"
                     >
                         {renderServerErrors()}
-                        <Field name="text" labelClass={"test"} component={FormInput} label="Title"/>
-                        <Field name="text" component={FormInput} label="Description"/>
-                        <Field name="number" type="number" min="1" step="any" component={FormInput} label="Price"/>
+                        <Field 
+                            component={FormInput} 
+                            name="text" 
+                            label="Title"
+                            labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
+                            inputClass={"text-lg py-2 px-4 text-gray-600"}
+                        />
+                        <Field 
+                            component={FormInput} 
+                            name="description" 
+                            label="Description"
+                            labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
+                            inputClass={"text-lg py-2 px-4 text-gray-600"}
+                        />
+                        <Field 
+                            component={FormInput}
+                            name="number" 
+                            type="number" 
+                            min="1" 
+                            step="any"  
+                            label="Price"
+                            labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
+                            inputClass={"text-lg py-2 px-4 text-gray-600"}
+                        />
                     </form>
                 </div>
             )}
         </Form>
     );
 
-    const renderModal = () => shouldShouldModal && (
+    const renderModal = () => shouldShowModal && (
         <Modal 
             header="Create an Event"
             content={renderModalContent()}
             cancelButtonText="Nevermind"
-            confirmButtonText="Yes, I'm sure"
+            confirmButtonText="Submit"
+            handleCancelModal={toggleModal}
             handleConfirm={handleOnSubmit}
+            headerClass={"pb-3 text-center text-3xl text-purple-400 font-semibold"}
+            buttonClass={"text-white bg-purple-400 font-semibold hover:bg-purple-300 transition duration-300"}
         />
     );
 
     return (
         <div>
             <div className="w-full max-w-3xl mx-auto">
-                <div className="bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 py-8 mt-12">
+                <div 
+                    className="bg-gradient-to-r from-green-400 to-green-300 hover:from-purple-400 hover:to-purple-300 container shadow-xl rounded px-8 py-8 mt-12 cursor-pointer"
+                    onClick={toggleModal}
+                >
                     <div className="flex flex-wrap justify-center items-center text-center">
                         <div className="text-white my-auto text-center text-xl font-semibold">
                             <span className="text-2xl">+ </span>Create an Event

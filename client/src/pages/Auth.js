@@ -126,8 +126,18 @@ const Auth = () => {
                         <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
                         <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
                         {renderServerErrors()}
-                        <Field name="email" component={FormInput} label="Email"/>
-                        <Field name="password" component={FormInput} label="Password" />
+                        <Field 
+                            name="email" 
+                            type="email"
+                            component={FormInput} 
+                            label="Email"
+                        />
+                        <Field 
+                            name="password" 
+                            type="password"
+                            component={FormInput} 
+                            label="Password" 
+                        />
                         <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
                             <button 
                                 className="animate-float shadow-2xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
