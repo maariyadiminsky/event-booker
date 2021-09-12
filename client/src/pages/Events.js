@@ -94,6 +94,7 @@ const Events = () => {
 
     const renderModalContent = () => (
         <Form 
+            initialValues={{ date: todaysDate }}
             validate={(fields) => validateForm(fields, CREATE_EVENT_FORM)}
             onSubmit={handleOnSubmit}>
             {({ handleSubmit }) => (
@@ -126,8 +127,6 @@ const Events = () => {
                             name="date" 
                             type="date"
                             label="Date"
-                            value={todaysDate}
-                            min={todaysDate}
                             step="any"
                             labelClass={"text-left font-semibold text-green-400 text-xl font-light mb-2"} 
                             inputClass={"text-lg py-2 px-4 text-gray-600"}
