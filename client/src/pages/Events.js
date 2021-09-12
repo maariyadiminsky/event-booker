@@ -52,12 +52,13 @@ const Events = () => {
                 throw new Error(`${CREATE_EVENT_FORM} failed! Check your network connection.`);
             }
 
-            // close modal if no errors
-            toggleModal();
-            console.log("response", response);
-            // const { data: { data: { createEvent: { title, user, date } }} } = response;
+            const { data: { data : { createEvent: { _id }}}} = response;
 
-            // console.log("in events success", title, user, date);
+            if (_id) {
+                toggleModal();
+            } else {
+                throw new Error(`${CREATE_EVENT_FORM} failed! User not created! Please try again.`);
+            }
         } catch(err) {
             console.log(err);
             throw err;
