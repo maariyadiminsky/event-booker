@@ -274,14 +274,16 @@ const Events = () => {
                             <div className="text-2xl font-thin text-gray-600 group-hover:text-white">{description}</div>
                         </div>
                         <div>
-                        <div className="relative h-12">
-                            <div className="absolute inset-y-0 right-0 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
+                        <div>
+                            <div className="text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
                                 {`$${price}`}
                             </div>
-                            
                         </div>
                         </div>
                     </div>
+                    {isDateBeforeToday(date) && (
+                        <div className="bg-red-500 text-gray-100 rounded p-2 mt-5 w-20 text-center opacity-70 border-2 border-red-500 text-xs">Expired</div>
+                    )}
                 </div>
             )
         })
