@@ -250,6 +250,17 @@ const Events = () => {
         </div>
     );
 
+    const renderEvents = () => events && (
+        events.map(({ title, description, price, date }) => (
+            <div className="container shadow-xl rounded px-8 py-10 mt-6 border-2 border-green-400">
+                <div>{title}</div>
+                <div>{description}</div>
+                <div>{price}</div>
+                <div>{date}</div>
+            </div>
+        ))
+    );
+
     return (
         <div>
             <div className="w-full max-w-3xl mx-auto">
@@ -264,9 +275,7 @@ const Events = () => {
                     </div>
                 </div>
                 {renderEventCreatedConfirmation()}
-                <div className="container shadow-xl rounded px-8 py-10 mt-6 border-2 border-green-400">
-                    An event
-                </div>
+                <div className="overflow-y-scroll max-h-screen">{renderEvents()}</div>
             </div>
             <div>{renderModal()}</div>
         </div>
