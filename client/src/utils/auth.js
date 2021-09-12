@@ -29,7 +29,6 @@ export const validateForm = ({
             }
             break;
         case CREATE_EVENT_FORM:
-            console.log(title, description, price);
             if (!title) {
                 errors.title = "Title is required.";
             }
@@ -41,7 +40,7 @@ export const validateForm = ({
             if (!price) {
                 errors.price = "Price is required.";
             }
-            
+
             if (!date) {
                 errors.date = "Date is required.";
             }

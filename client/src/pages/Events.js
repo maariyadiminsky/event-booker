@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, Field } from "react-final-form";
 
 import FormInput from "../components/Form/FormInput";
@@ -23,11 +23,6 @@ const createEventMutation = (userId, title, description, price, date) => `
         createEvent(eventInput: { userId: "${userId}", title: "${title}", description: "${description}", price: ${price}, date: "${date}"}) {
             _id
             title
-            date
-            user {
-                _id
-                email
-            }
         }
     }
 `;
@@ -36,9 +31,22 @@ const todaysDate = getTodaysDate();
 
 const Events = () => {
     const [shouldShowModal, setShouldShowModal] = useState(false);
+    const [shouldRenderSuccessEventMessage, setShouldRenderSuccessEventMessage] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
+    const [eventCreatedTitle, setEventCreatedTitle] = useState("");
 
     const { token, userId } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (eventCreatedTitle && shouldRenderSuccessEventMessage) {
+            const showSuccessMessageForTwoSeconds = setTimeout(() => {
+                setShouldRenderSuccessEventMessage(false)
+            }, 2500);
+
+            return () => clearTimeout(showSuccessMessageForTwoSeconds);
+        }
+
+    }, [eventCreatedTitle, shouldRenderSuccessEventMessage]);
 
     const handleOnSubmit = async({ title, description, price, date }) => {
         // user should be verified to hit endpoint
@@ -51,17 +59,22 @@ const Events = () => {
 
             // handle errors from the server
             if (!response) {
+                setEventCreatedTitle("");
                 throw new Error(`${CREATE_EVENT_FORM} failed! Response returned empty.`);
             } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+                setEventCreatedTitle("");
                 setServerErrors(response.data.errors);
                 return;
             } else if (response.status !== 200 && response.status !== 201) {
+                setEventCreatedTitle("");
                 throw new Error(`${CREATE_EVENT_FORM} failed! Check your network connection.`);
             }
 
-            const { data: { data : { createEvent: { _id }}}} = response;
+            const { data: { data : { createEvent }}} = response;
 
-            if (_id) {
+            if (createEvent._id && createEvent.title) {
+                setEventCreatedTitle(createEvent.title);
+                setShouldRenderSuccessEventMessage(true);
                 toggleModal();
             } else {
                 throw new Error(`${CREATE_EVENT_FORM} failed! User not created! Please try again.`);
@@ -94,8 +107,6 @@ const Events = () => {
             </button>
         </div>
     );
-
-    console.log("yo", todaysDate); 
 
     const renderModalContent = () => (
         <Form 
@@ -155,7 +166,7 @@ const Events = () => {
         </Form>
     );
 
-    const renderModal = () => shouldShowModal && (
+    const renderModal = () => !shouldRenderSuccessEventMessage && shouldShowModal && (
         <Modal 
             header="Create an Event"
             content={renderModalContent()}
@@ -165,11 +176,33 @@ const Events = () => {
         />
     );
 
+    // todo: create reusable alert component
+    const renderEventCreatedConfirmation = () => shouldRenderSuccessEventMessage && (
+        <div 
+            className="bg-green-100 border-t-4 border-green-500 rounded-b-lg text-green-900 px-4 py-3 shadow-md" 
+            role="alert"
+        >
+            <div className="flex">
+                <div className="py-1">
+                    <svg 
+                        className="fill-current h-6 w-6 text-teal-500 mr-4" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p className="font-semibold">Success!</p>
+                    <p className="text-sm font-light">The Event <span className="font-semibold">{`${eventCreatedTitle}`}</span> has been created!</p>
+                </div>
+            </div>
+        </div>
+    );
+
     return (
         <div>
             <div className="w-full max-w-3xl mx-auto">
                 <div 
-                    className={`${!shouldShowModal && "animate-float"} bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-500 container shadow-lg rounded px-8 py-8 mt-12 cursor-pointer`}
+                    className={`${!shouldRenderSuccessEventMessage && !shouldShowModal && "animate-float"} bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-500 container shadow-lg rounded px-8 py-8 mt-12 cursor-pointer`}
                     onClick={toggleModal}
                 >
                     <div className="flex flex-wrap justify-center items-center text-center">
@@ -178,6 +211,7 @@ const Events = () => {
                         </div>
                     </div>
                 </div>
+                {renderEventCreatedConfirmation()}
                 <div className="container shadow-xl rounded px-8 py-10 mt-6 border-2 border-green-400">
                     An event
                 </div>
