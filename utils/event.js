@@ -40,12 +40,12 @@ const findEventsData = async(eventIds) => {
 
 const findAllEvents = () => Event.find();
 
-const createNewEvent = (title, description, price) => (
+const createNewEvent = (title, description, price, date) => (
     new Event({
         title,
         description,
         price: +price,
-        date: findDate(),
+        date: findDate(date),
         user: "612d43fa7858eae664785e47" // note: temporary created for testing
     })
 );
