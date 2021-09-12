@@ -1,5 +1,7 @@
-export const getTodaysDate = () => {
-    const todaysDate = new Date();
+import moment from "moment";
 
-    return todaysDate.toISOString().split("T")[0];
+export const getTodaysDate = () => moment().format("YYYY-MM-DD");
+
+export const getDateInCorrectFormat = (date) => {
+    return moment(date).format("MMM Do YYYY");
 }

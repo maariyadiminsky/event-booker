@@ -10,7 +10,10 @@ import { AuthContext } from "../context/AuthContext";
 import { eventBookerAPI } from "../api/eventBookerAPI";
 
 import { validateForm } from "../utils/auth";
-import { getTodaysDate } from "../utils/date";
+import { 
+    getTodaysDate,
+    getDateInCorrectFormat
+} from "../utils/date";
 
 import { 
     GRAPHQL_ENDPOINT,
@@ -251,12 +254,24 @@ const Events = () => {
     );
 
     const renderEvents = () => events && (
-        events.map(({ title, description, price, date }) => (
-            <div className="container shadow-xl rounded px-8 py-10 mt-6 border-2 border-green-400">
-                <div>{title}</div>
-                <div>{description}</div>
-                <div>{price}</div>
-                <div>{date}</div>
+        events.map(({ title, description, price, date }, index) => (
+            <div 
+                key={index}
+                className="container cursor-pointer shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300 rounded-lg px-8 py-10 mt-6 border-2 border-green-400 group bg-gradient-to-r hover:from-green-400 hover:to-green-300">
+                <div className="flex flex-wrap justify-between">
+                    <div>
+                        <div className="font-bold text-blue-400 group-hover:text-indigo-500">{getDateInCorrectFormat(date)}</div>
+                        <div className="mb-2 text-3xl font-semibold text-green-400 group-hover:text-white">{title}</div>
+                        <div className="text-2xl font-thin text-gray-600 group-hover:text-white">{description}</div>
+                    </div>
+                    <div>
+                    <div className="relative h-12">
+                        <div className="absolute inset-y-0 right-0 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
+                            {`$${price}`}
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
         ))
     );
@@ -265,7 +280,7 @@ const Events = () => {
         <div>
             <div className="w-full max-w-3xl mx-auto">
                 <div 
-                    className={`${!shouldRenderSuccessEventMessage && !shouldShowModal && "animate-float"} bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-500 container shadow-lg rounded px-8 py-8 mt-12 cursor-pointer`}
+                    className={`${!shouldRenderSuccessEventMessage && !shouldShowModal && "animate-float"} max-w-2xl bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-500 container shadow-lg rounded px-8 py-8 mt-12 cursor-pointer`}
                     onClick={toggleModal}
                 >
                     <div className="flex flex-wrap justify-center items-center text-center">
@@ -275,7 +290,7 @@ const Events = () => {
                     </div>
                 </div>
                 {renderEventCreatedConfirmation()}
-                <div className="overflow-y-scroll max-h-screen">{renderEvents()}</div>
+                <div className="overflow-y-scroll max-h-screen px-20 pb-20 max-w-3xl m-auto">{renderEvents()}</div>
             </div>
             <div>{renderModal()}</div>
         </div>
