@@ -6,6 +6,8 @@ import FormError from "../components/Form/FormError";
 
 import Modal from "../components/Modal/Modal";
 
+import { shouldStopEventPropagationTry } from "../utils";
+
 import { 
     GRAPHQL_ENDPOINT,
     CREATE_EVENT_FORM 
@@ -16,11 +18,14 @@ import { validateForm } from "../utils/auth";
 
 const createEventMutation = (title, description, price) => `
     mutation {
-        createEvent(eventInput: { title: "${title}", description: "${description}", price: "${price}"}) {
+        createEvent(eventInput: { title: "${title}", description: "${description}", price: ${price}}) {
             _id
             title
-            user
             date
+            user {
+                _id
+                email
+            }
         }
     }
 `;
@@ -29,7 +34,7 @@ const Events = () => {
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
 
-    const handleOnSubmit = async({ title, description, price }) => {
+    const handleOnSubmit = async({ title, description, price}) => {
         console.log("Submitted!", title, description, price );
 
         try {
@@ -49,9 +54,10 @@ const Events = () => {
 
             // close modal if no errors
             toggleModal();
-            const { data: { data: { createEvent: { title, user, date } }} } = response;
+            console.log("response", response);
+            // const { data: { data: { createEvent: { title, user, date } }} } = response;
 
-            console.log("in events success", title, user, date);
+            // console.log("in events success", title, user, date);
         } catch(err) {
             console.log(err);
             throw err;
@@ -66,24 +72,36 @@ const Events = () => {
         }
     }
 
+    const renderModalActionButtons = () => (
+        <div className="flex flex-wrap justify-center items-center space-x-5 pt-5">
+            <button 
+                onClick={toggleModal} 
+                className="py-3 px-12 text-lg text-white bg-gray-400 rounded-md hover:bg-gray-500 transition duration-300">
+                    Nevermind
+            </button>
+            <button 
+                type="submit"
+                className="py-3 px-12 rounded-md text-lg text-white bg-purple-400 font-semibold hover:bg-green-400 transition duration-300">
+                    Submit
+            </button>
+        </div>
+    );
+
     const renderModalContent = () => (
         <Form 
             validate={(fields) => validateForm(fields, CREATE_EVENT_FORM)}
-            onSubmit={(formValues) => handleOnSubmit(formValues, CREATE_EVENT_FORM)}
-        >
-            {({ handleSubmit, form }) => (
+            onSubmit={handleOnSubmit}>
+            {({ handleSubmit }) => (
                 <div className="w-full max-w-lg mx-auto">
                     <form
-                        onSubmit={async(event) => {
-                            await handleSubmit(event);
-                            form.reset();
-                        }} 
-                        className="bg-white container shadow-2xl rounded px-8 pb-8 mt-3"
+                        onSubmit={handleSubmit} 
+                        className="bg-white container rounded-lg px-8 pb-8 mt-3"
                     >
                         {renderServerErrors()}
                         <Field 
                             component={FormInput} 
-                            name="text" 
+                            name="title" 
+                            type="text"
                             label="Title"
                             labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
                             inputClass={"text-lg py-2 px-4 text-gray-600"}
@@ -91,13 +109,14 @@ const Events = () => {
                         <Field 
                             component={FormInput} 
                             name="description" 
+                            type="text"
                             label="Description"
                             labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
                             inputClass={"text-lg py-2 px-4 text-gray-600"}
                         />
                         <Field 
                             component={FormInput}
-                            name="number" 
+                            name="price" 
                             type="number" 
                             min="1" 
                             step="any"  
@@ -105,6 +124,7 @@ const Events = () => {
                             labelClass={"text-left font-semibold text-purple-400 text-xl font-light mb-2"} 
                             inputClass={"text-lg py-2 px-4 text-gray-600"}
                         />
+                        {renderModalActionButtons()}
                     </form>
                 </div>
             )}
@@ -115,12 +135,9 @@ const Events = () => {
         <Modal 
             header="Create an Event"
             content={renderModalContent()}
-            cancelButtonText="Nevermind"
-            confirmButtonText="Submit"
             handleCancelModal={toggleModal}
-            handleConfirm={handleOnSubmit}
             headerClass={"pb-3 text-center text-3xl text-purple-400 font-semibold"}
-            buttonClass={"text-white bg-purple-400 font-semibold hover:bg-purple-300 transition duration-300"}
+            hideSubmitButtons
         />
     );
 

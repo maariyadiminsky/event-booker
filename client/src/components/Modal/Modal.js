@@ -8,25 +8,39 @@ const Modal = ({
     header, content, 
     cancelButtonText, confirmButtonText, 
     handleConfirm, handleCancelModal, 
-    headerClass,
-    buttonClass,
+    customSubmitButtons,
+    hideSubmitButtons = false,
+    headerClass, buttonClass,
     startHeight = 32
 }) => {
     const handleCancel = (event) => {
         if (shouldStopEventPropagationTry(event)) {
             handleCancelModal();
         }
-
-        console.log("In handleCancel");
     }
 
     const handleConfirmButton = (event) => {
-        console.log("In handleConfirm");
         if (shouldStopEventPropagationTry(event)) {
-            console.log("In handleConfirm 2");
             handleConfirm();
         }
     }
+
+    const renderSubmitButtons = () => customSubmitButtons ? 
+        customSubmitButtons : (
+        <div className="flex flex-wrap justify-center items-center space-x-5 pt-10">
+            <button 
+                onClick={handleCancel} 
+                className="py-3 px-12 text-lg text-white bg-gray-400 rounded-md hover:bg-gray-500 transition duration-300">
+                    {cancelButtonText}
+            </button>
+            <button 
+                type="submit"
+                onClick={handleConfirmButton} 
+                className={`py-3 px-12 rounded-md text-lg ${defaultButtonClass}`}>
+                    {confirmButtonText}
+            </button>
+        </div>
+    );
 
     const defaultHeaderClass = headerClass ? headerClass : "pb-3 text-center text-3xl text-green-400 font-semibold";
     const defaultButtonClass = buttonClass ? buttonClass : "text-white bg-green-400 font-semibold hover:bg-green-300 transition duration-300";
@@ -37,18 +51,7 @@ const Modal = ({
                 <div className="">
                     <div className={`m-auto align-middle ${defaultHeaderClass}`}>{header}</div>
                     <div className="m-auto text-center align-middle mt-5">{content}</div>
-                    <div className="flex flex-wrap justify-center items-center space-x-5 pt-10">
-                        <button 
-                            onClick={handleCancel} 
-                            className="py-3 px-12 text-lg text-white bg-gray-400 rounded-md hover:bg-gray-300 transition duration-300">
-                                {cancelButtonText}
-                        </button>
-                        <button 
-                            onClick={handleConfirmButton} 
-                            className={`py-3 px-12 rounded-md text-lg ${defaultButtonClass}`}>
-                                {confirmButtonText}
-                        </button>
-                    </div>
+                    {!hideSubmitButtons && renderSubmitButtons()}
                 </div>
             </div>
         </div>,

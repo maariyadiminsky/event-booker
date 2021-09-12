@@ -28,6 +28,7 @@ export const validateForm = ({
             }
             break;
         case CREATE_EVENT_FORM:
+            console.log(title, description, price);
             if (!title) {
                 errors.title = "Title is required.";
             }
