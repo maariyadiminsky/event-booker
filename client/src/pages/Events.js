@@ -274,8 +274,8 @@ const Events = () => {
                             <div className="text-2xl font-thin text-gray-600 group-hover:text-white">{description}</div>
                         </div>
                         <div>
-                        <div>
-                            <div className="text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
+                        <div className="static">
+                            <div className="absolute top-5 right-5 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
                                 {`$${price}`}
                             </div>
                         </div>
