@@ -71,7 +71,7 @@ const Events = () => {
 
     const renderServerErrors = () => {
         if (serverErrors.length > 0) {
-            return serverErrors.map(({ message }) => <FormError error={message} />);
+            return serverErrors.map(({ message }, index) => <FormError key={index} error={message} />);
         }
     }
 
