@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import FormInput from "../components/Form/FormInput";
 import FormError from "../components/Form/FormError";
 
-import eventBookerAPI from "../api/eventBookerAPI";
+import { eventBookerAPI } from "../api/eventBookerAPI";
 import { validateForm } from "../utils/auth";
 
 import { 
@@ -47,7 +47,7 @@ const Auth = () => {
 
     const handleOnSubmit = async({ email, password }, formType) => {
         try {
-            const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
+            const response = await eventBookerAPI().post(GRAPHQL_ENDPOINT, {
                 query: isSignInForm ? signInQuery(email, password) : signUpMutation(email, password)
             });
 

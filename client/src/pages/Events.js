@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Field } from "react-final-form";
 
 import FormInput from "../components/Form/FormInput";
 import FormError from "../components/Form/FormError";
-
 import Modal from "../components/Modal/Modal";
 
+import { AuthContext } from "../context/AuthContext";
+
+import { eventBookerAPI } from "../api/eventBookerAPI";
+
+import { validateForm } from "../utils/auth";
 import { getTodaysDate } from "../utils/date";
 
 import { 
@@ -13,8 +17,6 @@ import {
     CREATE_EVENT_FORM 
 } from "../const";
 
-import eventBookerAPI from "../api/eventBookerAPI";
-import { validateForm } from "../utils/auth";
 
 const createEventMutation = (title, description, price, date) => `
     mutation {
@@ -36,11 +38,13 @@ const Events = () => {
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
 
+    const { token } = useContext(AuthContext);
+
     const handleOnSubmit = async({ title, description, price, date }) => {
-        console.log("Submitted!", title, description, price, date);
+        console.log("Submitted!", title, description, price, date, token);
 
         try {
-            const response = await eventBookerAPI.post(GRAPHQL_ENDPOINT, {
+            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
                 query: createEventMutation(title, description, price, date)
             });
 
