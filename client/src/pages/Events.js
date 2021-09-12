@@ -27,6 +27,9 @@ const createEventMutation = (userId, title, description, price, date) => `
         createEvent(eventInput: { userId: "${userId}", title: "${title}", description: "${description}", price: ${price}, date: "${date}"}) {
             _id
             title
+            description
+            price
+            date
         }
     }
 `;
@@ -262,7 +265,7 @@ const Events = () => {
 
     const renderEvents = () => events && (
         events.map(({ title, description, price, date }, index) => {
-            console.log("r", isDateBeforeToday(date));
+            console.log("r", title, description, price);
             return (
                 <div 
                     key={index}
@@ -275,7 +278,7 @@ const Events = () => {
                         </div>
                         <div>
                         <div className="static">
-                            <div className="absolute top-5 right-5 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
+                            <div className="absolute top-5 right-5 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 group-hover:text-gray-700 px-2 py-1">
                                 {`$${price}`}
                             </div>
                         </div>
