@@ -80,11 +80,9 @@ const Events = () => {
                     const { data: { data }} = response;
     
                     if (data.events) {
-                        console.log("READY!!")
                         // sort upcoming events at the top
                         data.events.sort((eventOne, eventTwo) => new Date(eventOne.date) - new Date(eventTwo.date));
 
-                        console.log("READY 2!!");
                         // set events for ui
                         setEvents(data.events);
                     }
@@ -265,7 +263,6 @@ const Events = () => {
 
     const renderEvents = () => events && (
         events.map(({ title, description, price, date }, index) => {
-            console.log("r", title, description, price);
             return (
                 <div 
                     key={index}
