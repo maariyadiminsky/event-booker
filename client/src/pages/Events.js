@@ -11,6 +11,7 @@ import { eventBookerAPI } from "../api/eventBookerAPI";
 
 import { validateForm } from "../utils/auth";
 import { 
+    isDateBeforeToday,
     getTodaysDate,
     getDateInCorrectFormat
 } from "../utils/date";
@@ -76,6 +77,12 @@ const Events = () => {
                     const { data: { data }} = response;
     
                     if (data.events) {
+                        console.log("READY!!")
+                        // sort upcoming events at the top
+                        data.events.sort((eventOne, eventTwo) => new Date(eventOne.date) - new Date(eventTwo.date));
+
+                        console.log("READY 2!!");
+                        // set events for ui
                         setEvents(data.events);
                     }
                 } catch(err) {
@@ -254,26 +261,30 @@ const Events = () => {
     );
 
     const renderEvents = () => events && (
-        events.map(({ title, description, price, date }, index) => (
-            <div 
-                key={index}
-                className="container cursor-pointer shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300 rounded-lg px-8 py-10 mt-6 border-2 border-green-400 group bg-gradient-to-r hover:from-green-400 hover:to-green-300">
-                <div className="flex flex-wrap justify-between">
-                    <div>
-                        <div className="font-bold text-blue-400 group-hover:text-indigo-500">{getDateInCorrectFormat(date)}</div>
-                        <div className="mb-2 text-3xl font-semibold text-green-400 group-hover:text-white">{title}</div>
-                        <div className="text-2xl font-thin text-gray-600 group-hover:text-white">{description}</div>
-                    </div>
-                    <div>
-                    <div className="relative h-12">
-                        <div className="absolute inset-y-0 right-0 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
-                            {`$${price}`}
+        events.map(({ title, description, price, date }, index) => {
+            console.log("r", isDateBeforeToday(date));
+            return (
+                <div 
+                    key={index}
+                    className="container cursor-pointer shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300 rounded-lg px-8 py-10 mt-6 border-2 border-green-400 group bg-gradient-to-r hover:from-green-400 hover:to-green-300">
+                    <div className="flex flex-wrap justify-between">
+                        <div>
+                            <div className="font-bold text-blue-400 group-hover:text-indigo-500">{getDateInCorrectFormat(date)}</div>
+                            <div className="mb-2 text-3xl font-semibold text-green-400 group-hover:text-white">{title}</div>
+                            <div className="text-2xl font-thin text-gray-600 group-hover:text-white">{description}</div>
+                        </div>
+                        <div>
+                        <div className="relative h-12">
+                            <div className="absolute inset-y-0 right-0 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 px-2 py-1">
+                                {`$${price}`}
+                            </div>
+                            
+                        </div>
                         </div>
                     </div>
-                    </div>
                 </div>
-            </div>
-        ))
+            )
+        })
     );
 
     return (
