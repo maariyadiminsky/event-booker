@@ -40,10 +40,10 @@ const deleteBooking = async (bookingId) => {
 
 const findAllBookings = () => Booking.find();
 
-const createNewBooking = async(eventId) => {
+const createNewBooking = async(userId, eventId) => {
     try {
         return new Booking({
-            user: "612d43fa7858eae664785e47", // wip temp until I add auth
+            user: userId,
             event: await findEventData(eventId)
         })
     } catch(err) {

@@ -20,11 +20,12 @@ module.exports = {
             throw err;
         };
     },
-    createBooking: async ({ eventId }, req) => {
+    createBooking: async ({ eventId, userId }, req) => {
         try {
             if (!req.isUserAuthorized) throw new Error("User is unauthenticated!");
 
-            const booking = await createNewBooking(eventId);
+            console.log("Booking with user:", userId);
+            const booking = await createNewBooking(userId, eventId);
 
             await booking.save();
 

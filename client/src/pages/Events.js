@@ -18,9 +18,9 @@ import {
 } from "../const";
 
 
-const createEventMutation = (title, description, price, date) => `
+const createEventMutation = (userId, title, description, price, date) => `
     mutation {
-        createEvent(eventInput: { title: "${title}", description: "${description}", price: ${price}, date: "${date}"}) {
+        createEvent(eventInput: { userId: "${userId}", title: "${title}", description: "${description}", price: ${price}, date: "${date}"}) {
             _id
             title
             date
@@ -38,14 +38,15 @@ const Events = () => {
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
 
-    const { token } = useContext(AuthContext);
+    const { token, userId } = useContext(AuthContext);
 
     const handleOnSubmit = async({ title, description, price, date }) => {
-        console.log("Submitted!", title, description, price, date, token);
+        // user should be verified to hit endpoint
+        if (!token || !userId) return;
 
         try {
             const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: createEventMutation(title, description, price, date)
+                query: createEventMutation(userId, title, description, price, date)
             });
 
             // handle errors from the server

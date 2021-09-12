@@ -32,6 +32,7 @@ module.exports = buildSchema(`
     }
 
     input EventInput {
+        userId: ID!
         title: String!
         description: String!
         price: Float!
@@ -53,7 +54,7 @@ module.exports = buildSchema(`
     type RootMutation {
         createUser(userInput: UserInput): User
         createEvent(eventInput: EventInput): Event
-        createBooking(eventId: ID!): Booking!
+        createBooking(eventId: ID!, userId: ID!): Booking!
         cancelBooking(bookingId: ID!): Event!
     }
 
