@@ -1,0 +1,21 @@
+@layer components {
+    .form-wrapper {
+        @apply w-full max-w-lg mx-auto
+    }
+
+    .form-container {
+        @apply bg-white container rounded-lg px-8 pb-4 mt-3
+    }
+
+    .form-header {
+        @apply pb-3 text-center text-3xl text-green-400 font-semibold
+    }
+
+    .field-label {
+        @apply text-left font-semibold text-green-400 text-xl font-light mb-2
+    }
+
+    .field-input {
+        @apply text-lg py-2 px-4 text-gray-600
+    }
+}

@@ -9,7 +9,7 @@ import {
     INFORMATIVE
 } from "../const";
 
-const colors = [SUCCESS_COLOR, INFORMATIVE_COLOR, WARNING_COLOR];
+const colors = ["red", "blue", "green", "yellow", "purple"];
 export const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 export const getColorForAlertType = (type) => {

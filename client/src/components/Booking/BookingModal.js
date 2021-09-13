@@ -8,22 +8,17 @@ import Modal from "../Modal/Modal";
 import ModalActionsButtons from "../Modal/ModalActionButtons";
 
 import { validateForm } from "../../utils/auth";
-import { getTodaysDate } from "../../utils/date";
-
-import { CREATE_EVENT_FORM } from "../../const";
 
 import "../Form/Form.css";
 
-const todaysDate = getTodaysDate();
-const EventModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
+const Booking = ({ formType, toggleModal, serverErrors, handleOnSubmit }) => {
     const renderServerErrors = () => serverErrors.length > 0 && (
         <FormErrors errors={serverErrors} />
     );
 
     const renderModalContent = () => (
         <Form 
-            initialValues={{ date: todaysDate }}
-            validate={(fields) => validateForm(fields, CREATE_EVENT_FORM)}
+            validate={(fields) => validateForm(fields, formType)}
             onSubmit={handleOnSubmit}>
             {({ handleSubmit }) => (
                 <div className="form-wrapper">
@@ -80,7 +75,7 @@ const EventModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
 
     return (
         <Modal 
-            header="Create an Event"
+            header="Book an Event"
             content={renderModalContent()}
             handleCancelModal={toggleModal}
             headerClass="header"
@@ -89,4 +84,4 @@ const EventModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
     );
 }
 
-export default EventModal;
+export default Booking;

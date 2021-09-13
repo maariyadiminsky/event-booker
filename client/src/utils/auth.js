@@ -4,6 +4,17 @@ import {
     CREATE_EVENT_FORM
 } from "../const"
 
+export const handleServerErrors = (response, callback) => {
+    if (!response) {
+        throw new Error("Booking retrieval failed with no response!");
+    } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+        callback(response.data.errors);
+        return;
+    } else if (response.status !== 200 && response.status !== 201) {
+        throw new Error(`Booking retrieval failed with server status code: ${response.status}.`);
+    }
+}
+
 export const validateForm = ({ 
     // sign in / sign up forms
     email, 

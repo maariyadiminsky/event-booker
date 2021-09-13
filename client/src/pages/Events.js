@@ -6,6 +6,7 @@ import Event from "../components/Event/Event";
 import EventModal from "../components/Event/EventModal";
 import FormAlert from "../components/Form/FormAlert";
 
+import { handleServerErrors } from "../utils/auth";
 import { isDateBeforeToday } from "../utils/date";
 
 import { 
@@ -43,12 +44,12 @@ const Events = () => {
     const [shouldRenderSuccessEventMessage, setShouldRenderSuccessEventMessage] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
     const [eventCreatedTitle, setEventCreatedTitle] = useState("");
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState(null);
 
     const { token, userId } = useContext(AuthContext);
 
     useEffect(() => {
-        if (!events || events.length === 0) {
+        if (!events) {
             // user should be verified to hit endpoint
             if (!token || !userId) return;
 
@@ -59,14 +60,7 @@ const Events = () => {
                     });
     
                     // handle errors from the server
-                    if (!response) {
-                        throw new Error("Event retrieval failed with no response!");
-                    } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                        setServerErrors(response.data.errors);
-                        return;
-                    } else if (response.status !== 200 && response.status !== 201) {
-                        throw new Error(`Event retrieval failed with server status code: ${response.status}.`);
-                    }
+                    handleServerErrors(response, setServerErrors);
     
                     const { data: { data }} = response;
     
@@ -85,6 +79,9 @@ const Events = () => {
 
                         // set events for ui
                         setEvents(data.events);
+                    } else {
+                        // set so loader knows no events exist
+                        setEvents([]);
                     }
                 } catch(err) {
                     console.log(err);
