@@ -167,7 +167,14 @@ const Events = () => {
         </div>
     );
 
-    const renderEvents = () => events && events.map((event) => <Event event={event} />);
+    const renderEvents = () => events && (
+        events.map((event, index) => (
+            <Event 
+                key={index}
+                event={event} 
+            />
+        ))
+    );
 
     const renderEventModal = () => !shouldRenderSuccessEventMessage && shouldShowModal && (
         <EventModal

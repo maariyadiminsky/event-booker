@@ -14,7 +14,7 @@ import { CREATE_EVENT_FORM } from "../../const";
 import "./EventModal.css";
 
 const todaysDate = getTodaysDate();
-const EventModal = ({ event : { toggleModal, serverErrors, handleOnSubmit }}) => {
+const EventModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
     const renderServerErrors = () => {
         if (serverErrors.length > 0) {
             return serverErrors.map(({ message }, index) => <FormError key={index} error={message} />);
