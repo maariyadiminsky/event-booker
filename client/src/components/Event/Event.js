@@ -41,7 +41,7 @@ const Event = ({ event: { title, description, price, date }}) => {
     );
 
     const renderNotification = () => notification.shouldRender && notification.color === WARNING_COLOR && (
-        <span className="animate-ping inline-flex h-2 w-2 mr-2 mb-0.5 rounded-full bg-red-400 opacity-75" />
+        <span className="animate-ping inline-flex h-2 w-2 mr-2 mb-0.5 rounded-full bg-red-500" />
     );
 
     return (
