@@ -46,7 +46,7 @@ const Event = ({ event: { title, description, price, date }}) => {
 
     return (
         <div 
-            className="container cursor-pointer shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300 rounded-lg px-8 py-10 mt-6 border-2 border-green-400 group bg-gradient-to-r hover:from-green-400 hover:to-green-300">
+            className="container cursor-pointer shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300 rounded-lg px-8 py-10 mt-6 border-2 border-green-400 hover:border-green-300 group bg-gradient-to-r hover:from-green-400 hover:to-green-300">
             <div className="flex flex-wrap justify-between">
                 <div className="relative">
                     <div className="font-bold text-blue-400 group-hover:text-indigo-500">
