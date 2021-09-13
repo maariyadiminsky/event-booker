@@ -22,7 +22,8 @@ const Routes = () => {
             <Route path={ROOT_PATH} exact component={Home}/> 
             <ProtectedRoute path={AUTH_PATH} component={Auth} isAuthRoute />
             <ProtectedRoute path={EVENTS_PATH} component={Events} />
-            <ProtectedRoute path={BOOKINGS_PATH} component={Bookings} />
+            {/* <ProtectedRoute path={BOOKINGS_PATH} component={Bookings} /> */}
+            <Route path={BOOKINGS_PATH} component={Bookings} />
         </Switch>
       </div>
   );

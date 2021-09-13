@@ -161,7 +161,7 @@ const Events = () => {
 
     const renderCreateEvent = () => (
         <div 
-            className={`${!shouldRenderSuccessEventMessage && !shouldShowModal && "animate-float"} max-w-2xl m-auto mt-12 py-8 bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer`}
+            className={`${!shouldRenderSuccessEventMessage && !shouldShowModal && "animate-float"} max-w-2xl m-auto py-8 bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer`}
             onClick={toggleModal}
         >
             <div className="flex flex-wrap justify-center items-center text-center">
@@ -191,10 +191,12 @@ const Events = () => {
 
     return (
         <Fragment>
-            <div className="w-full max-w-3xl mx-auto">
+            <div className="w-full max-w-3xl mx-auto mt-12">
                 {renderCreateEvent()}
                 {renderEventCreatedConfirmation()}
-                <div className="overflow-y-scroll max-h-screen px-20 pb-20 max-w-3xl m-auto">{renderEvents()}</div>
+                <div className="overflow-y-scroll max-h-screen px-20 pb-20 max-w-3xl m-auto">
+                    {renderEvents()}
+                </div>
             </div>
             {renderEventModal()}
         </Fragment>
