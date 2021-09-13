@@ -1,0 +1,9 @@
+@layer components {
+    .field-label {
+        @apply text-left font-semibold text-green-400 text-xl font-light mb-2
+    }
+
+    .field-input {
+        @apply text-lg py-2 px-4 text-gray-600
+    }
+}

@@ -28,3 +28,14 @@ export const DELETE_BOOKING_FORM = "Delete Booking Form";
 // other
 export const DEVELOPMENT = "development";
 export const PRODUCTION = "production";
+
+// alert types
+export const SUCCESS_COLOR = "green";
+export const WARNING_COLOR = "yellow";
+export const ERROR_COLOR = "red";
+export const INFORMATIVE_COLOR = "blue";
+
+export const SUCCESS = "success";
+export const WARNING = "warning";
+export const ERROR = "error";
+export const INFORMATIVE = "informative";
