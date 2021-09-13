@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { eventBookerAPI } from "../api/eventBookerAPI";
 
@@ -190,16 +190,14 @@ const Events = () => {
     );
 
     return (
-        <div>
+        <Fragment>
             <div className="w-full max-w-3xl mx-auto">
                 {renderCreateEvent()}
                 {renderEventCreatedConfirmation()}
                 <div className="overflow-y-scroll max-h-screen px-20 pb-20 max-w-3xl m-auto">{renderEvents()}</div>
             </div>
-            <div>
-                {renderEventModal()}
-            </div>
-        </div>
+            {renderEventModal()}
+        </Fragment>
     );
 }
 
