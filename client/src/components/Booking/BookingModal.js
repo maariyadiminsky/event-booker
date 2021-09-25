@@ -12,17 +12,21 @@ import { validateForm } from "../../utils/auth";
 
 import "../Form/Form.css";
 
-const eatOptions = [
-    {key: "c", name: "Chicken", value: "chicken"},
-    {key: "h", name: "Ham", value: "ham"},
-    {key: "m", name: "Mushrooms", value: "mushrooms"},
-    {key: "t", name: "Tuna", value: "tuna"}
-];
-
-
 const Booking = ({ formType, eventOptions, toggleModal, serverErrors, handleOnSubmit }) => {
     const renderServerErrors = () => serverErrors.length > 0 && (
         <FormErrors errors={serverErrors} />
+    );
+
+    const renderEventOptions = () => eventOptions && (
+        <Field name="events" options={eventOptions} >
+            { ({ input, options }) => (
+                <FormOptions
+                    name={input.name}
+                    options={options}
+                    onChange={(value) => input.onChange(value)}
+                />
+            )}
+        </Field>
     );
 
     const renderModalContent = () => (
@@ -36,17 +40,7 @@ const Booking = ({ formType, eventOptions, toggleModal, serverErrors, handleOnSu
                         className="form-container"
                     >
                         {renderServerErrors()}
-                        {eventOptions && (
-                            <Field name="events" options={eventOptions} >
-                                { ({ input, options }) => (
-                                    <FormOptions
-                                        name={input.name}
-                                        options={options}
-                                        onChange={(value) => input.onChange(value)}
-                                    />
-                                )}
-                            </Field>
-                        )}
+                        {renderEventOptions()}
                         <Field 
                             component={FormInput} 
                             name="title" 
