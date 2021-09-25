@@ -16,6 +16,17 @@ import {
     DELETE_BOOKING_FORM,
 } from "../const";
 
+const createBookingMutation = (userId, eventId) => `
+    mutation {
+        createBooking(userId: "${userId}", eventId: "${eventId}") {
+            event {
+                title
+                date
+            }
+        }
+    }
+`;
+
 const bookingsQuery = `
     query {
         bookings {
@@ -30,6 +41,7 @@ const bookingsQuery = `
 const eventsQuery = `
     query {
         events {
+            _id
             title
             description
             price
@@ -121,11 +133,47 @@ const Bookings = () => {
         }
     }, [events])
 
-    const handleOnSubmit = (values) => {
+    const handleOnSubmit = async(values) => {
         // user should be verified to hit endpoint
         if (!token || !userId) return;
-        
-        console.log("in handleOnSubmit booking", values);
+
+        console.log("values", values);
+
+        // try {
+        //     const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
+        //         query: createBookingMutation(userId, title, description, price, date)
+        //     });
+
+        //     // handle errors from the server
+        //     if (!response) {
+        //         setEventCreatedTitle("");
+        //         throw new Error(`${CREATE_EVENT_FORM} failed! Response returned empty.`);
+        //     } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+        //         setEventCreatedTitle("");
+        //         setServerErrors(response.data.errors);
+        //         return;
+        //     } else if (response.status !== 200 && response.status !== 201) {
+        //         setEventCreatedTitle("");
+        //         throw new Error(`${CREATE_EVENT_FORM} failed! Check your network connection.`);
+        //     }
+
+        //     const { data: { data : { createEvent }}} = response;
+
+        //     if (createEvent._id && createEvent.title) {
+        //         setEvents([
+        //             ...events,
+        //             createEvent
+        //         ]);
+        //         setEventCreatedTitle(createEvent.title);
+        //         setShouldRenderSuccessEventMessage(true);
+        //         toggleModal();
+        //     } else {
+        //         throw new Error(`${CREATE_EVENT_FORM} failed! User not created! Please try again.`);
+        //     }
+        // } catch(err) {
+        //     console.log(err);
+        //     throw err;
+        // }
     }
 
     const toggleModal = (formType) => {
