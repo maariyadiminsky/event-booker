@@ -9,7 +9,6 @@ import { isDateBeforeToday } from "../utils/date";
 import { getRandomColor } from "../utils/colors";
 
 import { 
-    BOOKINGS_NEED_EVENTS,
     BOOKINGS,
     EVENTS,
     GRAPHQL_ENDPOINT,
@@ -147,21 +146,15 @@ const Bookings = () => {
         })
     );
 
-    const renderBookingModal = () => {
-        if (!shouldShowModal) return;
-
-        if (!events) return BOOKINGS_NEED_EVENTS;
-
-        return (
-            <BookingModal
-                formType={bookingModalType}
-                serverErrors={serverErrors}
-                toggleModal={toggleModal}
-                handleOnSubmit={handleOnSubmit}
-                eventOptions={events}
-            />
-        );
-    }
+    const renderBookingModal = () => shouldShowModal && (
+        <BookingModal
+            formType={bookingModalType}
+            serverErrors={serverErrors}
+            toggleModal={toggleModal}
+            handleOnSubmit={handleOnSubmit}
+            eventOptions={events}
+        />
+    );
 
     const renderBookAnEvent = () => (
         <div 
