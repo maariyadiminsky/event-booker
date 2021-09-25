@@ -94,7 +94,6 @@ const Bookings = () => {
                     return new Date(itemOne.date) - new Date(itemTwo.date)
                 });
 
-                console.log("responseData", responseData);
                 // set items
                 if (isBookings) {
                     setBookings(responseData);
@@ -102,7 +101,6 @@ const Bookings = () => {
                     setEvents(responseData);
                 }
             } else {
-                console.log("no data", itemType);
                 // set so loader knows no items exist
                 if (isBookings) {
                     setBookings([]);
@@ -126,10 +124,7 @@ const Bookings = () => {
                 const eventItems = events && events.length > 0 ? events : await fetchItems(EVENTS);
 
                 if (eventItems && eventItems.length > 0) {
-                    console.log("events exist!",eventItems.length);
-                    console.log("fetching bookings", bookings);
                     await fetchItems(BOOKINGS);
-                    console.log("fetched bookings", bookings);
                 } else {
                     setBookings([]);
                 }
@@ -144,8 +139,6 @@ const Bookings = () => {
     const handleOnSubmit = async({ event }) => {
         // user should be verified to hit endpoint
         if (!token || !userId || !event) return;
-
-        console.log("values", event);
 
         try {
             const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
