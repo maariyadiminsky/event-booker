@@ -17,18 +17,6 @@ const Booking = ({ formType, eventOptions, toggleModal, serverErrors, handleOnSu
         <FormErrors errors={serverErrors} />
     );
 
-    const renderEventOptions = () => eventOptions && (
-        <Field name="events" options={eventOptions} >
-            { ({ input, options }) => (
-                <FormOptions
-                    name={input.name}
-                    options={options}
-                    onChange={(value) => input.onChange(value)}
-                />
-            )}
-        </Field>
-    );
-
     const renderModalContent = () => (
         <Form 
             validate={(fields) => validateForm(fields, formType)}
@@ -40,7 +28,15 @@ const Booking = ({ formType, eventOptions, toggleModal, serverErrors, handleOnSu
                         className="form-container"
                     >
                         {renderServerErrors()}
-                        {renderEventOptions()}
+                        <Field name="events" options={eventOptions} >
+                            { ({ input, options }) => (
+                                <FormOptions
+                                    name={input.name}
+                                    options={options}
+                                    onChange={(value) => input.onChange(value)}
+                                />
+                            )}
+                        </Field>
                         <Field 
                             component={FormInput} 
                             name="title" 

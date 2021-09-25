@@ -14,6 +14,7 @@ export const HOME = "Home";
 // text
 export const SWITCH_SIGN_UP_TEXT = "Don't have an account yet?";
 export const SWITCH_SIGN_IN_TEXT = "Already have an account?";
+export const BOOKINGS_NEED_EVENTS = "Events must be created to book them!";
 
 // server endpoint
 export const GRAPHQL_ENDPOINT = "/graphql";
