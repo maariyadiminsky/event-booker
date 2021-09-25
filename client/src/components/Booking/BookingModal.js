@@ -46,6 +46,7 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
                                         name={input.name}
                                         options={options}
                                         onChange={(value) => input.onChange(value)}
+                                        isBooking
                                     />
                                 )}
                             </Field>

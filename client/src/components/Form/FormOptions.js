@@ -1,6 +1,8 @@
 import React from "react";
 
-const getEventNameForBooking = (title, price, date) => `${title} for ${price} on ${date}`;
+import { getDateInCorrectFormat } from "../../utils/date";
+
+const getEventNameForBooking = (title, price, date) => `${title} @ $${price} - (${getDateInCorrectFormat(date)})`;
 
 const FormOptions = ({ name, options, onChange, isBooking }) => {
     const renderOptionsName = (title, price, date) => isBooking ? getEventNameForBooking(title, price, date) : title;
