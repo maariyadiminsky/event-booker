@@ -187,7 +187,7 @@ const Bookings = () => {
         bookings.map(({ event: { title, date }}) => {
             const color = getRandomColor();
             return (
-                <div className={`relative flex flex-wrap justify-end text-right bg-gradient-to-r h-64 max-h-64 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
+                <div className={`relative flex justify-end text-right bg-gradient-to-r h-64 max-h-64 sm:w-64 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
                     <div className={`absolute inset-x-5 top-5 font-light text-${color}-100 text-xl`}>
                         {title}
                     </div>
@@ -212,7 +212,7 @@ const Bookings = () => {
     const renderBookAnEvent = () => (
         <div 
             onClick={() => toggleModal(CREATE_BOOKING_FORM)}
-            className="relative animate-pulse flex flex-wrap justify-end text-right content-right h-64 max-h-64 bg-gradient-to-r from-green-500 to-green-400 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer">
+            className="relative animate-pulse flex flex-wrap justify-end text-right content-right h-64 sm:w-64 max-h-64 bg-gradient-to-r from-green-500 to-green-400 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer">
             <div className="absolute inset-x-5 bottom-5 text-green-100 text-4xl font-semibold">
                 <span className="">+ </span>Book an Event
             </div>
@@ -225,7 +225,7 @@ const Bookings = () => {
         <Fragment>
             <div className="w-full mt-12">
                 <div className="overflow-y-scroll max-h-screen px-20 pb-20 m-auto">
-                    <div className="grid grid-cols-5 gap-3">
+                    <div className="grid grid-cols-5 sm:gap-x-72 xl:gap-x-48 2xl:gap-x-3">
                         {renderBookAnEvent()}
                         {renderBookings()}
                     </div>

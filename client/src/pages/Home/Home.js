@@ -15,8 +15,8 @@ const Home = () => (
                 <p>Share and book events at the palm of your hand.</p>
             </div>
             <Link to={EVENTS_PATH}>
-                <button className="mt-6 py-3 px-12 text-xl text-white bg-green-400 rounded hover:bg-green-300 transition duration-300">
-                    Start here
+                <button className="mt-5 py-3 px-8 md:text-xl sm:text-2xl font-semibold text-white bg-green-400 rounded hover:bg-green-300 transition duration-300">
+                🌟 Start Here
                 </button>
             </Link>
         </div>

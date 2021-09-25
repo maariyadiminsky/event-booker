@@ -202,7 +202,7 @@ const Events = () => {
             <div className="w-full max-w-3xl mx-auto mt-12">
                 {renderCreateEvent()}
                 {renderEventCreatedConfirmation()}
-                <div className="overflow-y-scroll max-h-screen px-20 pb-20 max-w-3xl m-auto">
+                <div className="overflow-y-scroll max-h-screen md:px-20 pb-20 max-w-3xl m-auto">
                     {renderEvents()}
                 </div>
             </div>
