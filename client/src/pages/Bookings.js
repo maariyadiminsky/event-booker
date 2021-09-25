@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { eventBookerAPI } from "../api/eventBookerAPI";
 
+import Loader from "../components/Loader";
 import BookingModal from "../components/Booking/BookingModal";
 
 import { handleServerErrors } from "../utils/auth";
@@ -55,7 +56,7 @@ const eventsQuery = `
 `;
 
 const Bookings = () => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
     const [events, setEvents] = useState(null);
@@ -115,8 +116,8 @@ const Bookings = () => {
     }
 
     useEffect(() => {
-        setLoading(true);
         if (!bookings) {
+            setLoading(true);
             // user should be verified to hit endpoint
             if (!token || !userId) return;
 
@@ -128,17 +129,20 @@ const Bookings = () => {
                 } else {
                     setBookings([]);
                 }
+
+                setLoading(false);
             };
 
             fetchBookings();
         }
 
-        setLoading(false);
     }, [events])
 
     const handleOnSubmit = async({ event }) => {
         // user should be verified to hit endpoint
         if (!token || !userId || !event) return;
+
+        setLoading(true);
 
         try {
             const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
@@ -166,6 +170,8 @@ const Bookings = () => {
             } else {
                 throw new Error(`${CREATE_BOOKING_FORM} failed! Please try again.`);
             }
+
+            setLoading(false);
         } catch(err) {
             console.log(err);
             throw err;
@@ -213,11 +219,7 @@ const Bookings = () => {
         </div>
     );
 
-    if (loading) {
-        return (
-            <div>Loading...</div>
-        );
-    }
+    if (loading) return <Loader />;
 
     return (
         <Fragment>

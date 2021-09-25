@@ -41,6 +41,7 @@ const eventsQuery = `
 `;
 
 const Events = () => {
+    const [loading, setLoading] = useState(false);
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [shouldRenderSuccessEventMessage, setShouldRenderSuccessEventMessage] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
@@ -51,6 +52,7 @@ const Events = () => {
 
     useEffect(() => {
         if (!events) {
+            setLoading(true);
             // user should be verified to hit endpoint
             if (!token || !userId) return;
 
@@ -88,6 +90,8 @@ const Events = () => {
                     console.log(err);
                     throw err;
                 }
+
+                setLoading(false);
             }
 
             fetchEvents();
@@ -108,6 +112,8 @@ const Events = () => {
     const handleOnSubmit = async({ title, description, price, date }) => {
         // user should be verified to hit endpoint
         if (!token || !userId) return;
+
+        setLoading(true);
 
         try {
             const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
@@ -144,6 +150,8 @@ const Events = () => {
             console.log(err);
             throw err;
         }
+
+        setLoading(false);
     }
 
     const toggleModal = () => setShouldShowModal(!shouldShowModal);
@@ -187,7 +195,7 @@ const Events = () => {
         />
     );
 
-    return <Loader />
+    if (loading) return <Loader />;
 
     return (
         <Fragment>
