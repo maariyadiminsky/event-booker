@@ -3,6 +3,7 @@ import React from "react";
 import { Form, Field } from "react-final-form";
 
 import FormInput from "../Form/FormInput";
+import FormOptions from "../Form/FormOptions";
 import FormErrors from "../Form/FormErrors";
 import Modal from "../Modal/Modal";
 import ModalActionsButtons from "../Modal/ModalActionButtons";
@@ -11,7 +12,15 @@ import { validateForm } from "../../utils/auth";
 
 import "../Form/Form.css";
 
-const Booking = ({ formType, toggleModal, serverErrors, handleOnSubmit }) => {
+const eatOptions = [
+    {key: "c", name: "Chicken", value: "chicken"},
+    {key: "h", name: "Ham", value: "ham"},
+    {key: "m", name: "Mushrooms", value: "mushrooms"},
+    {key: "t", name: "Tuna", value: "tuna"}
+];
+
+
+const Booking = ({ formType, eventOptions, toggleModal, serverErrors, handleOnSubmit }) => {
     const renderServerErrors = () => serverErrors.length > 0 && (
         <FormErrors errors={serverErrors} />
     );
@@ -27,6 +36,17 @@ const Booking = ({ formType, toggleModal, serverErrors, handleOnSubmit }) => {
                         className="form-container"
                     >
                         {renderServerErrors()}
+                        {eventOptions && (
+                            <Field name="events" options={eventOptions} >
+                                { ({ input, options }) => (
+                                    <FormOptions
+                                        name={input.name}
+                                        options={options}
+                                        onChange={(value) => input.onChange(value)}
+                                    />
+                                )}
+                            </Field>
+                        )}
                         <Field 
                             component={FormInput} 
                             name="title" 

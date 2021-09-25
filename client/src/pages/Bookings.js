@@ -61,10 +61,7 @@ const Bookings = () => {
 
             const responseData = isBookings ? data.bookings : data.events;
 
-            console.log("in fetchItems response",itemType, data);
-
             if (responseData && responseData.length > 0) {
-                console.log("responseData", responseData);
                 // sort upcoming items at the top
                 responseData.sort((itemOne, itemTwo) => {
                     const firstItem = isBookings ? itemOne.event.date : itemOne;
@@ -155,6 +152,7 @@ const Bookings = () => {
             serverErrors={serverErrors}
             toggleModal={toggleModal}
             handleOnSubmit={handleOnSubmit}
+            eventOptions={events}
         />
     );
 
