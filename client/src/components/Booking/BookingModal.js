@@ -78,7 +78,7 @@ const Booking = ({ formType, toggleModal, serverErrors, handleOnSubmit }) => {
             header="Book an Event"
             content={renderModalContent()}
             handleCancelModal={toggleModal}
-            headerClass="header"
+            headerClass="form-header"
             hideSubmitButtons
         />
     );

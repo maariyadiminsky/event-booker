@@ -83,7 +83,7 @@ const EventModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
             header="Create an Event"
             content={renderModalContent()}
             handleCancelModal={toggleModal}
-            headerClass="header"
+            headerClass="form-header"
             hideSubmitButtons
         />
     );
