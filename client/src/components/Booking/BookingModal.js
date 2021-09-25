@@ -21,7 +21,9 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
     const renderModalContent = () => {
         if (!eventOptions) {
             return "Loading...";
-        } else if (eventOptions && eventOptions.length === 0) {
+        }
+        
+        if (eventOptions && eventOptions.length === 0) {
             return (
                 <div className="font-light">
                     ⚠ {BOOKINGS_NEED_EVENTS}
@@ -40,7 +42,10 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
                             className="form-container"
                         >
                             {renderServerErrors()}
-                            <Field name="events" options={eventOptions} >
+                            <Field 
+                                name="events" 
+                                options={eventOptions} 
+                            >
                                 { ({ input, options }) => (
                                     <FormOptions
                                         name={input.name}
@@ -50,45 +55,6 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
                                     />
                                 )}
                             </Field>
-                            <Field 
-                                component={FormInput} 
-                                name="title" 
-                                type="text"
-                                label="Title"
-                                labelClass="field-label" 
-                                inputClass="field-input"
-                                required
-                            />
-                            <Field 
-                                component={FormInput} 
-                                name="description" 
-                                type="text"
-                                label="Description"
-                                labelClass="field-label" 
-                                inputClass="field-input"
-                                required
-                            />
-                            <Field 
-                                component={FormInput} 
-                                name="date" 
-                                type="date"
-                                label="Date"
-                                step="any"
-                                labelClass="field-label" 
-                                inputClass="field-input"
-                                required
-                            />
-                            <Field 
-                                component={FormInput}
-                                name="price" 
-                                type="number" 
-                                min="1" 
-                                step="any"  
-                                label="Price"
-                                labelClass="field-label"
-                                inputClass="field-input"
-                                required
-                            />
                             <ModalActionsButtons toggleModal={toggleModal} />
                         </form>
                     </div>
