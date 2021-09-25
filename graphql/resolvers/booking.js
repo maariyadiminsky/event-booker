@@ -27,6 +27,8 @@ module.exports = {
             console.log("Booking with user:", userId);
             const booking = await createNewBooking(userId, eventId);
 
+            console.log("booking created!")
+
             await booking.save();
 
             return bookingData(booking);

@@ -5,20 +5,24 @@ import { eventBookerAPI } from "../api/eventBookerAPI";
 import BookingModal from "../components/Booking/BookingModal";
 
 import { handleServerErrors } from "../utils/auth";
-import { isDateBeforeToday } from "../utils/date";
 import { getRandomColor } from "../utils/colors";
+
+import { 
+    isDateBeforeToday,
+    getDateInCorrectFormat 
+} from "../utils/date";
 
 import { 
     BOOKINGS,
     EVENTS,
     GRAPHQL_ENDPOINT,
-    CREATE_BOOKING_FORM,
-    DELETE_BOOKING_FORM,
+    CREATE_BOOKING_FORM
 } from "../const";
 
 const createBookingMutation = (userId, eventId) => `
     mutation {
         createBooking(userId: "${userId}", eventId: "${eventId}") {
+            _id
             event {
                 title
                 date
@@ -51,6 +55,7 @@ const eventsQuery = `
 `;
 
 const Bookings = () => {
+    const [loading, setLoading] = useState(true);
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
     const [events, setEvents] = useState(null);
@@ -112,6 +117,7 @@ const Bookings = () => {
     }
 
     useEffect(() => {
+        setLoading(true);
         if (!bookings) {
             // user should be verified to hit endpoint
             if (!token || !userId) return;
@@ -131,49 +137,46 @@ const Bookings = () => {
 
             fetchBookings();
         }
+
+        setLoading(false);
     }, [events])
 
-    const handleOnSubmit = async(values) => {
+    const handleOnSubmit = async({ event }) => {
         // user should be verified to hit endpoint
-        if (!token || !userId) return;
+        if (!token || !userId || !event) return;
 
-        console.log("values", values);
+        console.log("values", event);
 
-        // try {
-        //     const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-        //         query: createBookingMutation(userId, title, description, price, date)
-        //     });
+        try {
+            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
+                query: createBookingMutation(userId, event)
+            });
 
-        //     // handle errors from the server
-        //     if (!response) {
-        //         setEventCreatedTitle("");
-        //         throw new Error(`${CREATE_EVENT_FORM} failed! Response returned empty.`);
-        //     } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-        //         setEventCreatedTitle("");
-        //         setServerErrors(response.data.errors);
-        //         return;
-        //     } else if (response.status !== 200 && response.status !== 201) {
-        //         setEventCreatedTitle("");
-        //         throw new Error(`${CREATE_EVENT_FORM} failed! Check your network connection.`);
-        //     }
+            // handle errors from the server
+            if (!response) {
+                throw new Error(`${CREATE_BOOKING_FORM} failed! Response returned empty.`);
+            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+                setServerErrors(response.data.errors);
+                return;
+            } else if (response.status !== 200 && response.status !== 201) {
+                throw new Error(`${CREATE_BOOKING_FORM} failed! Check your network connection.`);
+            }
 
-        //     const { data: { data : { createEvent }}} = response;
+            const { data: { data : { createBooking }}} = response;
 
-        //     if (createEvent._id && createEvent.title) {
-        //         setEvents([
-        //             ...events,
-        //             createEvent
-        //         ]);
-        //         setEventCreatedTitle(createEvent.title);
-        //         setShouldRenderSuccessEventMessage(true);
-        //         toggleModal();
-        //     } else {
-        //         throw new Error(`${CREATE_EVENT_FORM} failed! User not created! Please try again.`);
-        //     }
-        // } catch(err) {
-        //     console.log(err);
-        //     throw err;
-        // }
+            if (createBooking._id) {
+                setBookings([
+                    ...bookings,
+                    createBooking
+                ]);
+                toggleModal();
+            } else {
+                throw new Error(`${CREATE_BOOKING_FORM} failed! Please try again.`);
+            }
+        } catch(err) {
+            console.log(err);
+            throw err;
+        }
     }
 
     const toggleModal = (formType) => {
@@ -182,7 +185,7 @@ const Bookings = () => {
     }
 
     const renderBookings = () => bookings && bookings.length > 0 && (
-        bookings.map(({ title, event: { date }}) => {
+        bookings.map(({ event: { title, date }}) => {
             const color = getRandomColor();
             return (
                 <div className={`relative flex flex-wrap justify-end text-right bg-gradient-to-r h-64 max-h-64 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
@@ -190,7 +193,7 @@ const Bookings = () => {
                         {title}
                     </div>
                     <div className={`absolute inset-x-5 bottom-5 text-${color}-100 text-4xl font-semibold`}>
-                        {date}
+                        {getDateInCorrectFormat(date)}
                     </div>
                 </div>
             );
@@ -216,6 +219,12 @@ const Bookings = () => {
             </div>
         </div>
     );
+
+    if (loading) {
+        return (
+            <div>Loading...</div>
+        );
+    }
 
     return (
         <Fragment>

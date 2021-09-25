@@ -42,7 +42,7 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
                         >
                             {renderServerErrors()}
                             <Field 
-                                name="events" 
+                                name="event" 
                                 options={eventOptions} 
                             >
                                 { ({ input, options }) => (
