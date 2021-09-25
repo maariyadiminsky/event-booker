@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { eventBookerAPI } from "../api/eventBookerAPI";
 
+import Loader from "../components/Loader";
 import Event from "../components/Event/Event";
 import EventModal from "../components/Event/EventModal";
 import FormAlert from "../components/Form/FormAlert";
@@ -185,6 +186,8 @@ const Events = () => {
             handleOnSubmit={handleOnSubmit}
         />
     );
+
+    return <Loader />
 
     return (
         <Fragment>
