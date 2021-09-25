@@ -121,8 +121,11 @@ const Bookings = () => {
         }
     }, [events])
 
-    const handleOnSubmit = ({ eventId, userId }) => {
-        console.log("in handleOnSubmit booking", eventId, userId);
+    const handleOnSubmit = (values) => {
+        // user should be verified to hit endpoint
+        if (!token || !userId) return;
+        
+        console.log("in handleOnSubmit booking", values);
     }
 
     const toggleModal = (formType) => {

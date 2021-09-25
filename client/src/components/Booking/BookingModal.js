@@ -2,7 +2,6 @@ import React from "react";
 
 import { Form, Field } from "react-final-form";
 
-import FormInput from "../Form/FormInput";
 import FormOptions from "../Form/FormOptions";
 import FormErrors from "../Form/FormErrors";
 import Modal from "../Modal/Modal";

@@ -13,7 +13,8 @@ const FormOptions = ({ name, options, onChange, isBooking }) => {
             onChange={onChange}
             className="w-full border bg-white rounded px-3 py-2 outline-none"
         >
-            {options.map(({ title, price, date }) => (
+            <option value=""></option>
+            {options.map(({ title, price, date }, index) => (
                 <option 
                     key={title} 
                     value={title}
