@@ -38,7 +38,7 @@ const deleteBooking = async (bookingId) => {
     }
 }
 
-const findAllBookings = () => Booking.find();
+const findAllBookings = (userId) => Booking.find({ user: userId });
 
 const createNewBooking = async(userId, eventId) => {
     try {

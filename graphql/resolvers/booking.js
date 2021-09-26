@@ -13,7 +13,7 @@ module.exports = {
         try {
             if (!req.isUserAuthorized) throw new Error("User is unauthenticated!");
 
-            const bookings = await findAllBookings();
+            const bookings = await findAllBookings(req.userId);
 
             return bookings.map(booking => bookingData(booking));
         } catch(err) {
