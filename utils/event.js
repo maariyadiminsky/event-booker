@@ -16,6 +16,15 @@ const eventData = async(event) => {
     }
 }
 
+const deleteEvent = async (eventId) => {
+    try {
+        return await Event.deleteOne({ _id: eventId });
+    } catch(err) {
+        console.log(err);
+        throw err;
+    }
+}
+
 const findEventData = async(eventId) => {
     try {
         const event = await Event.findById(eventId);
@@ -50,10 +59,14 @@ const createNewEvent = (userId, title, description, price, date) => (
     })
 );
 
+const isValidEventUser = (userId, eventUserId) => userId === eventUserId;
+
 module.exports = {
     findEventData,
     findEventsData,
     eventData,
     findAllEvents,
-    createNewEvent
+    createNewEvent,
+    deleteEvent,
+    isValidEventUser
 };

@@ -56,6 +56,7 @@ module.exports = buildSchema(`
         createEvent(eventInput: EventInput): Event
         createBooking(eventId: ID!): Booking!
         cancelBooking(bookingId: ID!): Event!
+        removeEvent(eventId: ID!): Event!
     }
 
     schema {

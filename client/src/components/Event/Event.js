@@ -11,7 +11,12 @@ import {
     ERROR_COLOR
 } from "../../const";
 
-const Event = ({ event: { title, description, price, date }}) => {
+const Event = ({ 
+    toggleCancelModal, 
+    setCancelEventId,
+    userId, 
+    event: { _id, title, description, price, date, user }
+}) => {
     const [notification, setNotification] = useState({
         shouldRender: false,
         color: "white",
@@ -34,6 +39,11 @@ const Event = ({ event: { title, description, price, date }}) => {
         }
     }, [date])
 
+    const openCancelModal = () => {
+        setCancelEventId(_id);
+        toggleCancelModal();
+    }
+
     const renderSmallAlert = () => notification.shouldRender && (
         <div className={`bg-${notification.color}-500 text-gray-100 rounded p-2 mt-5 w-20 text-center opacity-70 border-2 border-${notification.color}-500 text-xs`}>
             {notification.text}
@@ -42,6 +52,16 @@ const Event = ({ event: { title, description, price, date }}) => {
 
     const renderNotification = () => notification.shouldRender && notification.color === WARNING_COLOR && (
         <span className="animate-ping inline-flex h-2 w-2 mr-2 mb-0.5 rounded-full bg-red-500" />
+    );
+
+    const isCreatorOfEvent = userId === user._id;
+    const renderRemoveOption = () => isCreatorOfEvent && (
+        <div 
+            onClick={() => openCancelModal()}
+            className="absolute bottom-10 right-5 text-center align-center text-sm font-thin bg-red-400 hover:bg-red-300 rounded-sm text-white px-2 py-1"
+        >
+            ✏️ Remove
+        </div>
     );
 
     return (
@@ -61,6 +81,9 @@ const Event = ({ event: { title, description, price, date }}) => {
                     <div className="absolute top-5 right-5 text-center align-center text-3xl font-semibold bg-yellow-300 rounded-md text-gray-600 group-hover:text-gray-700 px-2 py-1">
                         {`$${price}`}
                     </div>
+                </div>
+                <div className="static">
+                    {renderRemoveOption()}
                 </div>
                 </div>
             </div>

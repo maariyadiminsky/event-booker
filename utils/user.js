@@ -71,5 +71,5 @@ module.exports = {
     findUserByEmail,
     findUserById,
     createNewUser,
-    validateUser
+    validateUser,
 };

@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
 import BookingModal from "../components/Booking/BookingModal";
-import CancelBookingModal from "../components/Booking/CancelBookingModal";
+import CancelWarningModal from "../components/Booking/CancelWarningModal";
 
 import { eventBookerAPI } from "../api/eventBookerAPI";
 
@@ -274,12 +274,13 @@ const Bookings = () => {
     );
 
     const renderCancelBookingModal = () => shouldShowCancelModal && (
-        <CancelBookingModal
+        <CancelWarningModal
+            header="Cancel Booking"
             serverErrors={serverErrors}
             toggleModal={toggleCancelModal}
             handleOnSubmit={handleCancelBooking}
         />
-    )
+    );
 
     const renderBookingModal = () => shouldShowModal && (
         <BookingModal

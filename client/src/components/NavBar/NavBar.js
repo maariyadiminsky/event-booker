@@ -129,8 +129,7 @@ const NavBar = () => {
             </button>
         </div>
     );
-
-    console.log("shouldOpenMobileMenu?", shouldOpenMobileMenu);
+    
     const renderMobileMenu = () => (shouldOpenMobileMenu && (
         <div className="md:hidden mobile-menu">
             <ul className="">

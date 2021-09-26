@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import Loader from "../components/Loader";
 import Event from "../components/Event/Event";
 import EventModal from "../components/Event/EventModal";
+import CancelWarningModal from "../components/Booking/CancelWarningModal";
 import FormAlert from "../components/Form/FormAlert";
 
 import { eventBookerAPI } from "../api/eventBookerAPI";
@@ -16,7 +17,8 @@ import {
     AUTH_PATH,
     GRAPHQL_ENDPOINT,
     CREATE_EVENT_FORM,
-    SUCCESS
+    REMOVE_EVENT_FORM,
+    SUCCESS,
 } from "../const";
 
 
@@ -32,13 +34,25 @@ const createEventMutation = (userId, title, description, price, date) => `
     }
 `;
 
+const removeEventMutation = (eventId) => `
+    mutation {
+        removeEvent(eventId: "${eventId}") {
+            title
+        }
+    }
+`;
+
 const eventsQuery = `
     query {
         events {
+            _id
             title
             description
             price
             date
+            user {
+                _id
+            }
         }
     }
 `;
@@ -46,10 +60,12 @@ const eventsQuery = `
 const Events = () => {
     const [loading, setLoading] = useState(false);
     const [shouldShowModal, setShouldShowModal] = useState(false);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
     const [shouldRenderSuccessEventMessage, setShouldRenderSuccessEventMessage] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
     const [eventCreatedTitle, setEventCreatedTitle] = useState("");
     const [events, setEvents] = useState(null);
+    const [cancelEventId, setCancelEventId] = useState(null);
 
     const { token, userId } = useContext(AuthContext);
 
@@ -99,7 +115,7 @@ const Events = () => {
 
             fetchEvents();
         }
-    }, []);
+    }, [events]);
 
     useEffect(() => {    
         if (eventCreatedTitle && shouldRenderSuccessEventMessage) {
@@ -157,6 +173,48 @@ const Events = () => {
         setLoading(false);
     }
 
+    const handleRemoveEvent = async() => {
+        // user should be verified to hit endpoint
+        if (!token || !userId || !cancelEventId) return;
+
+        setLoading(true);
+
+        try {
+            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
+                query: removeEventMutation(cancelEventId)
+            });
+
+            // handle errors from the server
+            if (!response) {
+                throw new Error(`${REMOVE_EVENT_FORM} failed! Response returned empty.`);
+            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+                setServerErrors(response.data.errors);
+                return;
+            } else if (response.status !== 200 && response.status !== 201) {
+                throw new Error(`${REMOVE_EVENT_FORM} failed! Check your network connection.`);
+            }
+
+            const { data: { data : { removeEvent }}} = response;
+
+            // if deletion was successful reset events so they would be refetched again
+            // purpose of this is to keep event in sync with backend
+            if (removeEvent && removeEvent.title) {
+                setEvents(null);
+                toggleCancelModal();
+            }
+
+        } catch(err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
+    const toggleCancelModal = () => {
+        if (shouldShowCancelModal) setCancelEventId(null);
+
+        setShouldShowCancelModal(!shouldShowCancelModal);
+    }
+
     const toggleModal = () => {
         if (!token || !userId) {
             history.push(AUTH_PATH);
@@ -192,8 +250,20 @@ const Events = () => {
             <Event 
                 key={index}
                 event={event} 
+                userId={userId}
+                toggleCancelModal={toggleCancelModal}
+                setCancelEventId={(id) => setCancelEventId(id)}
             />
         ))
+    );
+
+    const renderCancelBookingModal = () => shouldShowCancelModal && (
+        <CancelWarningModal
+            header="Remove Event"
+            serverErrors={serverErrors}
+            toggleModal={toggleCancelModal}
+            handleOnSubmit={handleRemoveEvent}
+        />
     );
 
     const renderEventModal = () => !shouldRenderSuccessEventMessage && shouldShowModal && (
@@ -216,6 +286,7 @@ const Events = () => {
                 </div>
             </div>
             {renderEventModal()}
+            {renderCancelBookingModal()}
         </Fragment>
     );
 }

@@ -7,7 +7,7 @@ import ModalActionsButtons from "../Modal/ModalActionButtons";
 
 import "../Form/Form.css";
 
-const CancelBookingModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
+const CancelWarningModal = ({ header, toggleModal, serverErrors, handleOnSubmit }) => {
     const renderServerErrors = () => serverErrors.length > 0 && (
         <FormErrors errors={serverErrors} />
     );
@@ -24,7 +24,7 @@ const CancelBookingModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
                         {renderServerErrors()}
                         <div className="text-center text-gray-400 text-2xl pb-4 px-3">Are you sure?</div>
                         <ModalActionsButtons 
-                            submitText={"Yes I'm sure"}
+                            submitText="Yes I'm sure"
                             toggleModal={toggleModal} 
                             submitButtonColor="red"
                         />
@@ -36,7 +36,7 @@ const CancelBookingModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
 
     return (
         <Modal 
-            header="Cancel Booking"
+            header={header}
             content={renderModalContent()}
             handleCancelModal={toggleModal}
             headerClass="pb-3 text-center text-3xl text-red-400 font-semibold"
@@ -46,4 +46,4 @@ const CancelBookingModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
     );
 }
 
-export default CancelBookingModal;
+export default CancelWarningModal;
