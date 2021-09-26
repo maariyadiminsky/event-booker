@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
-import { useComponentDidMount } from "../hooks/useComponentDidMount";
 import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
@@ -52,11 +51,7 @@ const Events = () => {
 
     const { token, userId } = useContext(AuthContext);
 
-    const didComponentMount = useComponentDidMount();
-
     useEffect(() => {
-        if (!didComponentMount) return;
-
         if (!events) {
             setLoading(true);
             // user should be verified to hit endpoint
@@ -104,9 +99,7 @@ const Events = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if (!didComponentMount) return;
-        
+    useEffect(() => {    
         if (eventCreatedTitle && shouldRenderSuccessEventMessage) {
             const showSuccessMessageForTwoSeconds = setTimeout(() => {
                 setShouldRenderSuccessEventMessage(false)

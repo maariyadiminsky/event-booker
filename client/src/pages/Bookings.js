@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
-import { useComponentDidMount } from "../hooks/useComponentDidMount";
 import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
@@ -34,9 +33,21 @@ const createBookingMutation = (userId, eventId) => `
     }
 `;
 
+const cancelBookingMutation = (bookingId) => `
+    mutation {
+        cancelBooking(bookingId: "${bookingId}") {
+            event {
+                title
+                date
+            }
+        }
+    }
+`;
+
 const bookingsQuery = `
     query {
         bookings {
+            _id
             event {
                 title
                 date
@@ -66,8 +77,6 @@ const Bookings = () => {
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
 
     const { token, userId } = useContext(AuthContext);
-
-    const didComponentMount = useComponentDidMount();
 
     const fetchItems = async(itemType) => {
         try {
@@ -120,29 +129,36 @@ const Bookings = () => {
     }
 
     useEffect(() => {
-        if (!didComponentMount) return;
+        if (!events) {
+            setLoading(true);
 
-        if (!bookings) {
+            const fetchEvents = async() => {
+                await fetchItems(EVENTS);
+            }
+
+            fetchEvents();
+        }
+
+    }, [events])
+
+    useEffect(() => {
+        if (events && events.length > 0 && !bookings) {
             setLoading(true);
             // user should be verified to hit endpoint
             if (!token || !userId) return;
 
             const fetchBookings = async() => {
-                const eventItems = events && events.length > 0 ? events : await fetchItems(EVENTS);
-
-                if (eventItems && eventItems.length > 0) {
-                    await fetchItems(BOOKINGS);
-                } else {
-                    setBookings([]);
-                }
+                await fetchItems(BOOKINGS);
 
                 setLoading(false);
             };
 
             fetchBookings();
+        } else if (events && events.length === 0 && !bookings) {
+            setBookings([]);
         }
 
-    }, [events])
+    }, [events, bookings])
 
     const handleOnSubmit = async({ event }) => {
         // user should be verified to hit endpoint
@@ -190,7 +206,7 @@ const Bookings = () => {
     }
 
     const renderBookings = () => bookings && bookings.length > 0 && (
-        bookings.map(({ event: { title, date }}) => {
+        bookings.map(({ _id, event: { title, date }}) => {
             const color = getRandomColor();
             return (
                 <div 
