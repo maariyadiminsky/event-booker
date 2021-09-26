@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Form, Field } from "react-final-form";
 
 import Loader from "../Loader";
@@ -13,7 +12,7 @@ import { BOOKINGS_NEED_EVENTS } from "../../const";
 
 import "../Form/Form.css";
 
-const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSubmit }) => {
+const BookingModal = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSubmit }) => {
     const renderServerErrors = () => serverErrors.length > 0 && (
         <FormErrors errors={serverErrors} />
     );
@@ -74,4 +73,4 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
     );
 }
 
-export default Booking;
+export default BookingModal;

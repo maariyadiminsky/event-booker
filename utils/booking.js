@@ -22,7 +22,7 @@ const bookingData = async(booking) => {
 const findBookingData = async(bookingId) => {
     try {
         const booking = await Booking.findById(bookingId);
-        return bookingData(booking);
+        return await bookingData(booking);
     } catch(err) {
         console.log(err);
         throw err;
@@ -52,10 +52,13 @@ const createNewBooking = async(userId, eventId) => {
     }
 };
 
+const isValidBookingUser = (userId, bookingUserId) => userId === bookingUserId;
+
 module.exports = {
     bookingData,
     findBookingData,
     deleteBooking,
     findAllBookings,
-    createNewBooking
+    createNewBooking,
+    isValidBookingUser
 };

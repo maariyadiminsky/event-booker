@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
 import BookingModal from "../components/Booking/BookingModal";
+import CancelBookingModal from "../components/Booking/CancelBookingModal";
 
 import { eventBookerAPI } from "../api/eventBookerAPI";
 
@@ -33,13 +34,10 @@ const createBookingMutation = (userId, eventId) => `
     }
 `;
 
-const cancelBookingMutation = (bookingId) => `
+const cancelBookingMutation = (userId, bookingId) => `
     mutation {
-        cancelBooking(bookingId: "${bookingId}") {
-            event {
-                title
-                date
-            }
+        cancelBooking(userId: "${userId}", bookingId: "${bookingId}") {
+            title
         }
     }
 `;
@@ -71,10 +69,12 @@ const eventsQuery = `
 const Bookings = () => {
     const [loading, setLoading] = useState(false);
     const [shouldShowModal, setShouldShowModal] = useState(false);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
     const [events, setEvents] = useState(null);
     const [bookings, setBookings] = useState(null);
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
+    const [cancelBookingId, setCancelBookingId] = useState(null);
 
     const { token, userId } = useContext(AuthContext);
 
@@ -200,7 +200,49 @@ const Bookings = () => {
         }
     }
 
-    const toggleModal = (formType) => {
+    const handleCancelBooking = async() => {
+        // user should be verified to hit endpoint
+        if (!token || !userId || !cancelBookingId) return;
+
+        setLoading(true);
+
+        try {
+            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
+                query: cancelBookingMutation(userId, cancelBookingId)
+            });
+
+            // handle errors from the server
+            if (!response) {
+                throw new Error(`${CREATE_BOOKING_FORM} failed! Response returned empty.`);
+            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
+                setServerErrors(response.data.errors);
+                return;
+            } else if (response.status !== 200 && response.status !== 201) {
+                throw new Error(`${CREATE_BOOKING_FORM} failed! Check your network connection.`);
+            }
+
+            const { data: { data : { cancelBooking }}} = response;
+
+            // if deletion was successful refetch the most accurate bookings data
+            if (cancelBooking && cancelBooking.title) {
+                setBookings(null);
+                toggleCancelModal();
+            }
+
+        } catch(err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
+    const openCancelModal = (bookingId = null) => {
+        setCancelBookingId(bookingId);
+        toggleCancelModal();
+    }
+
+    const toggleCancelModal = () => setShouldShowCancelModal(!shouldShowCancelModal);
+
+    const toggleModal = (formType = null) => {
         setBookingModalType(formType);
         setShouldShowModal(!shouldShowModal);
     }
@@ -211,17 +253,31 @@ const Bookings = () => {
             return (
                 <div 
                     key={title}
-                    className={`relative flex m-auto justify-end text-right bg-gradient-to-r h-64 max-h-64 w-72 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
-                    <div className={`absolute inset-x-5 top-5 font-light text-${color}-100 text-xl`}>
-                        {title}
+                    className={`relative flex m-auto bg-gradient-to-r h-64 max-h-64 w-72 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
+                    <div className={`absolute inset-x-5 top-5 text-${color}-100 text-xl text-right`}>
+                        ✨ {getDateInCorrectFormat(date)}
                     </div>
-                    <div className={`absolute inset-x-5 bottom-5 text-${color}-100 text-4xl font-semibold`}>
-                        {getDateInCorrectFormat(date)}
+                    <div 
+                        onClick={() => openCancelModal(_id)}
+                        className={`absolute inset-x-5 top-5 font-thin text-${color}-50 text-sm text-left`}
+                    >
+                        Cancel
+                    </div>
+                    <div className={`absolute inset-x-5 bottom-5 text-${color}-100 text-4xl font-semibold text-right`}>
+                        {title}
                     </div>
                 </div>
             );
         })
     );
+
+    const renderCancelBookingModal = () => shouldShowCancelModal && (
+        <CancelBookingModal
+            serverErrors={serverErrors}
+            toggleModal={toggleCancelModal}
+            handleOnSubmit={handleCancelBooking}
+        />
+    )
 
     const renderBookingModal = () => shouldShowModal && (
         <BookingModal
@@ -256,6 +312,7 @@ const Bookings = () => {
                 </div>
             </div>
             {renderBookingModal()}
+            {renderCancelBookingModal()}
         </Fragment>
     );
 }
