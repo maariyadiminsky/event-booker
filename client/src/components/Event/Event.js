@@ -54,7 +54,7 @@ const Event = ({
         <span className="animate-ping inline-flex h-2 w-2 mr-2 mb-0.5 rounded-full bg-red-500" />
     );
 
-    const isCreatorOfEvent = userId === user._id;
+    const isCreatorOfEvent = user && userId ? userId === user._id : false;
     const renderRemoveOption = () => isCreatorOfEvent && (
         <div 
             onClick={() => openCancelModal()}
