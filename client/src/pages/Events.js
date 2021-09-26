@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
@@ -12,6 +13,7 @@ import { handleServerErrors } from "../utils/auth";
 import { isDateBeforeToday } from "../utils/date";
 
 import { 
+    AUTH_PATH,
     GRAPHQL_ENDPOINT,
     CREATE_EVENT_FORM,
     SUCCESS
@@ -51,11 +53,11 @@ const Events = () => {
 
     const { token, userId } = useContext(AuthContext);
 
+    const history = useHistory();
+
     useEffect(() => {
         if (!events) {
             setLoading(true);
-            // user should be verified to hit endpoint
-            if (!token || !userId) return;
 
             const fetchEvents = async() => {
                 try {
@@ -155,7 +157,13 @@ const Events = () => {
         setLoading(false);
     }
 
-    const toggleModal = () => setShouldShowModal(!shouldShowModal);
+    const toggleModal = () => {
+        if (!token || !userId) {
+            history.push(AUTH_PATH);
+        }
+
+        setShouldShowModal(!shouldShowModal);
+    }
 
     const renderEventCreatedConfirmation = () => shouldRenderSuccessEventMessage && (
         <FormAlert type={SUCCESS}>

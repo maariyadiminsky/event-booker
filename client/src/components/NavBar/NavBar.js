@@ -135,8 +135,7 @@ const NavBar = () => {
                 <li>
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.events, true)}
-                        buttonPath={setDirectPathTry(EVENTS_PATH)}
-                        handleOnClick={() => setPathIfUserSignsInSuccessfully(EVENTS_PATH)}
+                        buttonPath={EVENTS_PATH}
                     >
                         {EVENTS}
                     </NavItem>
@@ -183,8 +182,7 @@ const NavBar = () => {
                         </NavItem>
                         <NavItem 
                             className={isActiveNavItem(navItemsActive.events)}
-                            buttonPath={setDirectPathTry(EVENTS_PATH)}
-                            handleOnClick={() => setPathIfUserSignsInSuccessfully(EVENTS_PATH)}
+                            buttonPath={EVENTS_PATH}
                         >
                             {EVENTS}
                         </NavItem>
