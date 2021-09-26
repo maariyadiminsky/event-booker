@@ -1,11 +1,13 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
+import { useComponentDidMount } from "../hooks/useComponentDidMount";
 import { AuthContext } from "../context/AuthContext";
-import { eventBookerAPI } from "../api/eventBookerAPI";
 
 import Loader from "../components/Loader";
 import Event from "../components/Event/Event";
 import EventModal from "../components/Event/EventModal";
 import FormAlert from "../components/Form/FormAlert";
+
+import { eventBookerAPI } from "../api/eventBookerAPI";
 
 import { handleServerErrors } from "../utils/auth";
 import { isDateBeforeToday } from "../utils/date";
@@ -50,7 +52,11 @@ const Events = () => {
 
     const { token, userId } = useContext(AuthContext);
 
+    const didComponentMount = useComponentDidMount();
+
     useEffect(() => {
+        if (!didComponentMount) return;
+
         if (!events) {
             setLoading(true);
             // user should be verified to hit endpoint
@@ -99,6 +105,8 @@ const Events = () => {
     }, []);
 
     useEffect(() => {
+        if (!didComponentMount) return;
+        
         if (eventCreatedTitle && shouldRenderSuccessEventMessage) {
             const showSuccessMessageForTwoSeconds = setTimeout(() => {
                 setShouldRenderSuccessEventMessage(false)

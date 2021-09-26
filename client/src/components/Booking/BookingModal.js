@@ -20,7 +20,7 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
 
     const renderModalContent = () => {
         if (!eventOptions) {
-            return <Loader />;
+            return <Loader height={0} />;
         }
         
         if (eventOptions && eventOptions.length === 0) {

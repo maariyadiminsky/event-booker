@@ -1,9 +1,11 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
+import { useComponentDidMount } from "../hooks/useComponentDidMount";
 import { AuthContext } from "../context/AuthContext";
-import { eventBookerAPI } from "../api/eventBookerAPI";
 
 import Loader from "../components/Loader";
 import BookingModal from "../components/Booking/BookingModal";
+
+import { eventBookerAPI } from "../api/eventBookerAPI";
 
 import { handleServerErrors } from "../utils/auth";
 import { getRandomColor } from "../utils/colors";
@@ -65,6 +67,8 @@ const Bookings = () => {
 
     const { token, userId } = useContext(AuthContext);
 
+    const didComponentMount = useComponentDidMount();
+
     const fetchItems = async(itemType) => {
         try {
             const isBookings = itemType === BOOKINGS;
@@ -116,6 +120,8 @@ const Bookings = () => {
     }
 
     useEffect(() => {
+        if (!didComponentMount) return;
+
         if (!bookings) {
             setLoading(true);
             // user should be verified to hit endpoint
@@ -187,7 +193,9 @@ const Bookings = () => {
         bookings.map(({ event: { title, date }}) => {
             const color = getRandomColor();
             return (
-                <div className={`relative flex m-auto justify-end text-right bg-gradient-to-r h-64 max-h-64 w-72 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
+                <div 
+                    key={title}
+                    className={`relative flex m-auto justify-end text-right bg-gradient-to-r h-64 max-h-64 w-72 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
                     <div className={`absolute inset-x-5 top-5 font-light text-${color}-100 text-xl`}>
                         {title}
                     </div>
