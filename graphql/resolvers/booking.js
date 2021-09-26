@@ -21,19 +21,11 @@ module.exports = {
             throw err;
         };
     },
-    bookingForUser: async({ userId }, req) => {
-        try {
-            if (!req.isUserAuthorized) throw new Error("User is unauthenticated!");
-        } catch(err) {
-            console.log(err);
-            throw err;
-        };
-    },
-    createBooking: async ({ eventId, userId }, req) => {
+    createBooking: async ({ eventId }, req) => {
         try {
             if (!req.isUserAuthorized) throw new Error("User is unauthenticated!");
             
-            const booking = await createNewBooking(userId, eventId);
+            const booking = await createNewBooking(req.userId, eventId);
 
             await booking.save();
 
@@ -44,7 +36,7 @@ module.exports = {
             throw err;
         };
     },
-    cancelBooking: async ({ bookingId, userId }, req) => {
+    cancelBooking: async ({ bookingId }, req) => {
         try {
             if (!req.isUserAuthorized) throw new Error("User is unauthenticated!");
             
@@ -54,7 +46,7 @@ module.exports = {
             if (!booking || booking && !booking.user || booking && booking.user && !booking.user._id) throw new Error("Booking with that id does not exist!");
 
             // make sure person deleting booking is the same one who created it
-            if(!isValidBookingUser(userId, booking.user._id.toString())) throw new Error("You can only delete your own bookings.");
+            if(!isValidBookingUser(req.userId, booking.user._id.toString())) throw new Error("You can only delete your own bookings.");
 
             const event = await findEventData(booking.event._id);
 

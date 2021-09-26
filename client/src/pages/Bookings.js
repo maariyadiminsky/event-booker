@@ -19,12 +19,13 @@ import {
     BOOKINGS,
     EVENTS,
     GRAPHQL_ENDPOINT,
-    CREATE_BOOKING_FORM
+    CREATE_BOOKING_FORM,
+    DELETE_BOOKING_FORM
 } from "../const";
 
-const createBookingMutation = (userId, eventId) => `
+const createBookingMutation = (eventId) => `
     mutation {
-        createBooking(userId: "${userId}", eventId: "${eventId}") {
+        createBooking(eventId: "${eventId}") {
             _id
             event {
                 title
@@ -34,9 +35,9 @@ const createBookingMutation = (userId, eventId) => `
     }
 `;
 
-const cancelBookingMutation = (userId, bookingId) => `
+const cancelBookingMutation = (bookingId) => `
     mutation {
-        cancelBooking(userId: "${userId}", bookingId: "${bookingId}") {
+        cancelBooking(bookingId: "${bookingId}") {
             title
         }
     }
@@ -168,7 +169,7 @@ const Bookings = () => {
 
         try {
             const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: createBookingMutation(userId, event)
+                query: createBookingMutation(event)
             });
 
             // handle errors from the server
@@ -208,22 +209,23 @@ const Bookings = () => {
 
         try {
             const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: cancelBookingMutation(userId, cancelBookingId)
+                query: cancelBookingMutation(cancelBookingId)
             });
 
             // handle errors from the server
             if (!response) {
-                throw new Error(`${CREATE_BOOKING_FORM} failed! Response returned empty.`);
+                throw new Error(`${DELETE_BOOKING_FORM} failed! Response returned empty.`);
             } else if (response.data && response.data.errors && response.data.errors.length > 0) {
                 setServerErrors(response.data.errors);
                 return;
             } else if (response.status !== 200 && response.status !== 201) {
-                throw new Error(`${CREATE_BOOKING_FORM} failed! Check your network connection.`);
+                throw new Error(`${DELETE_BOOKING_FORM} failed! Check your network connection.`);
             }
 
             const { data: { data : { cancelBooking }}} = response;
 
-            // if deletion was successful refetch the most accurate bookings data
+            // if deletion was successful reset bookings so they would be refetched again
+            // purpose of this is to keep bookings in sync with backend
             if (cancelBooking && cancelBooking.title) {
                 setBookings(null);
                 toggleCancelModal();
