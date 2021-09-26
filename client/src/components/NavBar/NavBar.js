@@ -88,7 +88,7 @@ const NavBar = () => {
     const handleAuthButton = () => {
         if (hasUserSignedIn) {
             signOutUser();
-            toggleMobileMenu();
+            if (shouldOpenMobileMenu) toggleMobileMenu();
         } else {
             setPathIfUserSignsInSuccessfully(ROOT_PATH);
         }
@@ -97,8 +97,8 @@ const NavBar = () => {
     const setDirectPathTry = (path) => token ? path : AUTH_PATH;
 
     const setPathIfUserSignsInSuccessfully = (pathToSet) => {
-        toggleMobileMenu();
-        
+        if (shouldOpenMobileMenu) toggleMobileMenu();
+
         // no need to set since this means they are signing out
         if (hasUserSignedIn) return;
 
@@ -130,6 +130,7 @@ const NavBar = () => {
         </div>
     );
 
+    console.log("shouldOpenMobileMenu?", shouldOpenMobileMenu);
     const renderMobileMenu = () => (shouldOpenMobileMenu && (
         <div className="md:hidden mobile-menu">
             <ul className="">
