@@ -85,11 +85,20 @@ const NavBar = () => {
     }, [token, hasUserSignedIn])
 
     // either sign them in or set the path to route them too if signed in successfully
-    const handleAuthButton = () => hasUserSignedIn ? signOutUser() : setPathIfUserSignsInSuccessfully(ROOT_PATH);
+    const handleAuthButton = () => {
+        if (hasUserSignedIn) {
+            signOutUser();
+            toggleMobileMenu();
+        } else {
+            setPathIfUserSignsInSuccessfully(ROOT_PATH);
+        }
+    }
 
     const setDirectPathTry = (path) => token ? path : AUTH_PATH;
 
     const setPathIfUserSignsInSuccessfully = (pathToSet) => {
+        toggleMobileMenu();
+        
         // no need to set since this means they are signing out
         if (hasUserSignedIn) return;
 
@@ -128,6 +137,7 @@ const NavBar = () => {
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.home, true)}
                         buttonPath={ROOT_PATH}
+                        handleOnClick={toggleMobileMenu}
                     >
                         {HOME}
                     </NavItem>
@@ -136,6 +146,7 @@ const NavBar = () => {
                     <NavItem 
                         className={isActiveNavItem(navItemsActive.events, true)}
                         buttonPath={EVENTS_PATH}
+                        handleOnClick={toggleMobileMenu}
                     >
                         {EVENTS}
                     </NavItem>
