@@ -2,6 +2,7 @@ import React from "react";
 
 import { Form, Field } from "react-final-form";
 
+import Loader from "../Loader";
 import FormOptions from "../Form/FormOptions";
 import FormErrors from "../Form/FormErrors";
 import Modal from "../Modal/Modal";
@@ -19,7 +20,7 @@ const Booking = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSu
 
     const renderModalContent = () => {
         if (!eventOptions) {
-            return "Loading...";
+            return <Loader />;
         }
         
         if (eventOptions && eventOptions.length === 0) {
