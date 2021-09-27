@@ -26,8 +26,6 @@ module.exports = {
             
             const event = await findEventData(eventId);
 
-            console.log("in event", event);
-
             // make sure booking really exists
             if (!event || (event && !event.user._id)) throw new Error("Event with that id does not exist!");
 
