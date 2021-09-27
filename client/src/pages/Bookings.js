@@ -94,8 +94,12 @@ const Bookings = () => {
             const responseData = isBookings ? data.bookings : data.events;
 
             if (responseData && responseData.length > 0) {
+                // make sure only bookings with events are rendered
+                // this avoids bug where an event is deleted but associated booking still exists.
+                const responseWithEvents = isBookings ? responseData.filter(booking => booking.event !== null) : responseData;
+
                 // sort upcoming items at the top
-                responseData.sort((itemOne, itemTwo) => {
+                responseWithEvents.sort((itemOne, itemTwo) => {
                     const firstItem = isBookings ? itemOne.event.date : itemOne;
                     const secondItem = isBookings ? itemTwo.event.date : itemTwo;
 
@@ -111,9 +115,9 @@ const Bookings = () => {
 
                 // set items
                 if (isBookings) {
-                    setBookings(responseData);
+                    setBookings(responseWithEvents);
                 } else {
-                    setEvents(responseData);
+                    setEvents(responseWithEvents);
                 }
             } else {
                 // set so loader knows no items exist
