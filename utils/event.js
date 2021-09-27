@@ -29,7 +29,7 @@ const findEventData = async(eventId) => {
     try {
         const event = await Event.findById(eventId);
 
-        return eventData(event);
+        return event ? eventData(event) : null;
     } catch(err) {
         console.log(err);
         throw err;
@@ -40,7 +40,7 @@ const findEventsData = async(eventIds) => {
     try {
         const events = await Event.find({ _id: { $in: eventIds }})
 
-        return events.map(event => eventData(event));
+        return events.map(event => event ? eventData(event) : null);
     } catch(err) {
         console.log(err);
         throw err;

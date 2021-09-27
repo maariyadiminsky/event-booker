@@ -47,7 +47,7 @@ module.exports = buildSchema(`
     type RootQuery {
         users: [User!]!
         signIn(email: String!, password: String!): Auth!
-        events: [Event!]!
+        events: [Event]
         bookings: [Booking!]!
     }
 
