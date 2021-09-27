@@ -125,6 +125,7 @@ const Bookings = () => {
                     setBookings([]);
                 } else {
                     setEvents([]);
+                    setLoading(false);
                 }
             }
         } catch(err) {
