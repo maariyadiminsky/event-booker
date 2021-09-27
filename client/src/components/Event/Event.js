@@ -53,8 +53,8 @@ const Event = ({
     const renderNotification = () => notification.shouldRender && notification.color === WARNING_COLOR && (
         <span className="animate-ping inline-flex h-2 w-2 mr-2 mb-0.5 rounded-full bg-red-500" />
     );
-
-    const isCreatorOfEvent = user && userId ? userId === user._id : false;
+    
+    const isCreatorOfEvent = userId === user._id;
     const renderRemoveOption = () => isCreatorOfEvent && (
         <div 
             onClick={() => openCancelModal()}

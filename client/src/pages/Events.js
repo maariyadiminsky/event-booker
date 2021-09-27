@@ -30,6 +30,9 @@ const createEventMutation = (userId, title, description, price, date) => `
             description
             price
             date
+            user {
+                _id
+            }
         }
     }
 `;
