@@ -1,4 +1,7 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, { 
+    Fragment, 
+    useState, useEffect, useContext, useMemo
+} from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
@@ -259,7 +262,7 @@ const Bookings = () => {
             const color = getRandomColor();
             return (
                 <div 
-                    key={title}
+                    key={_id}
                     className={`relative flex m-auto bg-gradient-to-r h-64 max-h-64 w-72 from-${color}-500 to-${color}-400 hover:from-${color}-400 hover:to-${color}-400 border-2 border-${color}-300 shadow-xl rounded-lg cursor-pointer`}>
                     <div className={`absolute inset-x-5 top-5 text-${color}-100 text-xl text-right`}>
                         ✨ {getDateInCorrectFormat(date)}

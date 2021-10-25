@@ -118,7 +118,7 @@ const Events = () => {
 
             fetchEvents();
         }
-    }, [events]);
+    }, [events, token]);
 
     useEffect(() => {    
         if (eventCreatedTitle && shouldRenderSuccessEventMessage) {
