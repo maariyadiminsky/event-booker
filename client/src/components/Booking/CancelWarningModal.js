@@ -7,9 +7,9 @@ import ModalActionsButtons from "../Modal/ModalActionButtons";
 
 import "../Form/Form.css";
 
-const CancelWarningModal = ({ header, toggleModal, serverErrors, handleOnSubmit }) => {
-    const renderServerErrors = () => serverErrors.length > 0 && (
-        <FormErrors errors={serverErrors} />
+const CancelWarningModal = ({ header, toggleModal, errors, handleOnSubmit }) => {
+    const renderErrors = () => errors.length > 0 && (
+        <FormErrors errors={errors} />
     );
 
     const renderModalContent = () => (
@@ -21,7 +21,7 @@ const CancelWarningModal = ({ header, toggleModal, serverErrors, handleOnSubmit 
                         onSubmit={handleSubmit} 
                         className="form-container"
                     >
-                        {renderServerErrors()}
+                        {renderErrors()}
                         <div className="text-center text-gray-400 text-2xl pb-4 px-3">Are you sure?</div>
                         <ModalActionsButtons 
                             submitText="Yes I'm sure"

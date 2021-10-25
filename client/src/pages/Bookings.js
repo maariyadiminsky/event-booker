@@ -15,7 +15,7 @@ import CancelWarningModal from "../components/Booking/CancelWarningModal";
 
 import { eventBookerAPI } from "../api/eventBookerAPI";
 
-import { handleServerErrors } from "../utils/auth";
+import { handleErrors } from "../utils/auth";
 import { getRandomColor } from "../utils/colors";
 
 import { 
@@ -79,7 +79,7 @@ const Bookings = () => {
     const [loading, setLoading] = useState(false);
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
-    const [serverErrors, setServerErrors] = useState([]);
+    const [errors, setErrors] = useState([]);
     const [events, setEvents] = useState(null);
     const [bookings, setBookings] = useState(null);
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
@@ -101,8 +101,8 @@ const Bookings = () => {
             const isBookings = itemType === BOOKINGS;
             const query = isBookings ? bookingsQuery : eventsQuery;
 
-            // handle errors from the server
-            handleServerErrors(query, setServerErrors);
+            // handle errors
+            handleErrors(query, setErrors);
 
             const { data } = query;
 
@@ -205,11 +205,11 @@ const Bookings = () => {
                 query: createBookingMutation(event)
             });
 
-            // handle errors from the server
+            // handle errors
             if (!response) {
                 throw new Error(`${CREATE_BOOKING_FORM} failed! Response returned empty.`);
             } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                setServerErrors(response.data.errors);
+                setErrors(response.data.errors);
                 return;
             } else if (response.status !== 200 && response.status !== 201) {
                 throw new Error(`${CREATE_BOOKING_FORM} failed! Check your network connection.`);
@@ -245,11 +245,11 @@ const Bookings = () => {
                 query: cancelBookingMutation(cancelBookingId)
             });
 
-            // handle errors from the server
+            // handle errors
             if (!response) {
                 throw new Error(`${DELETE_BOOKING_FORM} failed! Response returned empty.`);
             } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                setServerErrors(response.data.errors);
+                setErrors(response.data.errors);
                 return;
             } else if (response.status !== 200 && response.status !== 201) {
                 throw new Error(`${DELETE_BOOKING_FORM} failed! Check your network connection.`);
@@ -309,7 +309,7 @@ const Bookings = () => {
     const renderCancelBookingModal = () => shouldShowCancelModal && (
         <CancelWarningModal
             header="Cancel Booking"
-            serverErrors={serverErrors}
+            errors={errors}
             toggleModal={toggleCancelModal}
             handleOnSubmit={handleCancelBooking}
         />
@@ -318,7 +318,7 @@ const Bookings = () => {
     const renderBookingModal = () => shouldShowModal && (
         <BookingModal
             formType={bookingModalType}
-            serverErrors={serverErrors}
+            errors={errors}
             toggleModal={toggleModal}
             handleOnSubmit={handleOnSubmit}
             eventOptions={events}

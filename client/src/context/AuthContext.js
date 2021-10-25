@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [token, setToken] = useState(null);
+    // todo: store tokenExpiration in localStorage so doesn't reset on refresh
     const [tokenExpiration, setTokenExpiration] = useState(null);
     const [userId, setUserId] = useState(null);
     const [path, setPath] = useState("");

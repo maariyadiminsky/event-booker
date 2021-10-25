@@ -5,6 +5,7 @@ import React, {
 import { useHistory } from "react-router-dom";
 import {
     useQuery,
+    useMutation,
     gql
   } from "@apollo/client";
 
@@ -16,23 +17,22 @@ import EventModal from "../components/Event/EventModal";
 import CancelWarningModal from "../components/Booking/CancelWarningModal";
 import FormAlert from "../components/Form/FormAlert";
 
-import { eventBookerAPI } from "../api/eventBookerAPI";
-
-import { handleServerErrors } from "../utils/auth";
+import { 
+    handleErrors, 
+    getAuthHeaders 
+} from "../utils/auth";
 import { isDateBeforeToday } from "../utils/date";
 
 import { 
     AUTH_PATH,
-    GRAPHQL_ENDPOINT,
     CREATE_EVENT_FORM,
     REMOVE_EVENT_FORM,
     SUCCESS,
 } from "../const";
 
-
-const createEventMutation = (userId, title, description, price, date) => `
-    mutation {
-        createEvent(eventInput: { userId: "${userId}", title: "${title}", description: "${description}", price: ${price}, date: "${date}"}) {
+const CREATE_EVENT_MUTATION = gql `
+    mutation CreateEvent($userId: ID!, $title: String!, $description: String!, $price: Float!, $date: String!){
+        createEvent(eventInput: { userId: $userId, title: $title, description: $description, price: $price, date: $date}) {
             _id
             title
             description
@@ -45,15 +45,15 @@ const createEventMutation = (userId, title, description, price, date) => `
     }
 `;
 
-const removeEventMutation = (eventId) => `
-    mutation {
-        removeEvent(eventId: "${eventId}") {
+const REMOVE_EVENT_MUTATION = gql`
+    mutation RemoveEvent($eventId: ID!) {
+        removeEvent(eventId: $eventId) {
             title
         }
     }
 `;
 
-const EventsQuery = gql`
+const EVENTS_QUERY = gql`
     query Events {
         events {
             _id
@@ -69,20 +69,40 @@ const EventsQuery = gql`
 `;
 
 const Events = () => {
+    // loader & errors
     const [loading, setLoading] = useState(false);
-    const [shouldShowModal, setShouldShowModal] = useState(false);
-    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
-    const [shouldRenderSuccessEventMessage, setShouldRenderSuccessEventMessage] = useState(false);
-    const [serverErrors, setServerErrors] = useState([]);
+    const [errors, setErrors] = useState([]);
+
+    // context
+    const { token, userId } = useContext(AuthContext);
+
+    // routing
+    const history = useHistory();
+
+    // graphql
+    const eventsQuery = useQuery(EVENTS_QUERY);
+
+    const [createEvent] = useMutation(CREATE_EVENT_MUTATION, {
+        refetchQueries: [{ query: EVENTS_QUERY }],
+        awaitRefetchQueries: true,
+        context: getAuthHeaders(token)
+    });
+
+    const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, {
+        refetchQueries: [{ query: EVENTS_QUERY }],
+        awaitRefetchQueries: true,
+        context: getAuthHeaders(token)
+    });
+
+    // data
     const [eventCreatedTitle, setEventCreatedTitle] = useState("");
     const [events, setEvents] = useState(null);
     const [cancelEventId, setCancelEventId] = useState(null);
 
-    const { token, userId } = useContext(AuthContext);
-
-    const history = useHistory();
-
-    const eventsQuery = useQuery(EventsQuery);
+    // boolean values
+    const [shouldShowModal, setShouldShowModal] = useState(false);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
+    const [shouldRenderSuccessEventMessage, setShouldRenderSuccessEventMessage] = useState(false);
 
     useEffect(() => {
         if (!events && eventsQuery) {
@@ -92,8 +112,8 @@ const Events = () => {
 
             const fetchEvents = () => {
                 try {
-                    // handle errors from the server
-                    handleServerErrors(eventsQuery, setServerErrors);
+                    // handle errors
+                    handleErrors(eventsQuery, setErrors);
 
                     const { data } = eventsQuery;
     
@@ -148,6 +168,32 @@ const Events = () => {
 
     }, [eventCreatedTitle, shouldRenderSuccessEventMessage]);
 
+    /**
+                 const response = await removeEvent({ 
+                variables: {
+                    eventId: cancelEventId
+                }
+            });
+
+            console.log("removing", response);
+
+            // handle errors
+            handleErrors(response, setErrors, null, true);
+
+            const { data, loading } = response;
+
+            // if deletion was successful reset events so they would be refetched again
+            // purpose of this is to keep event in sync with backend
+            if (data.removeEvent && data.removeEvent.title) {
+                setEvents(null);
+                toggleCancelModal();
+            }
+
+            setLoading(loading);
+        } catch(err) {
+            console.log(err);
+           */
+
     const handleOnSubmit = async({ title, description, price, date }) => {
         // user should be verified to hit endpoint
         if (!token || !userId) return;
@@ -155,36 +201,32 @@ const Events = () => {
         setLoading(true);
 
         try {
-            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: createEventMutation(userId, title, description, price, date)
+            const response = await createEvent({ 
+                variables: {
+                    userId, 
+                    title, 
+                    description, 
+                    price: +price, 
+                    date
+                }
             });
 
-            // handle errors from the server
-            if (!response) {
-                setEventCreatedTitle("");
-                throw new Error(`${CREATE_EVENT_FORM} failed! Response returned empty.`);
-            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                setEventCreatedTitle("");
-                setServerErrors(response.data.errors);
-                return;
-            } else if (response.status !== 200 && response.status !== 201) {
-                setEventCreatedTitle("");
-                throw new Error(`${CREATE_EVENT_FORM} failed! Check your network connection.`);
-            }
+            // handle errors
+            handleErrors(response, setErrors, () => setEventCreatedTitle(""), true);
 
-            const { data: { data : { createEvent }}} = response;
-
-            if (createEvent._id && createEvent.title) {
+            if (response.data.createEvent._id && response.data.createEvent.title) {
                 setEvents([
                     ...events,
-                    createEvent
+                    response.data.createEvent
                 ]);
-                setEventCreatedTitle(createEvent.title);
+                setEventCreatedTitle(response.data.createEvent.title);
                 setShouldRenderSuccessEventMessage(true);
                 toggleModal();
             } else {
-                throw new Error(`${CREATE_EVENT_FORM} failed! User not created! Please try again.`);
+                throw new Error(`${CREATE_EVENT_FORM} failed! Event not created! Please try again.`);
             }
+
+            setLoading(response.loading);
         } catch(err) {
             console.log(err);
             throw err;
@@ -200,29 +242,25 @@ const Events = () => {
         setLoading(true);
 
         try {
-            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: removeEventMutation(cancelEventId)
+            const response = await removeEvent({ 
+                variables: {
+                    eventId: cancelEventId
+                }
             });
 
-            // handle errors from the server
-            if (!response) {
-                throw new Error(`${REMOVE_EVENT_FORM} failed! Response returned empty.`);
-            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                setServerErrors(response.data.errors);
-                return;
-            } else if (response.status !== 200 && response.status !== 201) {
-                throw new Error(`${REMOVE_EVENT_FORM} failed! Check your network connection.`);
-            }
-
-            const { data: { data : { removeEvent }}} = response;
+            // handle errors
+            handleErrors(response, setErrors, null, true);
 
             // if deletion was successful reset events so they would be refetched again
             // purpose of this is to keep event in sync with backend
-            if (removeEvent && removeEvent.title) {
+            if (response.data.removeEvent && response.data.removeEvent.title) {
                 setEvents(null);
                 toggleCancelModal();
+            } else {
+                throw new Error(`${REMOVE_EVENT_FORM} failed! Event not deleted! Please try again.`);
             }
 
+            setLoading(response.loading);
         } catch(err) {
             console.log(err);
             throw err;
@@ -280,7 +318,7 @@ const Events = () => {
     const renderCancelBookingModal = () => shouldShowCancelModal && (
         <CancelWarningModal
             header="Remove Event"
-            serverErrors={serverErrors}
+            errors={errors}
             toggleModal={toggleCancelModal}
             handleOnSubmit={handleRemoveEvent}
         />
@@ -288,7 +326,7 @@ const Events = () => {
 
     const renderEventModal = () => !shouldRenderSuccessEventMessage && shouldShowModal && (
         <EventModal
-            serverErrors={serverErrors}
+            errors={errors}
             toggleModal={toggleModal}
             handleOnSubmit={handleOnSubmit}
         />

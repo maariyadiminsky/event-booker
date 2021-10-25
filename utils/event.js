@@ -53,7 +53,7 @@ const createNewEvent = (userId, title, description, price, date) => (
     new Event({
         title,
         description,
-        price: +price,
+        price,
         date: findDate(date),
         user: userId
     })

@@ -15,9 +15,9 @@ import { CREATE_EVENT_FORM } from "../../const";
 import "../Form/Form.css";
 
 const todaysDate = getTodaysDate();
-const EventModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
-    const renderServerErrors = () => serverErrors.length > 0 && (
-        <FormErrors errors={serverErrors} />
+const EventModal = ({ toggleModal, errors, handleOnSubmit }) => {
+    const renderErrors = () => errors.length > 0 && (
+        <FormErrors errors={errors} />
     );
 
     const renderModalContent = () => (
@@ -31,7 +31,7 @@ const EventModal = ({ toggleModal, serverErrors, handleOnSubmit }) => {
                         onSubmit={handleSubmit} 
                         className="form-container"
                     >
-                        {renderServerErrors()}
+                        {renderErrors()}
                         <Field 
                             component={FormInput} 
                             name="title" 

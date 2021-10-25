@@ -4,17 +4,33 @@ import {
     CREATE_EVENT_FORM
 } from "../const"
 
-export const handleServerErrors = (response, callback) => {
+const mutationCallbackTry = (isMutation, mutationCallback) => {
+    if (isMutation && mutationCallback) mutationCallback();
+}
+export const handleErrors = (response, callback, mutationCallback = null, isMutation = false) => {
     console.log("in handleServerErrors", response);
     if (!response) {
-        throw new Error("Data retrieval failed with no response!");
+        mutationCallbackTry(isMutation, mutationCallback);
+
+        throw new Error(`Data ${isMutation? "mutation" : "retrieval"} failed with no response!`);
     } else if (response.errors && response.errors.length > 0) {
+        mutationCallbackTry(isMutation, mutationCallback);
+
         callback(response.errors);
+
         return;
     } else if (response.status && response.status !== 200 && response.status !== 201) {
-        throw new Error(`Data retrieval failed with server status code: ${response.status}.`);
+        mutationCallbackTry(isMutation, mutationCallback);
+
+        throw new Error(`Data ${isMutation? "mutation" : "retrieval"} failed with server status code: ${response.status}.`);
     }
 }
+
+export const getAuthHeaders = (token) => ({
+    headers: {
+        authorization: `Bearer ${token}`,
+    }
+});
 
 export const validateForm = ({ 
     // sign in / sign up forms

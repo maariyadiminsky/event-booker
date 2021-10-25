@@ -12,9 +12,9 @@ import { BOOKINGS_NEED_EVENTS } from "../../const";
 
 import "../Form/Form.css";
 
-const BookingModal = ({ eventOptions, formType, toggleModal, serverErrors, handleOnSubmit }) => {
-    const renderServerErrors = () => serverErrors.length > 0 && (
-        <FormErrors errors={serverErrors} />
+const BookingModal = ({ eventOptions, formType, toggleModal, errors, handleOnSubmit }) => {
+    const renderErrors = () => errors.length > 0 && (
+        <FormErrors errors={errors} />
     );
 
     const renderModalContent = () => {
@@ -40,7 +40,7 @@ const BookingModal = ({ eventOptions, formType, toggleModal, serverErrors, handl
                             onSubmit={handleSubmit} 
                             className="form-container"
                         >
-                            {renderServerErrors()}
+                            {renderErrors()}
                             <Field 
                                 name="event" 
                                 options={eventOptions} 
