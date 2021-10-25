@@ -318,7 +318,7 @@ const Bookings = () => {
                 <div className="overflow-y-scroll max-h-screen px-20 pb-20 m-auto">
                     <div className="grid sm:grid-cols-1 md:grid-cols-3 md:gap-x-52 md:gap-y-1 lg:grid-cols-4 lg:gap-x-52 xl:grid-cols-5 xl:gap-x-72 2xl:gap-x-3">
                         {renderBookAnEvent()}
-                        {renderBookings()}
+                        {renderBookings()} test
                     </div>
                 </div>
             </div>
