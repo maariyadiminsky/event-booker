@@ -90,7 +90,7 @@ const Events = () => {
                 setLoading(eventsQuery.loading);
             }
 
-            const fetchEvents = async() => {
+            const fetchEvents = () => {
                 try {
                     // handle errors from the server
                     handleServerErrors(eventsQuery, setServerErrors);
