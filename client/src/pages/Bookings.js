@@ -165,11 +165,17 @@ const Bookings = () => {
             }
         }
 
-    }, [events, eventsQuery, loading, fetchItems])
+    }, [
+        events, eventsQuery, 
+        loading, 
+        fetchItems
+    ])
 
     useEffect(() => {
         if (events && events.length > 0 && !bookings && bookingsQuery) {
-            setLoading(true);
+            if (!loading && bookingsQuery.loading) {
+                setLoading(bookingsQuery.loading);
+            }
             // user should be verified to hit endpoint
             if (!token || !userId) return;
 
@@ -181,7 +187,12 @@ const Bookings = () => {
             setBookings([]);
         }
 
-    }, [events, bookings, bookingsQuery, fetchItems, token, userId])
+    }, [
+        events, bookings, bookingsQuery,
+        token, userId, 
+        loading, 
+        fetchItems
+    ])
 
     const handleOnSubmit = async({ event }) => {
         // user should be verified to hit endpoint
