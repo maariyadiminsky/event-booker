@@ -30,7 +30,7 @@ import {
     SUCCESS,
 } from "../const";
 
-const CREATE_EVENT_MUTATION = gql `
+const CREATE_EVENT_MUTATION = gql`
     mutation CreateEvent($userId: ID!, $title: String!, $description: String!, $price: Float!, $date: String!){
         createEvent(eventInput: { userId: $userId, title: $title, description: $description, price: $price, date: $date}) {
             _id
@@ -167,32 +167,6 @@ const Events = () => {
         }
 
     }, [eventCreatedTitle, shouldRenderSuccessEventMessage]);
-
-    /**
-                 const response = await removeEvent({ 
-                variables: {
-                    eventId: cancelEventId
-                }
-            });
-
-            console.log("removing", response);
-
-            // handle errors
-            handleErrors(response, setErrors, null, true);
-
-            const { data, loading } = response;
-
-            // if deletion was successful reset events so they would be refetched again
-            // purpose of this is to keep event in sync with backend
-            if (data.removeEvent && data.removeEvent.title) {
-                setEvents(null);
-                toggleCancelModal();
-            }
-
-            setLoading(loading);
-        } catch(err) {
-            console.log(err);
-           */
 
     const handleOnSubmit = async({ title, description, price, date }) => {
         // user should be verified to hit endpoint
