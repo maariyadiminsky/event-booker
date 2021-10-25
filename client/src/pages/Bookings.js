@@ -2,6 +2,11 @@ import React, {
     Fragment, 
     useState, useEffect, useContext
 } from "react";
+import {
+    useQuery,
+    gql
+  } from "@apollo/client";
+
 import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
@@ -70,6 +75,30 @@ const eventsQuery = `
     }
 `;
 
+const BookingsQuery = gql`
+    query Bookings{
+        bookings {
+            _id
+            event {
+                title
+                date
+            }
+        }
+    }
+`;
+
+const EventsQuery = gql`
+    query Events {
+        events {
+            _id
+            title
+            description
+            price
+            date
+        }
+    }
+`;
+
 const Bookings = () => {
     const [loading, setLoading] = useState(false);
     const [shouldShowModal, setShouldShowModal] = useState(false);
@@ -82,12 +111,26 @@ const Bookings = () => {
 
     const { token, userId } = useContext(AuthContext);
 
+    const eventsQuery = useQuery(EventsQuery);
+    const bookingsQuery = useQuery(BookingsQuery, {
+        context: {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+    });
+
+    console.log("events", eventsQuery);
+    console.log("bookings", bookingsQuery);
+
     const fetchItems = async(itemType) => {
         try {
             const isBookings = itemType === BOOKINGS;
-            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: isBookings ? bookingsQuery : eventsQuery
-            });
+            const response = isBookings ? bookingsQuery : eventsQuery;
+
+            if (!response) return;
+
+            console.log("test", response);
 
             // handle errors from the server
             handleServerErrors(response, setServerErrors);
@@ -138,17 +181,23 @@ const Bookings = () => {
     }
 
     useEffect(() => {
-        if (!events) {
-            setLoading(true);
-
-            const fetchEvents = async() => {
-                await fetchItems(EVENTS);
+        if (!events && eventsQuery) {
+            if (!loading && eventsQuery.loading) {
+                setLoading(eventsQuery.loading);
             }
 
-            fetchEvents();
+            if (!eventsQuery.loading) {
+                const fetchEvents = async() => {
+                    await fetchItems(EVENTS);
+
+                    setLoading(false);
+                }
+
+                fetchEvents();
+            }
         }
 
-    }, [events])
+    }, [events, eventsQuery])
 
     useEffect(() => {
         if (events && events.length > 0 && !bookings) {

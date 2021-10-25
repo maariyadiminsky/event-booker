@@ -1,5 +1,13 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, { 
+    Fragment, 
+    useState, useEffect, useContext 
+} from "react";
 import { useHistory } from "react-router-dom";
+import {
+    useQuery,
+    gql
+  } from "@apollo/client";
+
 import { AuthContext } from "../context/AuthContext";
 
 import Loader from "../components/Loader";
@@ -45,8 +53,8 @@ const removeEventMutation = (eventId) => `
     }
 `;
 
-const eventsQuery = `
-    query {
+const EventsQuery = gql`
+    query Events {
         events {
             _id
             title
@@ -74,24 +82,26 @@ const Events = () => {
 
     const history = useHistory();
 
+    const eventsQuery = useQuery(EventsQuery);
+
     useEffect(() => {
-        if (!events) {
-            setLoading(true);
+        if (!events && eventsQuery) {
+            if (!loading && eventsQuery.loading) {
+                setLoading(eventsQuery.loading);
+            }
 
             const fetchEvents = async() => {
                 try {
-                    const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                        query: eventsQuery
-                    });
-    
                     // handle errors from the server
-                    handleServerErrors(response, setServerErrors);
+                    handleServerErrors(eventsQuery, setServerErrors);
+
+                    const { data } = eventsQuery;
     
-                    const { data: { data }} = response;
-    
-                    if (data.events) {
+                    if (data && data.events) {
+                        const newDataEvents = [...data.events];
+
                         // sort upcoming events at the top
-                        data.events.sort((eventOne, eventTwo) => {
+                        newDataEvents.sort((eventOne, eventTwo) => {
                             // make sure expired events are always at the bottom
                             if (isDateBeforeToday(eventOne.date) && !isDateBeforeToday(eventTwo.date)) {
                                 return 1;
@@ -103,7 +113,7 @@ const Events = () => {
                         });
 
                         // set events for ui
-                        setEvents(data.events);
+                        setEvents(newDataEvents);
                     } else {
                         // set so loader knows no events exist
                         setEvents([]);
@@ -116,9 +126,11 @@ const Events = () => {
                 setLoading(false);
             }
 
-            fetchEvents();
+            if (!eventsQuery.loading) {
+                fetchEvents();
+            }
         }
-    }, [events, token]);
+    }, [events, eventsQuery, loading, token]);
 
     useEffect(() => {    
         if (eventCreatedTitle && shouldRenderSuccessEventMessage) {

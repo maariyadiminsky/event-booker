@@ -5,13 +5,14 @@ import {
 } from "../const"
 
 export const handleServerErrors = (response, callback) => {
+    console.log("in handleServerErrors", response);
     if (!response) {
-        throw new Error("Booking retrieval failed with no response!");
-    } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-        callback(response.data.errors);
+        throw new Error("Data retrieval failed with no response!");
+    } else if (response.errors && response.errors.length > 0) {
+        callback(response.errors);
         return;
-    } else if (response.status !== 200 && response.status !== 201) {
-        throw new Error(`Booking retrieval failed with server status code: ${response.status}.`);
+    } else if (response.status && response.status !== 200 && response.status !== 201) {
+        throw new Error(`Data retrieval failed with server status code: ${response.status}.`);
     }
 }
 
