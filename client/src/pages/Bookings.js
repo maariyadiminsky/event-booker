@@ -1,6 +1,6 @@
 import React, { 
     Fragment, 
-    useState, useEffect, useContext
+    useState, useEffect, useContext, useMemo
 } from "react";
 import {
     useQuery,
@@ -51,30 +51,6 @@ const cancelBookingMutation = (bookingId) => `
     }
 `;
 
-const bookingsQuery = `
-    query {
-        bookings {
-            _id
-            event {
-                title
-                date
-            }
-        }
-    }
-`;
-
-const eventsQuery = `
-    query {
-        events {
-            _id
-            title
-            description
-            price
-            date
-        }
-    }
-`;
-
 const BookingsQuery = gql`
     query Bookings{
         bookings {
@@ -120,32 +96,28 @@ const Bookings = () => {
         }
     });
 
-    console.log("events", eventsQuery);
-    console.log("bookings", bookingsQuery);
-
-    const fetchItems = async(itemType) => {
+    const fetchItems = useMemo(() => (itemType) => {
         try {
             const isBookings = itemType === BOOKINGS;
-            const response = isBookings ? bookingsQuery : eventsQuery;
-
-            if (!response) return;
-
-            console.log("test", response);
+            const query = isBookings ? bookingsQuery : eventsQuery;
 
             // handle errors from the server
-            handleServerErrors(response, setServerErrors);
+            handleServerErrors(query, setServerErrors);
 
-            const { data: { data }} = response;
+            const { data } = query;
 
-            const responseData = isBookings ? data.bookings : data.events;
+            const queryData = isBookings ? data.bookings : data.events;
 
-            if (responseData && responseData.length > 0) {
+            if (queryData && queryData.length > 0) {
                 // make sure only bookings with events are rendered
                 // this avoids bug where an event is deleted but associated booking still exists.
-                const responseWithEvents = isBookings ? responseData.filter(booking => booking.event !== null) : responseData;
+                // todo: make an improved fix by removing the booking associated with the event on the backend
+                const queryWithEvents = isBookings ? queryData.filter(booking => booking.event !== null) : queryData;
 
+                // temporarily mutate data for sorting purposes
+                const mutableQueryEvents = [...queryWithEvents];
                 // sort upcoming items at the top
-                responseWithEvents.sort((itemOne, itemTwo) => {
+                mutableQueryEvents.sort((itemOne, itemTwo) => {
                     const firstItem = isBookings ? itemOne.event.date : itemOne;
                     const secondItem = isBookings ? itemTwo.event.date : itemTwo;
 
@@ -161,10 +133,12 @@ const Bookings = () => {
 
                 // set items
                 if (isBookings) {
-                    setBookings(responseWithEvents);
+                    setBookings(mutableQueryEvents);
                 } else {
-                    setEvents(responseWithEvents);
+                    setEvents(mutableQueryEvents);
                 }
+
+                setLoading(false);
             } else {
                 // set so loader knows no items exist
                 if (isBookings) {
@@ -178,7 +152,7 @@ const Bookings = () => {
             console.log(err);
             throw err;
         }
-    }
+    }, [eventsQuery, bookingsQuery]);
 
     useEffect(() => {
         if (!events && eventsQuery) {
@@ -187,36 +161,27 @@ const Bookings = () => {
             }
 
             if (!eventsQuery.loading) {
-                const fetchEvents = async() => {
-                    await fetchItems(EVENTS);
-
-                    setLoading(false);
-                }
-
-                fetchEvents();
+                fetchItems(EVENTS);
             }
         }
 
-    }, [events, eventsQuery])
+    }, [events, eventsQuery, loading, fetchItems])
 
     useEffect(() => {
-        if (events && events.length > 0 && !bookings) {
+        if (events && events.length > 0 && !bookings && bookingsQuery) {
             setLoading(true);
             // user should be verified to hit endpoint
             if (!token || !userId) return;
 
-            const fetchBookings = async() => {
-                await fetchItems(BOOKINGS);
+            if (!bookingsQuery.loading) {
+                fetchItems(BOOKINGS);
+            }
 
-                setLoading(false);
-            };
-
-            fetchBookings();
-        } else if (events && events.length === 0 && !bookings) {
+        } else if (events && events.length === 0 && !bookings && !bookingsQuery) {
             setBookings([]);
         }
 
-    }, [events, bookings])
+    }, [events, bookings, bookingsQuery, fetchItems, token, userId])
 
     const handleOnSubmit = async({ event }) => {
         // user should be verified to hit endpoint

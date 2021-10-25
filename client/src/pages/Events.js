@@ -98,10 +98,11 @@ const Events = () => {
                     const { data } = eventsQuery;
     
                     if (data && data.events) {
-                        const newDataEvents = [...data.events];
+                        // temporarily mutate data for sorting purposes
+                        const mutableDataEvents = [...data.events];
 
                         // sort upcoming events at the top
-                        newDataEvents.sort((eventOne, eventTwo) => {
+                        mutableDataEvents.sort((eventOne, eventTwo) => {
                             // make sure expired events are always at the bottom
                             if (isDateBeforeToday(eventOne.date) && !isDateBeforeToday(eventTwo.date)) {
                                 return 1;
@@ -113,7 +114,7 @@ const Events = () => {
                         });
 
                         // set events for ui
-                        setEvents(newDataEvents);
+                        setEvents(mutableDataEvents);
                     } else {
                         // set so loader knows no events exist
                         setEvents([]);
