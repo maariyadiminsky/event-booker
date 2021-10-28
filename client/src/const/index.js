@@ -11,6 +11,9 @@ export const SIGN_OUT = "Sign Out";
 export const SIGN_UP = "Sign Up";
 export const HOME = "Home";
 
+// policy
+export const QUERY_POLICY_NETWORK_ONLY = "network-only";
+
 // text
 export const SWITCH_SIGN_UP_TEXT = "Don't have an account yet?";
 export const SWITCH_SIGN_IN_TEXT = "Already have an account?";

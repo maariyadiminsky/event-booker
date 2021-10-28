@@ -10,6 +10,8 @@ import {
   } from "@apollo/client";
   import { onError } from "@apollo/client/link/error";
 
+  import { AuthContextProvider } from "./context/AuthContext";
+
 import App from "./pages/App";
 
 import { GRAPHQL_ENDPOINT } from "./const";
@@ -40,9 +42,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthContextProvider>
             <App />
-        </BrowserRouter>
+        </AuthContextProvider>
+      </BrowserRouter>
     </ApolloProvider>,
     document.getElementById("root")
 );

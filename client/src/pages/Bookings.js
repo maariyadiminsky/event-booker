@@ -4,6 +4,7 @@ import React, {
 } from "react";
 import {
     useQuery,
+    useMutation,
     gql
   } from "@apollo/client";
 
@@ -13,9 +14,10 @@ import Loader from "../components/Loader";
 import BookingModal from "../components/Booking/BookingModal";
 import CancelWarningModal from "../components/Booking/CancelWarningModal";
 
-import { eventBookerAPI } from "../api/eventBookerAPI";
-
-import { handleErrors } from "../utils/auth";
+import { 
+    handleErrors,
+    getAuthHeaders,
+} from "../utils/auth";
 import { getRandomColor } from "../utils/colors";
 
 import { 
@@ -26,14 +28,13 @@ import {
 import { 
     BOOKINGS,
     EVENTS,
-    GRAPHQL_ENDPOINT,
     CREATE_BOOKING_FORM,
-    DELETE_BOOKING_FORM
+    QUERY_POLICY_NETWORK_ONLY
 } from "../const";
 
-const createBookingMutation = (eventId) => `
-    mutation {
-        createBooking(eventId: "${eventId}") {
+const CREATE_BOOKING_MUTATION = gql`
+    mutation CreateBooking($eventId: ID!) {
+        createBooking(eventId: $eventId) {
             _id
             event {
                 title
@@ -43,16 +44,16 @@ const createBookingMutation = (eventId) => `
     }
 `;
 
-const cancelBookingMutation = (bookingId) => `
-    mutation {
-        cancelBooking(bookingId: "${bookingId}") {
+const CANCEL_BOOKING_MUTATION = gql`
+    mutation CancelBooking($bookingId: ID!) {
+        cancelBooking(bookingId: $bookingId) {
             title
         }
     }
 `;
 
-const BookingsQuery = gql`
-    query Bookings{
+const BOOKINGS_QUERY = gql`
+    query Bookings {
         bookings {
             _id
             event {
@@ -63,7 +64,7 @@ const BookingsQuery = gql`
     }
 `;
 
-const EventsQuery = gql`
+const EVENTS_QUERY = gql`
     query Events {
         events {
             _id
@@ -76,25 +77,32 @@ const EventsQuery = gql`
 `;
 
 const Bookings = () => {
+    // loader & errors
     const [loading, setLoading] = useState(false);
-    const [shouldShowModal, setShouldShowModal] = useState(false);
-    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
     const [errors, setErrors] = useState([]);
+
+    // auth
+    const { token, userId } = useContext(AuthContext);
+
+    // graphql
+    const eventsQuery = useQuery(EVENTS_QUERY);
+    const bookingsQuery = useQuery(BOOKINGS_QUERY, { 
+        fetchPolicy: QUERY_POLICY_NETWORK_ONLY,
+        context: getAuthHeaders(token) 
+    });
+
+    const [createBooking] = useMutation(CREATE_BOOKING_MUTATION, { context: getAuthHeaders(token) });
+    const [cancelBooking] = useMutation(CANCEL_BOOKING_MUTATION, { context: getAuthHeaders(token) });
+
+    // data
     const [events, setEvents] = useState(null);
     const [bookings, setBookings] = useState(null);
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
     const [cancelBookingId, setCancelBookingId] = useState(null);
 
-    const { token, userId } = useContext(AuthContext);
-
-    const eventsQuery = useQuery(EventsQuery);
-    const bookingsQuery = useQuery(BookingsQuery, {
-        context: {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-    });
+    // bools
+    const [shouldShowModal, setShouldShowModal] = useState(false);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
 
     const fetchItems = useMemo(() => (itemType) => {
         try {
@@ -152,7 +160,7 @@ const Bookings = () => {
             console.log(err);
             throw err;
         }
-    }, [eventsQuery, bookingsQuery]);
+    }, [bookingsQuery, eventsQuery]);
 
     useEffect(() => {
         if (!events && eventsQuery) {
@@ -167,12 +175,12 @@ const Bookings = () => {
 
     }, [
         events, eventsQuery, 
-        loading, 
+        loading,
         fetchItems
     ])
 
     useEffect(() => {
-        if (events && events.length > 0 && !bookings && bookingsQuery) {
+        if (events && !bookings && bookingsQuery && bookingsQuery.data) {
             if (!loading && bookingsQuery.loading) {
                 setLoading(bookingsQuery.loading);
             }
@@ -182,15 +190,12 @@ const Bookings = () => {
             if (!bookingsQuery.loading) {
                 fetchItems(BOOKINGS);
             }
-
-        } else if (events && events.length === 0 && !bookings && !bookingsQuery) {
-            setBookings([]);
         }
-
     }, [
-        events, bookings, bookingsQuery,
+        events,
+        bookings, bookingsQuery,
         token, userId, 
-        loading, 
+        loading,
         fetchItems
     ])
 
@@ -201,33 +206,28 @@ const Bookings = () => {
         setLoading(true);
 
         try {
-            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: createBookingMutation(event)
+            const response = await createBooking({ 
+                variables: { 
+                    eventId: event 
+                } 
             });
 
             // handle errors
-            if (!response) {
-                throw new Error(`${CREATE_BOOKING_FORM} failed! Response returned empty.`);
-            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                setErrors(response.data.errors);
-                return;
-            } else if (response.status !== 200 && response.status !== 201) {
-                throw new Error(`${CREATE_BOOKING_FORM} failed! Check your network connection.`);
-            }
+            handleErrors(response, setErrors);
 
-            const { data: { data : { createBooking }}} = response;
+            const { data, loading } = response;
 
-            if (createBooking._id) {
+            if (data.createBooking._id) {
                 setBookings([
                     ...bookings,
-                    createBooking
+                    data.createBooking
                 ]);
                 toggleModal();
             } else {
                 throw new Error(`${CREATE_BOOKING_FORM} failed! Please try again.`);
             }
 
-            setLoading(false);
+            setLoading(loading);
         } catch(err) {
             console.log(err);
             throw err;
@@ -241,28 +241,24 @@ const Bookings = () => {
         setLoading(true);
 
         try {
-            const response = await eventBookerAPI(token).post(GRAPHQL_ENDPOINT, {
-                query: cancelBookingMutation(cancelBookingId)
+            const response = await cancelBooking({ 
+                variables: { 
+                    bookingId: cancelBookingId
+                } 
             });
 
             // handle errors
-            if (!response) {
-                throw new Error(`${DELETE_BOOKING_FORM} failed! Response returned empty.`);
-            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                setErrors(response.data.errors);
-                return;
-            } else if (response.status !== 200 && response.status !== 201) {
-                throw new Error(`${DELETE_BOOKING_FORM} failed! Check your network connection.`);
-            }
+            handleErrors(response, setErrors);
 
-            const { data: { data : { cancelBooking }}} = response;
+            const { data, loading } = response;
 
-            // if deletion was successful reset bookings so they would be refetched again
-            // purpose of this is to keep bookings in sync with backend
-            if (cancelBooking && cancelBooking.title) {
-                setBookings(null);
+            if (data.cancelBooking && data.cancelBooking.title) {
+                const bookingsWithCanceledBookingRemoved = bookings.filter((booking) => booking.event.title !== data.cancelBooking.title);
+                setBookings(bookingsWithCanceledBookingRemoved);
                 toggleCancelModal();
             }
+
+            setLoading(loading);
 
         } catch(err) {
             console.log(err);

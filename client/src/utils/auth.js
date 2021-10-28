@@ -8,14 +8,12 @@ const mutationCallbackTry = (isMutation, mutationCallback) => {
     if (isMutation && mutationCallback) mutationCallback();
 }
 export const handleErrors = (response, callback, mutationCallback = null, isMutation = false) => {
-    console.log("in handleServerErrors", response);
     if (!response) {
         mutationCallbackTry(isMutation, mutationCallback);
 
         throw new Error(`Data ${isMutation? "mutation" : "retrieval"} failed with no response!`);
     } else if (response.errors && response.errors.length > 0) {
         mutationCallbackTry(isMutation, mutationCallback);
-
         callback(response.errors);
 
         return;
@@ -28,7 +26,7 @@ export const handleErrors = (response, callback, mutationCallback = null, isMuta
 
 export const getAuthHeaders = (token) => ({
     headers: {
-        authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`
     }
 });
 

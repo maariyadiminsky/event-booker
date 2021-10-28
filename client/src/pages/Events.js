@@ -19,7 +19,7 @@ import FormAlert from "../components/Form/FormAlert";
 
 import { 
     handleErrors, 
-    getAuthHeaders 
+    getAuthHeaders
 } from "../utils/auth";
 import { isDateBeforeToday } from "../utils/date";
 
@@ -28,6 +28,7 @@ import {
     CREATE_EVENT_FORM,
     REMOVE_EVENT_FORM,
     SUCCESS,
+    QUERY_POLICY_NETWORK_ONLY
 } from "../const";
 
 const CREATE_EVENT_MUTATION = gql`
@@ -80,19 +81,12 @@ const Events = () => {
     const history = useHistory();
 
     // graphql
-    const eventsQuery = useQuery(EVENTS_QUERY);
-
-    const [createEvent] = useMutation(CREATE_EVENT_MUTATION, {
-        refetchQueries: [{ query: EVENTS_QUERY }],
-        awaitRefetchQueries: true,
-        context: getAuthHeaders(token)
+    const eventsQuery = useQuery(EVENTS_QUERY, { 
+        fetchPolicy: QUERY_POLICY_NETWORK_ONLY,
     });
 
-    const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, {
-        refetchQueries: [{ query: EVENTS_QUERY }],
-        awaitRefetchQueries: true,
-        context: getAuthHeaders(token)
-    });
+    const [createEvent] = useMutation(CREATE_EVENT_MUTATION, { context: getAuthHeaders(token) });
+    const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, { context: getAuthHeaders(token) });
 
     // data
     const [eventCreatedTitle, setEventCreatedTitle] = useState("");
@@ -188,19 +182,21 @@ const Events = () => {
             // handle errors
             handleErrors(response, setErrors, () => setEventCreatedTitle(""), true);
 
-            if (response.data.createEvent._id && response.data.createEvent.title) {
+            const { data, loading } = response;
+
+            if (data.createEvent._id && data.createEvent.title) {
                 setEvents([
                     ...events,
-                    response.data.createEvent
+                    data.createEvent
                 ]);
-                setEventCreatedTitle(response.data.createEvent.title);
+                setEventCreatedTitle(data.createEvent.title);
                 setShouldRenderSuccessEventMessage(true);
                 toggleModal();
             } else {
                 throw new Error(`${CREATE_EVENT_FORM} failed! Event not created! Please try again.`);
             }
 
-            setLoading(response.loading);
+            setLoading(loading);
         } catch(err) {
             console.log(err);
             throw err;
@@ -225,16 +221,17 @@ const Events = () => {
             // handle errors
             handleErrors(response, setErrors, null, true);
 
-            // if deletion was successful reset events so they would be refetched again
-            // purpose of this is to keep event in sync with backend
-            if (response.data.removeEvent && response.data.removeEvent.title) {
-                setEvents(null);
+            const { data, loading } = response;
+
+            if (data.removeEvent && data.removeEvent.title) {
+                const eventsWithDeletedEventRemoved = events.filter((event) => event.title !== data.removeEvent.title);
+                setEvents(eventsWithDeletedEventRemoved);
                 toggleCancelModal();
             } else {
                 throw new Error(`${REMOVE_EVENT_FORM} failed! Event not deleted! Please try again.`);
             }
 
-            setLoading(response.loading);
+            setLoading(loading);
         } catch(err) {
             console.log(err);
             throw err;
