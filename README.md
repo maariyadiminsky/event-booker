@@ -29,9 +29,8 @@ A fullstack event booker app created with React, Node, GraphQL, and MongoDB—co
     * Elegant homepage design with inviting message.
     * Start Button takes users to events page.
 * #### Auth Features
-    * You must create an account to see events or bookings
+    * You must create an account to see/create/remove bookings and add/remove events.
     * Each event and booking with be associated with a user.
-    * A created account can do all the actions of #1 and #2.
 * #### Responsive Design
     * Works on your phone/tablet.
 
@@ -60,7 +59,6 @@ A fullstack event booker app created with React, Node, GraphQL, and MongoDB—co
     * Second terminal: go into the `client` folder then `yarn install` and `yarn start`. Make sure frontend server is running successfully.
 
 ## Todo
-* Use Dataloader to batch requests to database for better performance(next WIP)
 * Users should be able to share events and bookings they’ve made.
 * Instead of not rendering booking that exists with a deleted event, delete that booking on the backend
 * Add tests
