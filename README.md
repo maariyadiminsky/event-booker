@@ -61,4 +61,4 @@ A fullstack event booker app created with React, Node, GraphQL, and MongoDB—co
 ## Todo
 * Users should be able to share events and bookings they’ve made.
 * Instead of not rendering booking that exists with a deleted event, delete that booking on the backend
-* Add tests
+* Add more tests

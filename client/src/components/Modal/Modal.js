@@ -46,7 +46,11 @@ const Modal = ({
     const defaultButtonClass = buttonClass ? buttonClass : "text-white bg-green-400 font-semibold hover:bg-green-300 transition duration-300";
 
     return createPortal(
-        <div onClick={handleCancel} className="bg-gray-900 min-h-screen m-auto bg-opacity-75 fixed z-10 inset-0 overflow-y-auto overflow-x-auto">
+        <div 
+            data-testid="modal-portal"
+            onClick={handleCancel} 
+            className="bg-gray-900 min-h-screen m-auto bg-opacity-75 fixed z-10 inset-0 overflow-y-auto overflow-x-auto"
+        >
             <div className={`bg-white m-auto mt-${startHeight} py-12 flex flex-col flex-grow w-full max-w-xl shadow-xl rounded-lg`}>
                 <div className="">
                     <div className={`m-auto align-middle ${defaultHeaderClass}`}>{header}</div>
