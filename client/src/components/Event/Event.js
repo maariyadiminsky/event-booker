@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+import Button from '../Button/Button';
+import Notification from '../Notification/Notification';
+import NotificationPing from '../Notification/NotificationPing';
+
 import { 
     isDateBeforeToday,
     isSameAsToday,
@@ -45,23 +49,24 @@ const Event = ({
     }
 
     const renderSmallAlert = () => notification.shouldRender && (
-        <div className={`bg-${notification.color}-500 text-gray-100 rounded p-2 mt-5 w-20 text-center opacity-70 border-2 border-${notification.color}-500 text-xs`}>
-            {notification.text}
-        </div>
+        <Notification 
+            text={notification.text} 
+            color={notification.color} 
+        />
     );
 
     const renderNotification = () => notification.shouldRender && notification.color === WARNING_COLOR && (
-        <span className="animate-ping inline-flex h-2 w-2 mr-2 mb-0.5 rounded-full bg-red-500" />
+        <NotificationPing />
     );
     
     const isCreatorOfEvent = userId === user._id;
     const renderRemoveOption = () => isCreatorOfEvent && (
-        <div 
-            onClick={() => openCancelModal()}
-            className="absolute bottom-10 right-5 text-center align-center text-sm font-thin bg-red-400 hover:bg-red-300 rounded-sm text-white px-2 py-1"
+        <Button
+            onClick={openCancelModal}
+            className='absolute bottom-10 right-5 text-center align-center text-sm font-thin bg-red-400 hover:bg-red-300 rounded-sm text-white px-2 py-1'
         >
             ✏️ Remove
-        </div>
+        </Button>
     );
 
     return (
