@@ -1,15 +1,14 @@
 import React, { Fragment, useState, useContext } from 'react';
-import { Form, Field } from 'react-final-form';
+import { Field } from 'react-final-form';
 
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
-import NotificationAlt from '../components/Notification/NotificationAlt';
-import FormWrapper from '../components/Form/FormWrapper';
-import FormInput from '../components/Form/FormInput';
-import FormErrors from '../components/Form/FormErrors';
+import NotificationAlt from '../../components/Notification/NotificationAlt';
+import FormWrapper from '../../components/Form/FormWrapper';
+import FormInput from '../../components/Form/FormInput';
 
-import { eventBookerAPI } from '../api/eventBookerAPI';
-import { validateForm } from '../utils/auth';
+import { signUpMutation, signInQuery } from './queries';
+import { eventBookerAPI } from '../../api/eventBookerAPI';
 
 import { 
     SIGN_IN,
@@ -19,26 +18,7 @@ import {
     SIGN_IN_FORM,
     SIGN_UP_FORM,
     GRAPHQL_ENDPOINT
-} from '../const';
-
-const signUpMutation = (email, password) => `
-    mutation {
-        createUser(userInput: { email: "${email}", password: "${password}" }) {
-            _id
-            email
-        }
-    }
-`;
-
-const signInQuery = (email, password) => `
-    query {
-        signIn(email: "${email}", password: "${password}") {
-            userId
-            token
-            tokenExpiration
-        }
-    }
-`;
+} from '../../const';
 
 const Auth = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
