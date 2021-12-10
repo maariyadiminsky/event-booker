@@ -7,9 +7,10 @@ import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 import { validateForm } from '../../utils/auth';
 
 const FormWrapper = ({ 
-    children, formType, errors, initialValues = null,
+    children, errors, formType = '', initialValues = null,
     handleOnSubmit, handleCancelButton = null,
-    shouldValidate = true, 
+    shouldValidate = true, isCancelModal = false,
+    confirmButtonText = 'Submit', cancelButtonText = 'Nevermind'
  }) => {
     const renderErrors = () => errors.length > 0 && (
         <FormErrors errors={errors} />
@@ -17,8 +18,10 @@ const FormWrapper = ({
 
     const renderButtonGroup = () => handleCancelButton && (
         <ButtonTwoGroup
-            defaultClass='text-white font-semibold bg-green-400 hover:bg-green-500 transition duration-300'
+            defaultClass={`text-white font-semibold bg-${isCancelModal ? 'red' : 'green'}-400 hover:bg-${isCancelModal ? 'red' : 'green'}-500 transition duration-300`}
             handleCancel={handleCancelButton}
+            confirmText={confirmButtonText}
+            cancelText={cancelButtonText}
         />
     );
 

@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
 import '../Form/Form.css';
+import CancelWarningModalContent from './CancelWarningModalContent';
 
 const CancelWarningModal = ({ header, toggleModal, errors, handleOnSubmit }) => {
     const renderErrors = () => errors.length > 0 && (
@@ -37,7 +38,13 @@ const CancelWarningModal = ({ header, toggleModal, errors, handleOnSubmit }) => 
     return (
         <Modal 
             header={header}
-            content={renderModalContent()}
+            content={
+                <CancelWarningModalContent
+                    errors={errors}
+                    handleOnSubmit={handleOnSubmit}
+                    handleCancelButton={toggleModal}
+                />
+            }
             handleCancelModal={toggleModal}
             headerClass="pb-3 text-center text-3xl text-red-400 font-semibold"
             hideSubmitButtons
