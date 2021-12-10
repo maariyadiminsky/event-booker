@@ -5,9 +5,9 @@ const {
     findEventData,
     isValidEventUser,
     deleteEvent
-} = require("../../utils/event");
+} = require('../../utils/event');
 
-const { findUserById } = require("../../utils/user");
+const { findUserById } = require('../../utils/user');
 
 module.exports = {
     events: async() => {
@@ -22,15 +22,15 @@ module.exports = {
     },
     removeEvent: async ({ eventId }, req) => {
         try {
-            if (!req.isUserAuthorized) throw new Error("User is unauthenticated!");
+            if (!req.isUserAuthorized) throw new Error('User is unauthenticated!');
             
             const event = await findEventData(eventId);
 
             // make sure booking really exists
-            if (!event || (event && !event.user._id)) throw new Error("Event with that id does not exist!");
+            if (!event || (event && !event.user._id)) throw new Error('Event with that id does not exist!');
 
             // make sure person deleting booking is the same one who created it
-            if(!isValidEventUser(req.userId, event.user._id.toString())) throw new Error("You can only delete your own event.");
+            if(!isValidEventUser(req.userId, event.user._id.toString())) throw new Error('You can only delete your own event.');
 
             await deleteEvent(eventId);
 
@@ -42,7 +42,7 @@ module.exports = {
     },
     createEvent: async ({ eventInput: { userId, title, description, price, date } }, req) => {
         try {
-            if (!req.isUserAuthorized) throw new Error("User is unauthenticated!");
+            if (!req.isUserAuthorized) throw new Error('User is unauthenticated!');
 
             let createdEvent;
 
@@ -54,7 +54,7 @@ module.exports = {
 
             const user = await findUserById(event.user._id);
 
-            if (!user) throw new Error("A user with that id doesn't exist!");
+            if (!user) throw new Error('A user with that id doesn\'t exist!');
 
             user.createdEvents = [ ...user.createdEvents, event ];
 

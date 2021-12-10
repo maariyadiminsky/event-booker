@@ -1,5 +1,9 @@
 import React, { Fragment, useState, useContext } from 'react';
 import { Field } from 'react-final-form';
+import {
+    useQuery,
+    useMutation,
+  } from '@apollo/client';
 
 import { AuthContext } from '../../context/AuthContext';
 
@@ -7,8 +11,8 @@ import NotificationAlt from '../../components/Notification/NotificationAlt';
 import FormWrapper from '../../components/Form/FormWrapper';
 import FormInput from '../../components/Form/FormInput';
 
-import { signUpMutation, signInQuery } from './queries';
-import { eventBookerAPI } from '../../api/eventBookerAPI';
+import { CREATE_USER_MUTATION, SIGN_IN_QUERY } from './queries';
+import { handleErrors } from '../../utils/auth';
 
 import { 
     SIGN_IN,
@@ -16,8 +20,7 @@ import {
     SWITCH_SIGN_UP_TEXT,
     SWITCH_SIGN_IN_TEXT,
     SIGN_IN_FORM,
-    SIGN_UP_FORM,
-    GRAPHQL_ENDPOINT
+    SIGN_UP_FORM
 } from '../../const';
 
 const Auth = () => {
@@ -27,28 +30,23 @@ const Auth = () => {
 
     const { signInUser } = useContext(AuthContext);
 
-    const handleOnSubmit = async({ email, password }, formType) => {
-        try {
-            const response = await eventBookerAPI().post(GRAPHQL_ENDPOINT, {
-                query: isSignInForm ? signInQuery(email, password) : signUpMutation(email, password)
-            });
+    const [createUser] = useMutation(CREATE_USER_MUTATION);
+    const signIn = useQuery(SIGN_IN_QUERY, { skip: true });
 
-            // handle errors from the server
-            if (!response) {
-                throw new Error(`${formType} failed! Response returned empty.`);
-            } else if (response.data && response.data.errors && response.data.errors.length > 0) {
-                setServerErrors(response.data.errors);
-                return;
-            } else if (response.status !== 200 && response.status !== 201) {
-                throw new Error(`${formType} failed! Check your network connection.`);
-            }
+    const handleOnSubmit = async({ email, password }) => {
+        try {
+            const formType = findFormType();
+            const variables = { email, password };
+            const response = isSignInForm ? await signIn.refetch({ email, password }) : await createUser({ variables });
+
+            handleErrors(response, setServerErrors, null, !isSignInForm);
 
             if (isSignInForm) {
-                const { data: { data: { signIn: { userId, token, tokenExpiration} }} } = response;
+                const { data: { signIn: { userId, token, tokenExpiration} } } = response;
 
                 signInUser(userId, token, tokenExpiration);
             } else {
-                const { data: { data : { createUser: { _id }}}} = response;
+                const { data: { createUser: { _id } } } = response;
 
                 if (_id) {
                     setHasCreatedNewUser(true);
@@ -97,7 +95,7 @@ const Auth = () => {
             formCSS='w-full max-w-lg mx-auto bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 pb-8 mt-12'
             formContainerCSS=''
             errors={serverErrors}
-            handleOnSubmit={(formValues) => handleOnSubmit(formValues, findFormType())}
+            handleOnSubmit={handleOnSubmit}
             formType={findFormType()}
             topContent={renderTopContent()}
             shouldResetOnSubmit
