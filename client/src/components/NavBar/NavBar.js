@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from '../../context/AuthContext';
 
-import NavItem from "./NavItem";
+import NavItem from './NavItem';
 
 import {
     ROOT_PATH,
@@ -15,16 +15,16 @@ import {
     SIGN_IN,
     SIGN_OUT,
     HOME
-} from "../../const";
+} from '../../const';
 
-import "./NavBar.css";
+import './NavBar.css';
 
-import logo from "./logo.png";
+import logo from './logo.png';
 
 const isActiveNavItem = (navItemState, isMobile = false) => {
-    if (isMobile) return navItemState ? "active-mobile-nav-item" : "mobile-nav-item";
+    if (isMobile) return navItemState ? 'active-mobile-nav-item' : 'mobile-nav-item';
 
-    return navItemState ? "active-nav-item" : "nav-item";
+    return navItemState ? 'active-nav-item' : 'nav-item';
 }
 const NavBar = () => {
     const { pathname } = useLocation();
