@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import FormInput from '../Form/FormInput';
 import FormErrors from '../Form/FormErrors';
 import Modal from '../Modal/Modal';
-import ModalActionsButtons from '../Modal/ModalActionButtons';
+import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
 import { validateForm } from '../../utils/auth';
 import { getTodaysDate } from '../../utils/date';
@@ -71,7 +71,10 @@ const EventModal = ({ toggleModal, errors, handleOnSubmit }) => {
                             inputClass="field-input"
                             required
                         />
-                        <ModalActionsButtons toggleModal={toggleModal} />
+                        <ButtonTwoGroup
+                            defaultClass='text-white font-semibold bg-green-400 hover:bg-green-500 transition duration-300'
+                            handleCancel={toggleModal}
+                        />
                     </form>
                 </div>
             )}

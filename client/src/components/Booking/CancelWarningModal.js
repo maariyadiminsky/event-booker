@@ -3,7 +3,7 @@ import { Form } from 'react-final-form';
 
 import FormErrors from '../Form/FormErrors';
 import Modal from '../Modal/Modal';
-import ModalActionsButtons from '../Modal/ModalActionButtons';
+import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
 import '../Form/Form.css';
 
@@ -23,10 +23,10 @@ const CancelWarningModal = ({ header, toggleModal, errors, handleOnSubmit }) => 
                     >
                         {renderErrors()}
                         <div className="text-center text-gray-400 text-2xl pb-4 px-3">Are you sure?</div>
-                        <ModalActionsButtons 
-                            submitText="Yes I'm sure"
-                            toggleModal={toggleModal} 
-                            submitButtonColor="red"
+                        <ButtonTwoGroup
+                            defaultClass='text-white font-semibold bg-red-400 hover:bg-red-500 transition duration-300'
+                            confirmText={'Yes I\'m sure'}
+                            handleCancel={toggleModal}
                         />
                     </form>
                 </div>
