@@ -64,11 +64,11 @@ const Auth = () => {
     const toggleAuthForm = () => setIsSignInForm(!isSignInForm);
 
     const findFormType = () => isSignInForm ? SIGN_IN_FORM : SIGN_UP_FORM;
-    
-    const renderText = () => isSignInForm ? SIGN_IN : SIGN_UP;
 
     const renderSecondButtonText = () => isSignInForm ? SWITCH_SIGN_UP_TEXT : SWITCH_SIGN_IN_TEXT;
 
+    const renderText = () => isSignInForm ? SIGN_IN : SIGN_UP;
+    
     const renderTopText = () => {
         if (hasCreatedNewUser) {
             return (
@@ -77,7 +77,7 @@ const Auth = () => {
                     topText='Account successfully created!'
                     bottomText='Please sign in to continue.'
                 />
-            )
+            );
         } 
 
         return 'Please sign in or create an account.';
