@@ -1,11 +1,11 @@
-import React from "react";
-import { Form } from "react-final-form";
+import React from 'react';
+import { Form } from 'react-final-form';
 
-import FormErrors from "../Form/FormErrors";
-import Modal from "../Modal/Modal";
-import ModalActionsButtons from "../Modal/ModalActionButtons";
+import FormErrors from '../Form/FormErrors';
+import Modal from '../Modal/Modal';
+import ModalActionsButtons from '../Modal/ModalActionButtons';
 
-import "../Form/Form.css";
+import '../Form/Form.css';
 
 const CancelWarningModal = ({ header, toggleModal, errors, handleOnSubmit }) => {
     const renderErrors = () => errors.length > 0 && (

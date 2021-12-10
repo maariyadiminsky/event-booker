@@ -1,19 +1,19 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import { AuthContextProvider } from "../../context/AuthContext";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthContextProvider } from '../../context/AuthContext';
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
   from
-} from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
+} from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
 
-import { GRAPHQL_ENDPOINT } from "../../const";
+import { GRAPHQL_ENDPOINT } from '../../const';
 
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom';
 
 const httpLink = createHttpLink({
   uri: `${process.env.REACT_APP_DEV_EVENT_BOOKER_API_URL}${GRAPHQL_ENDPOINT}`
@@ -47,14 +47,14 @@ const Providers = ({ children }) => (
 
 const customRender = (ui, options) => {
   if (options && options.route) {
-    window.history.pushState({}, "", options.route);
+    window.history.pushState({}, '', options.route);
   }
   
   return render(ui, { wrapper: Providers, ...options })
 }
 
 // re-export everything
-export * from "@testing-library/react"
+export * from '@testing-library/react'
 
 // override render method
 export { customRender as render }

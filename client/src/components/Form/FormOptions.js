@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { getDateInCorrectFormat } from "../../utils/date";
+import { getDateInCorrectFormat } from '../../utils/date';
 
 const getEventNameForBooking = (title, price, date) => `${title} @ $${price} - (${getDateInCorrectFormat(date)})`;
 

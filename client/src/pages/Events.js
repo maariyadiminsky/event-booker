@@ -1,27 +1,27 @@
 import React, { 
     Fragment, 
     useState, useEffect, useContext 
-} from "react";
-import { useHistory } from "react-router-dom";
+} from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     useQuery,
     useMutation,
     gql
-  } from "@apollo/client";
+  } from '@apollo/client';
 
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from '../context/AuthContext';
 
-import Loader from "../components/Loader";
-import Event from "../components/Event/Event";
-import EventModal from "../components/Event/EventModal";
-import CancelWarningModal from "../components/Booking/CancelWarningModal";
-import FormAlert from "../components/Form/FormAlert";
+import Loader from '../components/Loader';
+import Event from '../components/Event/Event';
+import EventModal from '../components/Event/EventModal';
+import CancelWarningModal from '../components/Booking/CancelWarningModal';
+import FormAlert from '../components/Form/FormAlert';
 
 import { 
     handleErrors, 
     getAuthHeaders
-} from "../utils/auth";
-import { isDateBeforeToday } from "../utils/date";
+} from '../utils/auth';
+import { isDateBeforeToday } from '../utils/date';
 
 import { 
     AUTH_PATH,
@@ -29,7 +29,7 @@ import {
     REMOVE_EVENT_FORM,
     SUCCESS,
     QUERY_POLICY_NETWORK_ONLY
-} from "../const";
+} from '../const';
 
 const CREATE_EVENT_MUTATION = gql`
     mutation CreateEvent($userId: ID!, $title: String!, $description: String!, $price: Float!, $date: String!){
@@ -89,7 +89,7 @@ const Events = () => {
     const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, { context: getAuthHeaders(token) });
 
     // data
-    const [eventCreatedTitle, setEventCreatedTitle] = useState("");
+    const [eventCreatedTitle, setEventCreatedTitle] = useState('');
     const [events, setEvents] = useState(null);
     const [cancelEventId, setCancelEventId] = useState(null);
 
@@ -180,7 +180,7 @@ const Events = () => {
             });
 
             // handle errors
-            handleErrors(response, setErrors, () => setEventCreatedTitle(""), true);
+            handleErrors(response, setErrors, () => setEventCreatedTitle(''), true);
 
             const { data, loading } = response;
 
@@ -263,7 +263,7 @@ const Events = () => {
 
     const renderCreateEvent = () => (
         <div 
-            className={`${!shouldRenderSuccessEventMessage && !shouldShowModal && "animate-float"} max-w-2xl m-auto py-8 bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer`}
+            className={`${!shouldRenderSuccessEventMessage && !shouldShowModal && 'animate-float'} max-w-2xl m-auto py-8 bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer`}
             onClick={toggleModal}
         >
             <div className="flex flex-wrap justify-center items-center text-center">

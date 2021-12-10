@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 import { 
     isDateBeforeToday,
     isSameAsToday,
     getDateInCorrectFormat
-} from "../../utils/date";
+} from '../../utils/date';
 
 import {
     WARNING_COLOR,
     ERROR_COLOR
-} from "../../const";
+} from '../../const';
 
 const Event = ({ 
     toggleCancelModal, 
@@ -19,8 +19,8 @@ const Event = ({
 }) => {
     const [notification, setNotification] = useState({
         shouldRender: false,
-        color: "white",
-        text: "",
+        color: 'white',
+        text: '',
     });
 
     useEffect(() => {
@@ -28,13 +28,13 @@ const Event = ({
             setNotification({
                 shouldRender: true,
                 color: WARNING_COLOR,
-                text: "Today"
+                text: 'Today'
             })
         } else if (isDateBeforeToday(date)) {
             setNotification({
                 shouldRender: true,
                 color: ERROR_COLOR,
-                text: "Expired"
+                text: 'Expired'
             })
         }
     }, [date])

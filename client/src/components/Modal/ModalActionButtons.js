@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const ModalActionsButtons = ({ toggleModal, cancelText = "Nevermind", submitText="Submit", submitButtonColor="green"}) => (
+const ModalActionsButtons = ({ toggleModal, cancelText = 'Nevermind', submitText='Submit', submitButtonColor='green'}) => (
     <div className="flex flex-wrap justify-center items-center space-x-5 pt-5">
         <button 
             onClick={toggleModal} 

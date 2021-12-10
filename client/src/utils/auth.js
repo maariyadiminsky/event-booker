@@ -2,7 +2,7 @@ import {
     SIGN_IN_FORM,
     SIGN_UP_FORM,
     CREATE_EVENT_FORM
-} from "../const"
+} from '../const'
 
 const mutationCallbackTry = (isMutation, mutationCallback) => {
     if (isMutation && mutationCallback) mutationCallback();
@@ -11,7 +11,7 @@ export const handleErrors = (response, callback, mutationCallback = null, isMuta
     if (!response) {
         mutationCallbackTry(isMutation, mutationCallback);
 
-        throw new Error(`Data ${isMutation? "mutation" : "retrieval"} failed with no response!`);
+        throw new Error(`Data ${isMutation? 'mutation' : 'retrieval'} failed with no response!`);
     } else if (response.errors && response.errors.length > 0) {
         mutationCallbackTry(isMutation, mutationCallback);
         callback(response.errors);
@@ -20,13 +20,13 @@ export const handleErrors = (response, callback, mutationCallback = null, isMuta
     } else if (response.status && response.status !== 200 && response.status !== 201) {
         mutationCallbackTry(isMutation, mutationCallback);
 
-        throw new Error(`Data ${isMutation? "mutation" : "retrieval"} failed with server status code: ${response.status}.`);
+        throw new Error(`Data ${isMutation? 'mutation' : 'retrieval'} failed with server status code: ${response.status}.`);
     }
 }
 
 export const getAuthHeaders = (token) => ({
     headers: {
-        "Authorization": `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
     }
 });
 
@@ -47,28 +47,28 @@ export const validateForm = ({
         case SIGN_IN_FORM:
         case SIGN_UP_FORM:
             if (!email) {
-                errors.email = "Email must be included.";
+                errors.email = 'Email must be included.';
             }
         
             if (!password) {
-                errors.password = "Please provide a password.";
+                errors.password = 'Please provide a password.';
             }
             break;
         case CREATE_EVENT_FORM:
             if (!title) {
-                errors.title = "Title is required.";
+                errors.title = 'Title is required.';
             }
 
             if(!description) {
-                errors.description = "Please provide a short description.";
+                errors.description = 'Please provide a short description.';
             }
 
             if (!price) {
-                errors.price = "Price is required.";
+                errors.price = 'Price is required.';
             }
 
             if (!date) {
-                errors.date = "Date is required.";
+                errors.date = 'Date is required.';
             }
             break;
         default:

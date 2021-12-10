@@ -1,13 +1,13 @@
-import React, { useState, useContext } from "react";
-import { Form, Field } from "react-final-form";
+import React, { useState, useContext } from 'react';
+import { Form, Field } from 'react-final-form';
 
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from '../context/AuthContext';
 
-import FormInput from "../components/Form/FormInput";
-import FormError from "../components/Form/FormError";
+import FormInput from '../components/Form/FormInput';
+import FormError from '../components/Form/FormError';
 
-import { eventBookerAPI } from "../api/eventBookerAPI";
-import { validateForm } from "../utils/auth";
+import { eventBookerAPI } from '../api/eventBookerAPI';
+import { validateForm } from '../utils/auth';
 
 import { 
     SIGN_IN,
@@ -17,7 +17,7 @@ import {
     SIGN_IN_FORM,
     SIGN_UP_FORM,
     GRAPHQL_ENDPOINT
-} from "../const";
+} from '../const';
 
 const signUpMutation = (email, password) => `
     mutation {
@@ -100,7 +100,7 @@ const Auth = () => {
             );
         } 
 
-        return "Please sign in or create an account.";
+        return 'Please sign in or create an account.';
     }
 
     const renderServerErrors = () => {

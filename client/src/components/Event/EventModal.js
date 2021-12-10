@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import { Form, Field } from "react-final-form";
+import { Form, Field } from 'react-final-form';
 
-import FormInput from "../Form/FormInput";
-import FormErrors from "../Form/FormErrors";
-import Modal from "../Modal/Modal";
-import ModalActionsButtons from "../Modal/ModalActionButtons";
+import FormInput from '../Form/FormInput';
+import FormErrors from '../Form/FormErrors';
+import Modal from '../Modal/Modal';
+import ModalActionsButtons from '../Modal/ModalActionButtons';
 
-import { validateForm } from "../../utils/auth";
-import { getTodaysDate } from "../../utils/date";
+import { validateForm } from '../../utils/auth';
+import { getTodaysDate } from '../../utils/date';
 
-import { CREATE_EVENT_FORM } from "../../const";
+import { CREATE_EVENT_FORM } from '../../const';
 
-import "../Form/Form.css";
+import '../Form/Form.css';
 
 const todaysDate = getTodaysDate();
 const EventModal = ({ toggleModal, errors, handleOnSubmit }) => {

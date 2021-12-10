@@ -1,7 +1,7 @@
-import React, { createContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { createContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { ROOT_PATH } from "../const";
+import { ROOT_PATH } from '../const';
 
 export const AuthContext = createContext();
 
@@ -10,7 +10,7 @@ export const AuthContextProvider = ({ children }) => {
     // todo: store tokenExpiration in localStorage so doesn't reset on refresh
     const [tokenExpiration, setTokenExpiration] = useState(null);
     const [userId, setUserId] = useState(null);
-    const [path, setPath] = useState("");
+    const [path, setPath] = useState('');
 
     const history = useHistory();
     

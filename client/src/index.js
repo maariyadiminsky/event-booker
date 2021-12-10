@@ -1,22 +1,22 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import {
     ApolloClient,
     InMemoryCache,
     ApolloProvider,
     createHttpLink,
     from
-  } from "@apollo/client";
-  import { onError } from "@apollo/client/link/error";
+  } from '@apollo/client';
+  import { onError } from '@apollo/client/link/error';
 
-  import { AuthContextProvider } from "./context/AuthContext";
+  import { AuthContextProvider } from './context/AuthContext';
 
-import App from "./pages/App";
+import App from './pages/App';
 
-import { GRAPHQL_ENDPOINT } from "./const";
+import { GRAPHQL_ENDPOINT } from './const';
 
-import "./index.css";
+import './index.css';
 
 const httpLink = createHttpLink({
     uri: `${process.env.REACT_APP_DEV_EVENT_BOOKER_API_URL}${GRAPHQL_ENDPOINT}`
@@ -48,5 +48,5 @@ ReactDOM.render(
         </AuthContextProvider>
       </BrowserRouter>
     </ApolloProvider>,
-    document.getElementById("root")
+    document.getElementById('root')
 );

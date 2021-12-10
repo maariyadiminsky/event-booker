@@ -1,16 +1,16 @@
-import React from "react";
-import { Form, Field } from "react-final-form";
+import React from 'react';
+import { Form, Field } from 'react-final-form';
 
-import Loader from "../Loader";
-import FormOptions from "../Form/FormOptions";
-import FormErrors from "../Form/FormErrors";
-import Modal from "../Modal/Modal";
-import ModalActionsButtons from "../Modal/ModalActionButtons";
+import Loader from '../Loader';
+import FormOptions from '../Form/FormOptions';
+import FormErrors from '../Form/FormErrors';
+import Modal from '../Modal/Modal';
+import ModalActionsButtons from '../Modal/ModalActionButtons';
 
-import { validateForm } from "../../utils/auth";
-import { BOOKINGS_NEED_EVENTS } from "../../const";
+import { validateForm } from '../../utils/auth';
+import { BOOKINGS_NEED_EVENTS } from '../../const';
 
-import "../Form/Form.css";
+import '../Form/Form.css';
 
 const BookingModal = ({ eventOptions, formType, toggleModal, errors, handleOnSubmit }) => {
     const renderErrors = () => errors.length > 0 && (

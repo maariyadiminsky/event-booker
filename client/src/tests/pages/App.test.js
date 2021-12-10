@@ -1,15 +1,15 @@
-import { render, screen } from "../utils";
-import App from "../../pages/App";
+import { render, screen } from '../utils';
+import App from '../../pages/App';
 import {
     EVENTS,
     BOOKINGS,
     HOME,
     ROOT_PATH
-} from "../../const";
+} from '../../const';
 
 
-describe("App", () => {
-    test("renders App component", () => {
+describe('App', () => {
+    test('renders App component', () => {
         render(<App />);
 
         // if navbar renders its safe to assume App component is rendered
@@ -21,11 +21,11 @@ describe("App", () => {
         expect(bookingsLinkInNavbar).toBeInTheDocument();
         expect(homeLinkInNavbar).toBeInTheDocument();
 
-        const someRenderLink = screen.queryByText("someRandomLink");
+        const someRenderLink = screen.queryByText('someRandomLink');
         expect(someRenderLink).not.toBeInTheDocument();
     });
 
-    test("renders Home Component by default", () => {
+    test('renders Home Component by default', () => {
         render(<App />, { route: ROOT_PATH });
 
         const textFromHomePage = screen.getByText(/Create unique experiences/i);

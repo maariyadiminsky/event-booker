@@ -1,8 +1,8 @@
-import { render, screen } from "../utils";
-import Home from "../../pages/Home/Home";
+import { render, screen } from '../utils';
+import Home from '../../pages/Home/Home';
 
-describe("Home", () => {
-    test("renders Home component", () => {
+describe('Home', () => {
+    test('renders Home component', () => {
         render(<Home />);
 
         const createNewExperiencesText = screen.getByText(/Create unique experiences/i);

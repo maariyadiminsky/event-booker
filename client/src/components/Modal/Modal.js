@@ -1,7 +1,7 @@
-import React from "react";
-import { createPortal } from "react-dom";
+import React from 'react';
+import { createPortal } from 'react-dom';
 
-import { shouldStopEventPropagationTry } from "../../utils";
+import { shouldStopEventPropagationTry } from '../../utils';
 
 // todo: fix small bug with modal height ie. remove startHeight
 const Modal = ({ 
@@ -42,8 +42,8 @@ const Modal = ({
         </div>
     );
 
-    const defaultHeaderClass = headerClass ? headerClass : "pb-3 text-center text-3xl text-green-400 font-semibold";
-    const defaultButtonClass = buttonClass ? buttonClass : "text-white bg-green-400 font-semibold hover:bg-green-300 transition duration-300";
+    const defaultHeaderClass = headerClass ? headerClass : 'pb-3 text-center text-3xl text-green-400 font-semibold';
+    const defaultButtonClass = buttonClass ? buttonClass : 'text-white bg-green-400 font-semibold hover:bg-green-300 transition duration-300';
 
     return createPortal(
         <div 
@@ -59,7 +59,7 @@ const Modal = ({
                 </div>
             </div>
         </div>,
-        document.getElementById("modal")
+        document.getElementById('modal')
     );
 };
 

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { getColorForAlertType } from "../../utils/colors";
+import { getColorForAlertType } from '../../utils/colors';
 
 const FormAlert = ({ type, children }) => {
     const color = getColorForAlertType(type);

@@ -1,4 +1,4 @@
-import { DEVELOPMENT, PRODUCTION } from "../const";
+import { DEVELOPMENT, PRODUCTION } from '../const';
 
 export const findBaseURL = () => {
     if (process.env.NODE_ENV === PRODUCTION) {
@@ -7,5 +7,5 @@ export const findBaseURL = () => {
         return process.env.REACT_APP_DEV_EVENT_BOOKER_API_URL;
     } 
     
-    return "";
+    return '';
 }

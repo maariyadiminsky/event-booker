@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { findBaseURL } from "../utils/api";
+import { findBaseURL } from '../utils/api';
 
 const baseHeaders = {
-    "Content-Type": "application/json",
-     Accept: "application/json"
+    'Content-Type': 'application/json',
+     Accept: 'application/json'
 }
 const authHeaders = (token) => ({
     ...baseHeaders,
-    "Authorization": `Bearer ${token}`
+    'Authorization': `Bearer ${token}`
 })
 
 export const eventBookerAPI = (token = null) => (

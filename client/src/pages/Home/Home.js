@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { EVENTS_PATH } from "../../const";
+import { EVENTS_PATH } from '../../const';
 
-import HomeImage from "./svg/HomeImage";
+import HomeImage from './svg/HomeImage';
 
 const Home = () => (
     <div className="grid md:grid-cols-2 sm:grid-col-1 bg-white overflow-hidden min-h-screen md:pt-32 sm:pt-10">
