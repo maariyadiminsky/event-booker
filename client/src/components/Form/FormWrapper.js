@@ -8,11 +8,11 @@ import { validateForm } from '../../utils/auth';
 
 const FormWrapper = ({ 
     children, errors, formType = '', initialValues = null,
-    handleOnSubmit, handleCancelButton = null,
-    shouldValidate = true, isCancelModal = false,
-    confirmButtonText = 'Submit', cancelButtonText = 'Nevermind'
+    handleOnSubmit, handleCancelButton = null, formCSS = 'form-wrapper', formContainerCSS = 'form-container',
+    shouldValidate = true, shouldResetOnSubmit = false, isCancelModal = false,
+    topContent=null, confirmButtonText = 'Submit', cancelButtonText = 'Nevermind',
  }) => {
-    const renderErrors = () => errors.length > 0 && (
+    const renderErrors = () => errors && errors.length > 0 && (
         <FormErrors errors={errors} />
     );
 
@@ -25,17 +25,25 @@ const FormWrapper = ({
         />
     );
 
+    const handleSubmitResetTry = (handleSubmit, form) => shouldResetOnSubmit ? (
+        async(event) => {
+            await handleSubmit(event);
+            form.reset();
+        }
+    ) : handleSubmit;
+
     return (
         <Form 
             initialValues={initialValues ? initialValues : null}
             validate={shouldValidate && formType ? (fields) => validateForm(fields, formType) : null}
             onSubmit={handleOnSubmit}>
-            {({ handleSubmit }) => (
-                <div className="form-wrapper">
+            {({ handleSubmit, form }) => (
+                <div className={formCSS}>
                     <form
-                        onSubmit={handleSubmit} 
-                        className="form-container"
+                        onSubmit={handleSubmitResetTry(handleSubmit, form)} 
+                        className={formContainerCSS}
                     >
+                        {topContent}
                         {renderErrors()}
                         {children}
                         {renderButtonGroup()}

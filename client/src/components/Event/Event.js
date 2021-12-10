@@ -62,8 +62,8 @@ const Event = ({
     const isCreatorOfEvent = userId === user._id;
     const renderRemoveOption = () => isCreatorOfEvent && (
         <Button
-            onClick={openCancelModal}
-            className='absolute bottom-10 right-5 text-center align-center text-sm font-thin bg-red-400 hover:bg-red-300 rounded-sm text-white px-2 py-1'
+            handleOnClick={openCancelModal}
+            buttonCSS='absolute bottom-10 right-5 text-center align-center text-sm font-thin bg-red-400 hover:bg-red-300 rounded-sm text-white px-2 py-1'
         >
             ✏️ Remove
         </Button>

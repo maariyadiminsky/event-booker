@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 
 import { AuthContext } from '../context/AuthContext';
 
+import NotificationAlt from '../components/Notification/NotificationAlt';
+import FormWrapper from '../components/Form/FormWrapper';
 import FormInput from '../components/Form/FormInput';
-import FormError from '../components/Form/FormError';
+import FormErrors from '../components/Form/FormErrors';
 
 import { eventBookerAPI } from '../api/eventBookerAPI';
 import { validateForm } from '../utils/auth';
@@ -92,71 +94,62 @@ const Auth = () => {
     const renderTopText = () => {
         if (hasCreatedNewUser) {
             return (
-                <div>
-                    <p className="lh-10">🎉</p>
-                    <p className="font-bold">Account successfully created!</p>
-                    <p>Please sign in to continue.</p>
-                </div>
-            );
+                <NotificationAlt 
+                    icon='🎉'
+                    topText='Account successfully created!'
+                    bottomText='Please sign in to continue.'
+                />
+            )
         } 
 
         return 'Please sign in or create an account.';
     }
 
-    const renderServerErrors = () => {
-        if (serverErrors.length > 0) {
-            return serverErrors.map(({ message }) => <FormError error={message} />);
-        }
-    }
+    const renderTopContent = () => (
+        <Fragment>
+            <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
+            <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
+        </Fragment>
+    );
 
     return (
-        <Form 
-            validate={(fields) => validateForm(fields, findFormType())}
-            onSubmit={(formValues) => handleOnSubmit(formValues, findFormType())}
+        <FormWrapper
+            formCSS='w-full max-w-lg mx-auto bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 pb-8 mt-12'
+            formContainerCSS=''
+            errors={serverErrors}
+            handleOnSubmit={(formValues) => handleOnSubmit(formValues, findFormType())}
+            formType={findFormType()}
+            topContent={renderTopContent()}
+            shouldResetOnSubmit
         >
-            {({ handleSubmit, form }) => (
-                <div className="w-full max-w-lg mx-auto">
-                    <form
-                        onSubmit={async(event) => {
-                            await handleSubmit(event);
-                            form.reset();
-                        }} 
-                        className="bg-gradient-to-r from-green-400 to-green-300 container shadow-xl rounded px-8 pb-8 mt-12"
-                    >
-                        <div className="pt-12 pb-3 text-center text-3xl text-white font-semibold">{renderText()}</div>
-                        <div className="text-center pt-1 pb-6 font-light text-lg text-white">{renderTopText()}</div>
-                        {renderServerErrors()}
-                        <Field 
-                            name="email" 
-                            type="email"
-                            component={FormInput} 
-                            label="Email"
-                        />
-                        <Field 
-                            name="password" 
-                            type="password"
-                            component={FormInput} 
-                            label="Password" 
-                        />
-                        <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
-                            <button 
-                                className="animate-float shadow-2xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
-                                type="submit"
-                            >
-                                {renderText()}
-                            </button>
-                            <button 
-                                type="button"
-                                className="text-center align-center font-light text-lg text-white hover:text-gray-100"
-                                onClick={toggleAuthForm}
-                            >
-                                {renderSecondButtonText()}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            )}
-        </Form>
+            <Field 
+                name="email" 
+                type="email"
+                component={FormInput} 
+                label="Email"
+            />
+            <Field 
+                name="password" 
+                type="password"
+                component={FormInput} 
+                label="Password" 
+            />
+            <div className="flex flex-wrap justify-center items-center mt-9 mb-3 gap-3 mx-auto">
+                <button 
+                    className="animate-float shadow-2xl align-baseline bg-white text-center text-green-400 text-xl py-4 px-24 rounded-md focus:outline-none focus:shadow-outline"
+                    type="submit"
+                >
+                    {renderText()}
+                </button>
+                <button 
+                    type="button"
+                    className="text-center align-center font-light text-lg text-white hover:text-gray-100"
+                    onClick={toggleAuthForm}
+                >
+                    {renderSecondButtonText()}
+                </button>
+            </div>
+        </FormWrapper>
     );
 }
 
