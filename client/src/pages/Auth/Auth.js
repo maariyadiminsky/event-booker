@@ -34,7 +34,7 @@ const Auth = () => {
         try {
             const formType = findFormType();
             const variables = { email, password };
-            const response = isSignInForm ? await signIn.refetch({ email, password }) : await createUser({ variables });
+            const response = isSignInForm ? await signIn.refetch(variables) : await createUser({ variables });
 
             handleErrors(response, setServerErrors, null, !isSignInForm);
 
