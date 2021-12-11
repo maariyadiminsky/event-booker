@@ -5,6 +5,7 @@ export const getTodaysDate = () => moment.utc().format('YYYY-MM-DD');
 export const getDateInCorrectFormat = (date) => moment.utc(date).format('MMM Do YYYY');
 
 export const isDateBeforeToday = (date) => {
+    console.log("in date", date);
     if (isSameAsToday(date)) return false;
 
     return moment.utc(date).isBefore();

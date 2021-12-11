@@ -8,7 +8,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { AuthContext } from '../../context/AuthContext';
 
 import Loader from '../../components/Loader';
-import CreateButton from '../../components/Button/CreateButton';
+import CreateButtonRectangle from '../../components/Button/CreateButtonRectangle';
 import EventItems from '../../components/Event/EventItems';
 import EventModal from '../../components/Event/EventModal';
 import CancelWarningModal from '../../components/Booking/CancelWarningModal';
@@ -24,7 +24,7 @@ import {
     handleErrors, 
     getAuthHeaders
 } from '../../utils/auth';
-import { sortQueryData } from '../../utils/events';
+import { sortQueryData } from '../../utils';
 import { apiBaseCall, apiBaseParams } from '../../utils/api';
 
 import { 
@@ -36,17 +36,13 @@ import {
 } from '../../const';
 
 const Events = () => {
-    // loader & errors
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState([]);
 
-    // context
     const { token, userId } = useContext(AuthContext);
 
-    // routing
     const history = useHistory();
 
-    // graphql
     const eventsQuery = useQuery(EVENTS_QUERY, { 
         fetchPolicy: QUERY_POLICY_NETWORK_ONLY,
     });
@@ -54,12 +50,10 @@ const Events = () => {
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION, { context: getAuthHeaders(token) });
     const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, { context: getAuthHeaders(token) });
 
-    // data
     const [eventCreatedTitle, setEventCreatedTitle] = useState('');
     const [events, setEvents] = useState(null);
     const [cancelEventId, setCancelEventId] = useState(null);
 
-    // boolean values
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
     const [shouldRenderNotification, setShouldRenderNotification] = useShowNotification(eventCreatedTitle);
@@ -221,7 +215,7 @@ const Events = () => {
     return (
         <Fragment>
             <div className="w-full max-w-3xl mx-auto mt-12">
-                <CreateButton 
+                <CreateButtonRectangle
                     className={`${!shouldRenderNotification && !shouldShowModal && 'animate-float'} max-w-2xl m-auto py-8 bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer`}
                     onClick={toggleModal}
                     text='Create an Event'

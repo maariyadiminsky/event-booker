@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CreateButton = ({ className, onClick, text }) => (
+const CreateButtonRectangle = ({ className, onClick, text }) => (
     <div 
         className={className}
         onClick={onClick}
@@ -13,4 +13,4 @@ const CreateButton = ({ className, onClick, text }) => (
     </div>
 );
 
-export default CreateButton;
+export default CreateButtonRectangle;
