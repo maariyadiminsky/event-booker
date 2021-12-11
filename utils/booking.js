@@ -1,8 +1,8 @@
-const { findDate } = require("./date");
-const { findUserData } = require("./user");
-const { findEventData } = require("./event");
+const { findDate } = require('./date');
+const { findUserData } = require('./user');
+const { findEventData } = require('./event');
 
-const Booking = require("../models/booking");
+const Booking = require('../models/booking');
 
 const bookingData = async(booking) => {
     try {

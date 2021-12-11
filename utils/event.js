@@ -1,7 +1,7 @@
-const { findDate } = require("./date");
-const { findUserData } = require("./user");
+const { findDate } = require('./date');
+const { findUserData } = require('./user');
 
-const Event = require("../models/event");
+const Event = require('../models/event');
 
 const eventData = async(event) => {
     try {

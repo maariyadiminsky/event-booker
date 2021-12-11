@@ -1,7 +1,7 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const User = require("../models/user");
+const User = require('../models/user');
 
 const findUserData = async(userId) => {
     try {
@@ -41,11 +41,11 @@ const createNewUser = async(email, password) => {
 const validateUser = async(email, password) => {
     try {
         const user = await findUserByEmail(email);
-        if (!user) throw new Error("User email or password is incorrect!");
+        if (!user) throw new Error('User email or password is incorrect!');
 
         const hasCorrectPassword = await bcrypt.compare(password, user.password);
 
-        if (!hasCorrectPassword) throw new Error("User email or password is incorrect!"); // ambiguous error message for user safety
+        if (!hasCorrectPassword) throw new Error('User email or password is incorrect!'); // ambiguous error message for user safety
 
         const JWTToken = jwt.sign({ 
             userId: user.id, 

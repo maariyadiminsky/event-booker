@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { Route, Redirect } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext";
+import { Route, Redirect } from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthContext';
 
-import { AUTH_PATH } from "../../../const";
+import { AUTH_PATH } from '../../../const';
 
 const ProtectedRoute = ({ path, component, exact = true, isAuthRoute = false }) => {
     const { token } = useContext(AuthContext);

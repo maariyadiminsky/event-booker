@@ -1,21 +1,21 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const { graphqlHTTP } = require("express-graphql");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const { graphqlHTTP } = require('express-graphql');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const graphqlSchema = require("../graphql/schema/index");
-const graphqlResolvers = require("../graphql/resolvers/index");
+const graphqlSchema = require('../graphql/schema/index');
+const graphqlResolvers = require('../graphql/resolvers/index');
 
-const authentication = require("../middleware/authentication");
+const authentication = require('../middleware/authentication');
 
-dotenv.config({ path: "./.env.local"});
+dotenv.config({ path: './.env.local'});
 
 const app = express();
 
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: 'http://localhost:3000',
     optionSuccessStatus: 200
 }
 app.use(cors(corsOptions));
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 
 app.use(authentication);
 
-app.use("/graphql", graphqlHTTP({
+app.use('/graphql', graphqlHTTP({
     schema: graphqlSchema,
     rootValue: graphqlResolvers,
     graphiql: true

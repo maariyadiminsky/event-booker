@@ -1,8 +1,8 @@
-import moment from "moment";
+import moment from 'moment';
 
-export const getTodaysDate = () => moment.utc().format("YYYY-MM-DD");
+export const getTodaysDate = () => moment.utc().format('YYYY-MM-DD');
 
-export const getDateInCorrectFormat = (date) => moment.utc(date).format("MMM Do YYYY");
+export const getDateInCorrectFormat = (date) => moment.utc(date).format('MMM Do YYYY');
 
 export const isDateBeforeToday = (date) => {
     if (isSameAsToday(date)) return false;
@@ -12,4 +12,4 @@ export const isDateBeforeToday = (date) => {
 
 export const isSameAsToday = (date) => isSameDate(moment.utc(date), moment.utc());
 
-const isSameDate = (firstDate, secondDate) => firstDate.isSame(secondDate, "day");
+const isSameDate = (firstDate, secondDate) => firstDate.isSame(secondDate, 'day');

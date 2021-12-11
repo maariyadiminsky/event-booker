@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const mainClass = "h-3 w-3 m-3 mr-1 rounded-full";
+const mainClass = 'h-3 w-3 m-3 mr-1 rounded-full';
 
 const Loader = ({ height = 36}) => (
     <div className={`flex justify-center mt-${height} h-96 flex-wrap content-center animate-pulse`}>

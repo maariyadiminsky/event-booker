@@ -1,16 +1,16 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const bookingSchema = new Schema({
     event: {
         type: Schema.Types.ObjectId,
-        ref: "Event"
+        ref: 'Event'
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: 'User'
     },
 },{
     timestamps: true
 });
 
-module.exports = model("Booking", bookingSchema);
+module.exports = model('Booking', bookingSchema);

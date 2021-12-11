@@ -1,18 +1,18 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import ProtectedRoute from "../components/Auth/hoc/ProtectedRoute";
-import Home from "./Home/Home";
-import Auth from "./Auth";
-import Events from "./Events";
-import Bookings from "./Bookings";
+import ProtectedRoute from '../components/Auth/hoc/ProtectedRoute';
+import Home from './Home/Home';
+import Auth from './Auth/Auth';
+import Events from './Events/Events';
+import Bookings from './Bookings/Bookings';
 
 import {
   ROOT_PATH,
   AUTH_PATH,
   EVENTS_PATH,
   BOOKINGS_PATH,
-} from "../const";
+} from '../const';
 
 const Routes = () => {
 
