@@ -15,4 +15,4 @@ export const useShowNotification = (title, timeToShow = 2500) => {
     }, [title, shouldRenderNotification]);
 
     return [shouldRenderNotification, setShouldRenderNotification];
-}
+};

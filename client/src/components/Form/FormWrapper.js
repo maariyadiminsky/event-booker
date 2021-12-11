@@ -5,7 +5,9 @@ import FormErrors from './FormErrors';
 import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
 import { validateForm } from '../../utils/auth';
+import { ERROR_COLOR, SUCCESS_COLOR } from '../../const';
 
+const buttonColor = (isCancelModal) => isCancelModal ? ERROR_COLOR : SUCCESS_COLOR;
 const FormWrapper = ({ 
     children, errors, formType = '', initialValues = null,
     handleOnSubmit, handleCancelButton = null, formCSS = 'form-wrapper', formContainerCSS = 'form-container',
@@ -18,7 +20,7 @@ const FormWrapper = ({
 
     const renderButtonGroup = () => handleCancelButton && (
         <ButtonTwoGroup
-            defaultClass={`text-white font-semibold bg-${isCancelModal ? 'red' : 'green'}-400 hover:bg-${isCancelModal ? 'red' : 'green'}-500 transition duration-300`}
+            defaultClass={`text-white font-semibold bg-${buttonColor(isCancelModal)}-400 hover:bg-${buttonColor(isCancelModal)}-500 transition duration-300`}
             handleCancel={handleCancelButton}
             confirmText={confirmButtonText}
             cancelText={cancelButtonText}

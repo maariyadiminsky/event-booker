@@ -1,5 +1,3 @@
-import { isDateBeforeToday } from './date';
-
 // so elements with multiple event handlers aren't unnecessarily 
 // called more than once(ie. SyntheticEvent Bubbling)
 export const shouldStopEventPropagationTry = (event) => {

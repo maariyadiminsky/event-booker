@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Button from '../Button/Button';
 import Notification from '../Notification/Notification';
 import NotificationPing from '../Notification/NotificationPing';
 
-import { 
-    isDateBeforeToday,
-    isSameAsToday,
-    getDateInCorrectFormat
-} from '../../utils/date';
-
-import {
-    WARNING_COLOR,
-    ERROR_COLOR
-} from '../../const';
+import { useNotificationBasedOnDate } from '../../hooks/useNotificationBasedOnDate';
+import { getDateInCorrectFormat } from '../../utils/date';
+import { WARNING_COLOR } from '../../const';
 
 const Event = ({ 
     toggleCancelModal, 
@@ -21,27 +14,7 @@ const Event = ({
     userId, 
     event: { _id, title, description, price, date, user }
 }) => {
-    const [notification, setNotification] = useState({
-        shouldRender: false,
-        color: 'white',
-        text: '',
-    });
-
-    useEffect(() => {
-        if (isSameAsToday(date)) {
-            setNotification({
-                shouldRender: true,
-                color: WARNING_COLOR,
-                text: 'Today'
-            })
-        } else if (isDateBeforeToday(date)) {
-            setNotification({
-                shouldRender: true,
-                color: ERROR_COLOR,
-                text: 'Expired'
-            })
-        }
-    }, [date])
+    const [notification] = useNotificationBasedOnDate(date);
 
     const openCancelModal = () => {
         setCancelEventId(_id);
