@@ -1,9 +1,6 @@
 import React, { Fragment, useState, useContext } from 'react';
 import { Field } from 'react-final-form';
-import {
-    useQuery,
-    useMutation,
-  } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { AuthContext } from '../../context/AuthContext';
 
@@ -68,7 +65,7 @@ const Auth = () => {
     const renderSecondButtonText = () => isSignInForm ? SWITCH_SIGN_UP_TEXT : SWITCH_SIGN_IN_TEXT;
 
     const renderText = () => isSignInForm ? SIGN_IN : SIGN_UP;
-    
+
     const renderTopText = () => {
         if (hasCreatedNewUser) {
             return (
