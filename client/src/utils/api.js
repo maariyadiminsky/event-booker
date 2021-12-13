@@ -15,7 +15,7 @@ export const findBaseURL = () => {
 export const apiBaseParams = {
     exitIfTrue: false,
     isMutation: false, 
-    setLoadingState: null,
+    setLoadingState: () => {},
     setErrorState: () => {},
     handleErrors: () => {},
     errorCallback: () => {},
@@ -31,8 +31,6 @@ export const apiBaseCall = async ({
     errorCallback, isMutation, dataCallback
 }) => {
     if (exitIfTrue) return;
-
-    if (setLoadingState) setLoadingState(true);
 
     try {
         const response = await queryToCheck({ variables: queryVariables });
