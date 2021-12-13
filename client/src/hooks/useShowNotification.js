@@ -12,7 +12,7 @@ export const useShowNotification = (title, timeToShow = 2500) => {
             return () => clearTimeout(showForTime);
         }
 
-    }, [title, shouldRenderNotification]);
+    }, [title, timeToShow, shouldRenderNotification]);
 
     return [shouldRenderNotification, setShouldRenderNotification];
 };

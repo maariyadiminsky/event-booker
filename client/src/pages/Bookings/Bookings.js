@@ -1,7 +1,4 @@
-import React, { 
-    Fragment, 
-    useState, useEffect, useContext, useMemo
-} from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -18,23 +15,23 @@ import {
     BOOKINGS_QUERY 
 } from './queries';
 import { EVENTS_QUERY } from '../Events/queries';
-import { sortQueryData } from '../../utils';
+import { useLoadingAndErrors } from '../../hooks/useLoadingAndErrors';
+import { useAPIQuery } from '../../hooks/useAPIQuery';
 import { apiBaseCall, apiBaseParams } from '../../utils/api';
 import { 
     handleErrors,
     getAuthHeaders,
 } from '../../utils/auth';
 
-import { 
-    BOOKINGS,
-    EVENTS,
+import {
     CREATE_BOOKING_FORM,
-    QUERY_POLICY_NETWORK_ONLY
+    QUERY_POLICY_NETWORK_ONLY,
+    EVENTS_LOWERCASE,
+    BOOKINGS_LOWERCASE,
 } from '../../const';
 
 const Bookings = () => {
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState([]);
+    const [loading, errors, setLoading, setErrors] = useLoadingAndErrors();
 
     const { token, userId } = useContext(AuthContext);
 
@@ -47,94 +44,13 @@ const Bookings = () => {
     const [createBooking] = useMutation(CREATE_BOOKING_MUTATION, { context: getAuthHeaders(token) });
     const [cancelBooking] = useMutation(CANCEL_BOOKING_MUTATION, { context: getAuthHeaders(token) });
 
-    const [events, setEvents] = useState(null);
-    const [bookings, setBookings] = useState(null);
+    const [events] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors, null, false, true);
+    const [bookings, setBookings] = useAPIQuery(bookingsQuery, BOOKINGS_LOWERCASE, loading, setLoading, setErrors, token, true);
+    
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
     const [cancelBookingId, setCancelBookingId] = useState(null);
-    
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
-
-    const fetchItems = useMemo(() => (itemType) => {
-        try {
-            const isBookings = itemType === BOOKINGS;
-            const query = isBookings ? bookingsQuery : eventsQuery;
-
-            // handle errors
-            handleErrors(query, setErrors);
-
-            const { data } = query;
-
-            const queryData = isBookings ? data.bookings : data.events;
-
-            if (queryData && queryData.length > 0) {
-                // make sure only bookings with events are rendered
-                // this avoids bug where an event is deleted but associated booking still exists.
-                // todo: make an improved fix by removing the booking associated with the event on the backend
-                const queryWithEvents = isBookings ? queryData.filter(booking => booking.event !== null) : queryData;
-
-                // temporarily mutate data for sorting purposes
-                const mutableQueryEvents = sortQueryData(queryWithEvents, isBookings);
-
-                // set items
-                if (isBookings) {
-                    setBookings(mutableQueryEvents);
-                } else {
-                    setEvents(mutableQueryEvents);
-                }
-
-                setLoading(false);
-            } else {
-                // set so loader knows no items exist
-                if (isBookings) {
-                    setBookings([]);
-                } else {
-                    setEvents([]);
-                    setLoading(false);
-                }
-            }
-        } catch(err) {
-            console.log(err);
-            throw err;
-        }
-    }, [bookingsQuery, eventsQuery]);
-
-    useEffect(() => {
-        if (!events && eventsQuery) {
-            if (!loading && eventsQuery.loading) {
-                setLoading(eventsQuery.loading);
-            }
-
-            if (!eventsQuery.loading) {
-                fetchItems(EVENTS);
-            }
-        }
-
-    }, [
-        events, eventsQuery, 
-        loading,
-        fetchItems
-    ])
-
-    useEffect(() => {
-        if (events && !bookings && bookingsQuery && bookingsQuery.data) {
-            if (!loading && bookingsQuery.loading) {
-                setLoading(bookingsQuery.loading);
-            }
-            // user should be verified to hit endpoint
-            if (!token || !userId) return;
-
-            if (!bookingsQuery.loading) {
-                fetchItems(BOOKINGS);
-            }
-        }
-    }, [
-        events,
-        bookings, bookingsQuery,
-        token, userId, 
-        loading,
-        fetchItems
-    ])
 
     const handleOnSubmit = async({ event }) => {
         const apiBaseCallParams = {

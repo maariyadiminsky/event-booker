@@ -33,6 +33,8 @@ export const DELETE_BOOKING_FORM = 'Delete Booking Form';
 // other
 export const DEVELOPMENT = 'development';
 export const PRODUCTION = 'production';
+export const BOOKINGS_LOWERCASE = 'bookings';
+export const EVENTS_LOWERCASE = 'events';
 
 // alert types
 export const SUCCESS_COLOR = 'green';

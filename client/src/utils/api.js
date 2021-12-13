@@ -23,6 +23,8 @@ export const apiBaseParams = {
     query: null,
     queryVariables: null,
 }
+
+// note: although similar to useAPIQuery it has more options and only called on button press
 export const apiBaseCall = async ({
     exitIfTrue, queryToCheck, queryVariables, 
     setLoadingState, handleErrors, setErrorState, 

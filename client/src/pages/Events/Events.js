@@ -11,6 +11,7 @@ import EventModal from '../../components/Event/EventModal';
 import CancelWarningModal from '../../components/Booking/CancelWarningModal';
 import EventAlert from '../../components/Event/EventAlert';
 
+import { useLoadingAndErrors } from '../../hooks/useLoadingAndErrors';
 import { useAPIQuery } from '../../hooks/useAPIQuery';
 import { useShowNotification } from '../../hooks/useShowNotification';
 import { 
@@ -29,10 +30,13 @@ import {
     CREATE_EVENT_FORM,
     REMOVE_EVENT_FORM,
     SUCCESS,
-    QUERY_POLICY_NETWORK_ONLY
+    QUERY_POLICY_NETWORK_ONLY,
+    EVENTS_LOWERCASE
 } from '../../const';
 
 const Events = () => {
+    const [loading, errors, setLoading, setErrors] = useLoadingAndErrors();
+
     const { token, userId } = useContext(AuthContext);
 
     const history = useHistory();
@@ -51,10 +55,7 @@ const Events = () => {
     const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
     const [shouldRenderNotification, setShouldRenderNotification] = useShowNotification(eventCreatedTitle);
 
-    const [
-        loading, errors, data, 
-        setLoading, setErrors, setData,
-    ] = useAPIQuery(eventsQuery, 'events');
+    const [data, setData] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors);
 
     const handleOnSubmit = async({ title, description, price, date }) => {
         const apiBaseCallParams = {

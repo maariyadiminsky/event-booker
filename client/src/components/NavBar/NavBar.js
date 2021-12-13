@@ -26,7 +26,7 @@ const NavBar = () => {
     const { 
         token, 
         signOutUser,
-        path: [path, setPath]
+        path: [, setPath]
     } = useContext(AuthContext);
 
     useEffect(() => {
