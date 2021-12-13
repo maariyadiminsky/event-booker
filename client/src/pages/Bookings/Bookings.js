@@ -44,8 +44,11 @@ const Bookings = () => {
     const [createBooking] = useMutation(CREATE_BOOKING_MUTATION, { context: getAuthHeaders(token) });
     const [cancelBooking] = useMutation(CANCEL_BOOKING_MUTATION, { context: getAuthHeaders(token) });
 
-    const [events] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors, null, false, true);
-    const [bookings, setBookings] = useAPIQuery(bookingsQuery, BOOKINGS_LOWERCASE, loading, setLoading, setErrors, token, true);
+    const isEventsQueryAuthEndpoint = false;
+    const isBookingsQueryAuthEndpoint = true;
+    const shouldStopLoadingIfEventsEmpty = true;
+    const [events] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors, null, isEventsQueryAuthEndpoint, shouldStopLoadingIfEventsEmpty);
+    const [bookings, setBookings] = useAPIQuery(bookingsQuery, BOOKINGS_LOWERCASE, loading, setLoading, setErrors, token, isBookingsQueryAuthEndpoint);
     
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
     const [cancelBookingId, setCancelBookingId] = useState(null);
