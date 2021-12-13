@@ -1,7 +1,4 @@
-import React, { 
-    Fragment, 
-    useState, useEffect, useContext 
-} from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
@@ -14,6 +11,7 @@ import EventModal from '../../components/Event/EventModal';
 import CancelWarningModal from '../../components/Booking/CancelWarningModal';
 import EventAlert from '../../components/Event/EventAlert';
 
+import { useAPIQuery } from '../../hooks/useAPIQuery';
 import { useShowNotification } from '../../hooks/useShowNotification';
 import { 
     CREATE_EVENT_MUTATION, 
@@ -24,7 +22,6 @@ import {
     handleErrors, 
     getAuthHeaders
 } from '../../utils/auth';
-import { sortQueryData } from '../../utils';
 import { apiBaseCall, apiBaseParams } from '../../utils/api';
 
 import { 
@@ -36,9 +33,6 @@ import {
 } from '../../const';
 
 const Events = () => {
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState([]);
-
     const { token, userId } = useContext(AuthContext);
 
     const history = useHistory();
@@ -51,46 +45,16 @@ const Events = () => {
     const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, { context: getAuthHeaders(token) });
 
     const [eventCreatedTitle, setEventCreatedTitle] = useState('');
-    const [events, setEvents] = useState(null);
     const [cancelEventId, setCancelEventId] = useState(null);
 
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
     const [shouldRenderNotification, setShouldRenderNotification] = useShowNotification(eventCreatedTitle);
 
-    useEffect(() => {
-        if (!events && eventsQuery) {
-            if (!loading && eventsQuery.loading) {
-                setLoading(eventsQuery.loading);
-            }
-
-            const fetchEvents = () => {
-                try {
-                    handleErrors(eventsQuery, setErrors);
-
-                    const { data } = eventsQuery;
-    
-                    if (data && data.events) {
-                        const mutableDataEvents = sortQueryData(data.events);
-
-                        setEvents(mutableDataEvents);
-                    } else {
-                        // set so loader knows no events exist
-                        setEvents([]);
-                    }
-                } catch(err) {
-                    console.log(err);
-                    throw err;
-                }
-
-                setLoading(false);
-            }
-
-            if (!eventsQuery.loading) {
-                fetchEvents();
-            }
-        }
-    }, [events, eventsQuery, loading, token]);
+    const [
+        loading, errors, data, 
+        setLoading, setErrors, setData,
+    ] = useAPIQuery(eventsQuery, 'events');
 
     const handleOnSubmit = async({ title, description, price, date }) => {
         const apiBaseCallParams = {
@@ -117,13 +81,13 @@ const Events = () => {
         setLoading(false);
     }
 
-    const handleCreateEventQueryResult = (data) => {
-        if (data && data.createEvent._id && data.createEvent.title) {
-            setEvents([
-                ...events,
-                data.createEvent
+    const handleCreateEventQueryResult = (dataResult) => {
+        if (dataResult && dataResult.createEvent._id && dataResult.createEvent.title) {
+            setData([
+                ...data,
+                dataResult.createEvent
             ]);
-            setEventCreatedTitle(data.createEvent.title);
+            setEventCreatedTitle(dataResult.createEvent.title);
             setShouldRenderNotification(true);
             toggleModal();
         } else {
@@ -151,10 +115,10 @@ const Events = () => {
         setLoading(false);
     }
 
-    const handleRemoveEventQueryResult = (data) => {
-        if (data.removeEvent && data.removeEvent.title) {
-            const eventsWithDeletedEventRemoved = events.filter((event) => event.title !== data.removeEvent.title);
-            setEvents(eventsWithDeletedEventRemoved);
+    const handleRemoveEventQueryResult = (dataResult) => {
+        if (dataResult.removeEvent && dataResult.removeEvent.title) {
+            const eventsWithDeletedEventRemoved = data.filter((event) => event.title !== dataResult.removeEvent.title);
+            setData(eventsWithDeletedEventRemoved);
             toggleCancelModal();
         } else {
             throw new Error(`${REMOVE_EVENT_FORM} failed! Event not deleted! Please try again.`);
@@ -201,10 +165,10 @@ const Events = () => {
         />
     );
 
-    const renderEventItems = () => events && (
+    const renderEventItems = () => data && (
         <EventItems
             userId={userId}
-            events={events}
+            events={data}
             toggleCancelModal={toggleCancelModal}
             setCancelEventId={setCancelEventId}
         />

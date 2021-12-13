@@ -28,13 +28,13 @@ const Auth = () => {
     const { signInUser } = useContext(AuthContext);
 
     const [createUser] = useMutation(CREATE_USER_MUTATION);
-    const signIn = useQuery(SIGN_IN_QUERY, { skip: true });
+    const signInQuery = useQuery(SIGN_IN_QUERY, { skip: true });
 
     const handleOnSubmit = async({ email, password }) => {
         try {
             const formType = findFormType();
             const variables = { email, password };
-            const response = isSignInForm ? await signIn.refetch(variables) : await createUser({ variables });
+            const response = isSignInForm ? await signInQuery.refetch(variables) : await createUser({ variables });
 
             handleErrors(response, setServerErrors, null, !isSignInForm);
 
