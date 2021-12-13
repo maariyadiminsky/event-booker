@@ -32,6 +32,8 @@ export const apiBaseCall = async ({
 }) => {
     if (exitIfTrue) return;
 
+    setLoadingState(true);
+
     try {
         const response = await queryToCheck({ variables: queryVariables });
 
@@ -41,7 +43,7 @@ export const apiBaseCall = async ({
 
         dataCallback(data);
 
-        if (setLoadingState) setLoadingState(loading);
+        setLoadingState(loading);
     } catch(err) {
         console.log(err);
         throw err;
