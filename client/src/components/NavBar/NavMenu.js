@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import NavItem from './NavItem';
 
@@ -25,7 +26,7 @@ const authButtonCSS = {
 };
 
 const NavMenu = ({ 
-    pathname = ROOT_PATH, authButtonText = '', isMobile = DEFAULT.BOOL_FALSE, 
+    pathname = ROOT_PATH, authButtonText = DEFAULT.STRING, isMobile = DEFAULT.BOOL_FALSE, 
     handleOnPathDirect = DEFAULT.NULL, handleOnPathAfterSignIn = DEFAULT.NULL, handleOnAuth = DEFAULT.NULL, toggleMobileMenu = DEFAULT.NULL
 }) => {
     const [navItemsActive, setNavItemsActive] = useState({
@@ -75,5 +76,15 @@ const NavMenu = ({
         </Fragment>
     );
 }
+
+NavMenu.propTypes = {
+    pathname: PropTypes.string.isRequired,
+    authButtonText: PropTypes.string.isRequired,
+    isMobile: PropTypes.bool,
+    handleOnPathDirect: PropTypes.func.isRequired,
+    handleOnPathAfterSignIn: PropTypes.func.isRequired,
+    handleOnAuth: PropTypes.func.isRequired,
+    toggleMobileMenu: PropTypes.func.isRequired,
+};
 
 export default NavMenu;

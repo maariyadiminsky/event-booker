@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 
 import { shouldStopEventPropagationTry } from '../../utils';
 import { DEFAULT } from '../../const';
@@ -57,6 +58,24 @@ const Modal = ({
         </div>,
         document.getElementById('modal')
     );
+};
+
+Modal.propTypes = {
+    headerClass: PropTypes.string,
+    buttonClass: PropTypes.string,
+    startHeight: PropTypes.number,
+    header: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    cancelButtonText: PropTypes.isRequired,
+    confirmButtonText: PropTypes.isRequired,
+    handleConfirm: PropTypes.func.isRequired,
+    handleCancelModal: PropTypes.func.isRequired,
+    hideSubmitButtons: PropTypes.bool.isRequired,
+    customSubmitButtons: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+        PropTypes.func
+    ]).isRequired,
 };
 
 export default Modal;

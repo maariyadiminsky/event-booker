@@ -18,7 +18,11 @@ import {
     SWITCH_SIGN_UP_TEXT,
     SWITCH_SIGN_IN_TEXT,
     SIGN_IN_FORM,
-    SIGN_UP_FORM
+    SIGN_UP_FORM,
+    ACCOUNT_CREATED_MESSAGE,
+    SIGN_IN_MESSAGE,
+    SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE,
+    CONFETTI_ICON,
 } from '../../const';
 
 const Auth = () => {
@@ -71,14 +75,14 @@ const Auth = () => {
         if (hasCreatedNewUser) {
             return (
                 <NotificationAlt 
-                    icon='🎉'
-                    topText='Account successfully created!'
-                    bottomText='Please sign in to continue.'
+                    icon={CONFETTI_ICON}
+                    topText={ACCOUNT_CREATED_MESSAGE}
+                    bottomText={SIGN_IN_MESSAGE}
                 />
             );
         } 
 
-        return 'Please sign in or create an account.';
+        return SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE;
     }
 
     const renderTopContent = () => (

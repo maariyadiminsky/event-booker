@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT } from '../../const';
 
@@ -22,5 +23,9 @@ const NavMobileButton = ({ handleOnClick = DEFAULT.NULL }) => (
         </button>
     </div>
 );
+
+NavMobileButton.propTypes = {
+    handleOnClick: PropTypes.func.isRequired,
+};
 
 export default NavMobileButton;

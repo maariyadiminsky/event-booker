@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { DEFAULT, ROOT_PATH } from '../const';
 
@@ -44,3 +45,11 @@ export const AuthContextProvider = ({ children = DEFAULT.FUNCTION }) => {
         </AuthContext.Provider>
     );
 }
+
+AuthContextProvider.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+        PropTypes.func
+    ]).isRequired,
+};

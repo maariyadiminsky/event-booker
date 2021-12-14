@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const mainClass = 'h-3 w-3 m-3 mr-1 rounded-full';
 
@@ -9,6 +10,10 @@ const Loader = ({ height = 36}) => (
         <div className={`${mainClass} bg-green-400 animate-bounce400`}></div>
     </div>
 );
+
+Loader.propTypes = { 
+    height: PropTypes.number,
+};
 
 
 export default Loader;

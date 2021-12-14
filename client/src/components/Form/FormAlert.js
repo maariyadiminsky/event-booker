@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { getColorForAlertType } from '../../utils/colors';
 
@@ -25,5 +26,15 @@ const FormAlert = ({ type = DEFAULT.STRING, children = DEFAULT.FUNCTION }) => {
         </div>
     );
 }
+
+FormAlert.propTypes = {
+    type: PropTypes.string.isRequired,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+        PropTypes.func,
+        PropTypes.string,
+    ]).isRequired
+};
 
 export default FormAlert;

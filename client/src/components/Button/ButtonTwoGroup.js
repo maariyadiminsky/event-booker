@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT, SUBMIT, NEVERMIND } from '../../const';
 
@@ -19,5 +20,13 @@ const ButtonTwoGroup = ({ defaultClass = DEFAULT.STRING, confirmText = SUBMIT, c
         </button>
     </div>
 );
+
+ButtonTwoGroup.propTypes = {
+    defaultClass: PropTypes.string,
+    confirmText: PropTypes.string.isRequired,
+    cancelText: PropTypes.string.isRequired,
+    handleCancel: PropTypes.func.isRequired,
+    handleConfirm: PropTypes.func,
+};
 
 export default ButtonTwoGroup;

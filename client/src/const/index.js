@@ -1,3 +1,6 @@
+// server endpoint
+export const GRAPHQL_ENDPOINT = '/graphql';
+
 // paths
 export const ROOT_PATH = '/';
 export const EVENTS_PATH = '/events';
@@ -21,9 +24,15 @@ export const BOOKINGS_NEED_EVENTS = 'Events must be created to book them!';
 export const CREATE_AN_EVENT = 'Create an Event';
 export const BOOK_AN_EVENT = 'Book an Event';
 export const YES_IM_SURE = 'Yes I\'m sure';
+export const CANCEL_BOOKING = 'Cancel Booking';
+export const SUBMIT = 'Submit';
+export const NEVERMIND = 'Nevermind';
+export const ACCOUNT_CREATED_MESSAGE = 'Account successfully created!';
+export const SIGN_IN_MESSAGE = 'Please sign in to continue.';
+export const SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE = 'Please sign in or create an account.';
 
-// server endpoint
-export const GRAPHQL_ENDPOINT = '/graphql';
+// icons
+export const CONFETTI_ICON = '🎉';
 
 // form type
 export const SIGN_IN_FORM = 'Sign In Form';
@@ -50,10 +59,6 @@ export const SUCCESS = 'success';
 export const WARNING = 'warning';
 export const ERROR = 'error';
 export const INFORMATIVE = 'informative';
-
-// misc 
-export const SUBMIT = 'Submit';
-export const NEVERMIND = 'Nevermind';
 
 // default param types
 export const DEFAULT = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT } from '../../const';
 
@@ -11,5 +12,11 @@ const CreateButtonRectangle = ({ className = DEFAULT.STRING, text = DEFAULT.STRI
         </div>
     </div>
 );
+
+CreateButtonRectangle.propTypes = {
+    className: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
 
 export default CreateButtonRectangle;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FormWrapper from '../Form/FormWrapper';
 import FormInput from '../Form/FormInput';
@@ -58,5 +59,11 @@ const EventModalContent = ({ errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.NUL
         />
     </FormWrapper>
 );
+
+EventModalContent.propTypes = {
+    errors: PropTypes.arrayOf(PropTypes.string),
+    toddleModal: PropTypes.func.isRequired,
+    handleOnSubmit: PropTypes.func.isRequired,
+};
 
 export default EventModalContent;

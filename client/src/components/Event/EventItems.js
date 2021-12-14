@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Event from './Event';
 
@@ -15,5 +16,23 @@ const EventItems = ({ userId = DEFAULT.NULL, events = DEFAULT.NULL, toggleCancel
         />
     ))
 );
+
+EventItems.propTypes = {
+    userId: PropTypes.string,
+    toggleCancelModal: PropTypes.func.isRequired,
+    setCancelEventId: PropTypes.func.isRequired,
+    events: PropTypes.arrayOf(
+        PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired,
+            date: PropTypes.string.isRequired,
+            user: PropTypes.shape({
+                _id: PropTypes.string.isRequired,
+            }),
+        }).isRequired
+    ),
+};
 
 export default EventItems;

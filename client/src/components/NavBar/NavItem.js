@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { DEFAULT, ROOT_PATH } from '../../const';
 
@@ -10,5 +11,16 @@ const NavItem = ({ children = DEFAULT.FUNCTION, buttonPath = ROOT_PATH, classNam
         </div>
     </NavLink> 
 );
+
+NavItem.propTypes = {
+    className: PropTypes.string,
+    buttonPath: PropTypes.string.isRequired,
+    handleOnClick: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+        PropTypes.func
+    ]).isRequired,
+};
 
 export default NavItem;

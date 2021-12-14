@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from 'react-final-form';
+import PropTypes from 'prop-types';
 
 import FormErrors from './FormErrors';
 import ButtonTwoGroup from '../Button/ButtonTwoGroup';
@@ -12,7 +13,7 @@ const FormWrapper = ({
     children = DEFAULT.FUNCTION, errors = DEFAULT.NULL, formType = DEFAULT.STRING, initialValues = DEFAULT.NULL,
     handleOnSubmit = DEFAULT.NULL, handleCancelButton = DEFAULT.NULL, formCSS = 'form-wrapper', formContainerCSS = 'form-container',
     shouldValidate = DEFAULT.BOOL_TRUE, shouldResetOnSubmit = DEFAULT.BOOL_FALSE, isCancelModal = DEFAULT.BOOL_FALSE,
-    topContent=DEFAULT.NULL, confirmButtonText = SUBMIT, cancelButtonText = NEVERMIND,
+    topContent = DEFAULT.NULL, confirmButtonText = SUBMIT, cancelButtonText = NEVERMIND,
  }) => {
     const renderErrors = () => errors && errors.length > 0 && (
         <FormErrors errors={errors} />
@@ -36,8 +37,8 @@ const FormWrapper = ({
 
     return (
         <Form 
-            initialValues={initialValues ? initialValues : null}
-            validate={shouldValidate && formType ? (fields = DEFAULT.UNDEFINED) => validateForm(fields, formType) : null}
+            initialValues={initialValues ? initialValues : DEFAULT.NULL}
+            validate={shouldValidate && formType ? (fields = DEFAULT.UNDEFINED) => validateForm(fields, formType) : DEFAULT.NULL}
             onSubmit={handleOnSubmit}>
             {({ handleSubmit = DEFAULT.NULL, form = DEFAULT.NULL }) => (
                 <div className={formCSS}>
@@ -55,5 +56,30 @@ const FormWrapper = ({
         </Form>
     );
 }
+
+FormWrapper.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+        PropTypes.func
+    ]).isRequired,
+    topContent: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+        PropTypes.func
+    ]),
+    errors: PropTypes.arrayOf(PropTypes.string),
+    formType: PropTypes.string,
+    initialValues: PropTypes.objectOf(PropTypes.any),
+    handleOnSubmit: PropTypes.func.isRequired,
+    handleCancelButton: PropTypes.func,
+    formCSS: PropTypes.string,
+    formContainerCSS: PropTypes.string,
+    shouldValidate: PropTypes.bool,
+    shouldResetOnSubmit: PropTypes.bool,
+    isCancelModal: PropTypes.bool,
+    confirmButtonText: PropTypes.string,
+    cancelButtonText: PropTypes.string,
+};
 
 export default FormWrapper;

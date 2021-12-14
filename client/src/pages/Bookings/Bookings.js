@@ -24,6 +24,7 @@ import {
 } from '../../utils/auth';
 
 import {
+    CANCEL_BOOKING,
     BOOK_AN_EVENT,
     DEFAULT,
     CREATE_BOOKING_FORM,
@@ -125,16 +126,9 @@ const Bookings = () => {
         setShouldShowModal(!shouldShowModal);
     }
 
-    const renderBookings = () => bookings && bookings.length > 0 && (
-        <BookingItems 
-            bookings={bookings}
-            openCancelModal={openCancelModal}
-        />
-    );
-
     const renderCancelBookingModal = () => shouldShowCancelModal && (
         <CancelWarningModal
-            header="Cancel Booking"
+            header={CANCEL_BOOKING}
             errors={errors}
             toggleModal={toggleCancelModal}
             handleOnSubmit={handleCancelBooking}
@@ -152,7 +146,7 @@ const Bookings = () => {
     );
 
     if (loading) return <Loader />;
-
+    
     return (
         <Fragment>
             <div className="w-full mt-12">
@@ -163,7 +157,7 @@ const Bookings = () => {
                             onClick={() => toggleModal(CREATE_BOOKING_FORM)}
                             text={BOOK_AN_EVENT}
                         />
-                        {renderBookings()}
+                        <BookingItems bookings={bookings} openCancelModal={openCancelModal} />
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import EventModalContent from './EventModalContent';
 import Modal from '../Modal/Modal';
@@ -22,5 +23,11 @@ const EventModal = ({ errors = DEFAULT.NULL, toggleModal = DEFAULT.NULL, handleO
         hideSubmitButtons
     />
 );
+
+EventModal.propTypes = {
+    errors: PropTypes.arrayOf(PropTypes.string),
+    toggleModal: PropTypes.func.isRequired,
+    handleOnSubmit: PropTypes.func.isRequired,
+};
 
 export default EventModal;

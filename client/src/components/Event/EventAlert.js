@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FormAlert from '../Form/FormAlert';
 
@@ -12,5 +13,12 @@ const EventAlert = ({ alertType = DEFAULT.STRING , title = DEFAULT.STRING, event
         </div>
     </FormAlert>
 );
+
+EventAlert.propTypes = {
+    alertType: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    eventTitle: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+};
 
 export default EventAlert;

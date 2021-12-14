@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT } from '../../const';
 
@@ -8,9 +9,9 @@ const defaultLabelClass = (labelClass = DEFAULT.STRING) => labelClass ? labelCla
 const defaultInputClass = (inputClass = DEFAULT.STRING) => inputClass ? inputClass : 'text-center text-green-600 text-2xl py-4 px-3';
 
 const FormInput = ({ 
-    label = DEFAULT.STRING, input = DEFAULT.NULL, meta: { 
+    label = DEFAULT.STRING, input = DEFAULT.UNDEFINED, labelClass = DEFAULT.STRING, inputClass = DEFAULT.STRING, meta: { 
         touched = DEFAULT.BOOL_FALSE, submitFailed = DEFAULT.BOOL_TRUE, error = DEFAULT.STRING
-    }, labelClass = DEFAULT.STRING, inputClass = DEFAULT.STRING
+    },
 }) => {
     let hasBeenTouchedAndHasError = (touched || submitFailed) && error;
     
@@ -26,5 +27,17 @@ const FormInput = ({
         </div>
     );
 }
+
+FormInput.propTypes = {
+    label: PropTypes.string.isRequired,
+    input: PropTypes.objectOf(PropTypes.any),
+    labelClass: PropTypes.string,
+    inputClass: PropTypes.string,
+    meta: PropTypes.shape({
+        touched: PropTypes.bool.isRequired,
+        submitFailed: PropTypes.bool.isRequired,
+        error: PropTypes.string,
+    }),
+};
 
 export default FormInput;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT } from '../../const';
 
@@ -9,5 +10,9 @@ const FormErrors = ({ errors = DEFAULT.NULL }) => (
         <FormError key={index} error={message} />
     ))
 );
+
+FormErrors.propTypes = {
+    errors: PropTypes.arrayOf(PropTypes.string).isRequired
+};
 
 export default FormErrors;

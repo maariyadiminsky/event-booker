@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT } from '../../../const';
 
@@ -195,5 +196,9 @@ const HomeImage = ({ className =  DEFAULT.STRING }) => (
       </g>
     </svg>
 );
+
+HomeImage.propTypes = {
+  className: PropTypes.string,
+};
 
 export default HomeImage;

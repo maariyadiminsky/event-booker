@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT, YES_IM_SURE } from '../../const';
 
@@ -16,5 +17,11 @@ const CancelWarningModalContent = ({ errors = DEFAULT.NULL, handleOnSubmit = DEF
         <div className="text-center text-gray-400 text-2xl pb-4 px-3">Are you sure?</div>
     </FormWrapper>
 );
+
+CancelWarningModalContent.propTypes = {
+    errors: PropTypes.arrayOf(PropTypes.string),
+    handleCancelButton: PropTypes.func.isRequired,
+    handleOnSubmit: PropTypes.func.isRequired,
+};
 
 export default CancelWarningModalContent;

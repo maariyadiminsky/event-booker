@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT } from '../../const';
 
@@ -9,5 +10,11 @@ const NotificationAlt = ({ icon = DEFAULT.STRING, topText = DEFAULT.STRING, bott
         <p>{bottomText}</p>
     </div>
 );
+
+NotificationAlt.propTypes = {
+    icon: PropTypes.string.isRequired,
+    topText: PropTypes.string.isRequired,
+    bottomText: PropTypes.string.isRequired,
+};
 
 export default NotificationAlt;

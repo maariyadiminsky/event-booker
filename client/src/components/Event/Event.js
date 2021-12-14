@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '../Button/Button';
 import Notification from '../Notification/Notification';
@@ -21,16 +22,9 @@ const Event = ({
         toggleCancelModal();
     }
 
-    const renderSmallAlert = () => notification.shouldRender && (
-        <Notification 
-            text={notification.text} 
-            color={notification.color} 
-        />
-    );
+    const renderSmallAlert = () => notification.shouldRender && (<Notification text={notification.text} color={notification.color} />);
 
-    const renderNotification = () => notification.shouldRender && notification.color === WARNING_COLOR && (
-        <NotificationPing />
-    );
+    const renderNotification = () => notification.shouldRender && notification.color === WARNING_COLOR && (<NotificationPing />);
     
     const isCreatorOfEvent = userId === user._id;
     const renderRemoveOption = () => isCreatorOfEvent && (
@@ -69,5 +63,21 @@ const Event = ({
         </div>
     );
 }
+
+Event.propTypes = {
+    toggleCancelModal: PropTypes.func.isRequired,
+    setCancelEventId: PropTypes.func.isRequired,
+    userId: PropTypes.string,
+    event: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        date: PropTypes.string.isRequired,
+        user: PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+        }),
+    }).isRequired
+};
 
 export default Event;

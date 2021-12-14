@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DEFAULT } from '../../const';
 
@@ -9,5 +10,11 @@ const CreateButtonSquare = ({ className = DEFAULT.STRING, text = DEFAULT.STRING,
         </div>
     </div>
 );
+
+CreateButtonSquare.propTypes = {
+    className: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
 
 export default CreateButtonSquare;

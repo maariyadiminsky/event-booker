@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import CancelWarningModalContent from './CancelWarningModalContent';
 import Modal from '../Modal/Modal';
@@ -23,5 +24,12 @@ const CancelWarningModal = ({ header = DEFAULT.STRING, errors = DEFAULT.NULL, to
         startHeight={40}
     />
 );
+
+CancelWarningModal.propTypes = {
+    header: PropTypes.string.isRequired,
+    errors: PropTypes.arrayOf(PropTypes.string),
+    toggleModal: PropTypes.func.isRequired,
+    handleOnSubmit: PropTypes.func.isRequired,
+};
 
 export default CancelWarningModal;

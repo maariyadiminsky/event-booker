@@ -1,28 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Loader from '../Loader';
 import BookingModalContent from './BookingModalContent';
 import Modal from '../Modal/Modal';
 
-import { DEFAULT, BOOKINGS_NEED_EVENTS, BOOK_AN_EVENT } from '../../const';
+import { DEFAULT, BOOK_AN_EVENT } from '../../const';
 
 import '../Form/Form.css';
 
-const BookingModal = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.STRING, errors = DEFAULT.NULL, toggleModal = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL }) => {
-    const renderModalContent = () => {
-        if (!eventOptions) {
-            return <Loader height={0} />;
-        }
-        
-        if (eventOptions && eventOptions.length === 0) {
-            return (
-                <div className="font-light">
-                    ⚠ {BOOKINGS_NEED_EVENTS}
-                </div>
-            );
-        }
-
-        return (
+const BookingModal = ({ eventOptions = DEFAULT.NULL, errors = DEFAULT.NULL, formType = DEFAULT.STRING, toggleModal = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL }) => (
+    <Modal 
+        header={BOOK_AN_EVENT}
+        content={
             <BookingModalContent
                 formType={formType}
                 errors={errors}
@@ -30,18 +19,29 @@ const BookingModal = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.STRING, 
                 handleOnSubmit={handleOnSubmit}
                 handleCancelButton={toggleModal}
             />
-        );
-    }
+        }
+        handleCancelModal={toggleModal}
+        headerClass="form-header"
+        hideSubmitButtons
+    />
+);
 
-    return (
-        <Modal 
-            header={BOOK_AN_EVENT}
-            content={renderModalContent()}
-            handleCancelModal={toggleModal}
-            headerClass="form-header"
-            hideSubmitButtons
-        />
-    );
-}
+BookingModal.propTypes = {
+    eventOptions: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            date: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired,
+            user: PropTypes.shape({
+                _id: PropTypes.string.isRequired,
+            }).isRequired,
+        })
+    ),
+    errors: PropTypes.arrayOf(PropTypes.string),
+    formType: PropTypes.string.isRequired,
+    toggleModal: PropTypes.func.isRequired,
+    handleOnSubmit: PropTypes.func.isRequired,
+};
 
 export default BookingModal;

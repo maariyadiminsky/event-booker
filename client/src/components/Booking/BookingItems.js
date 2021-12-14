@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { getRandomColor } from '../../utils/colors';
 import { getDateInCorrectFormat } from '../../utils/date';
@@ -6,7 +7,7 @@ import { getDateInCorrectFormat } from '../../utils/date';
 import { DEFAULT } from '../../const';
 
 const BookingItems = ({ bookings = DEFAULT.NULL, openCancelModal = DEFAULT.NULL }) => (
-    bookings.map(({ _id = DEFAULT.STRING, event: { title = DEFAULT.STRING, date = DEFAULT.STRING }}) => {
+    bookings && bookings.map(({ _id = DEFAULT.STRING, event: { title = DEFAULT.STRING, date = DEFAULT.STRING }}) => {
         const color = getRandomColor();
         return (
             <div 
@@ -28,5 +29,19 @@ const BookingItems = ({ bookings = DEFAULT.NULL, openCancelModal = DEFAULT.NULL 
         );
     })
 );
+
+BookingItems.propTypes = {
+    bookings: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        event: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            date: PropTypes.string.isRequired,
+            user: PropTypes.shape({
+                _id: PropTypes.string.isRequired,
+            }),
+        })
+    })),
+    openCancelModal: PropTypes.func,
+};
 
 export default BookingItems;
