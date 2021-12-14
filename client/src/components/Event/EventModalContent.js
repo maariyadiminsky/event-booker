@@ -5,11 +5,11 @@ import FormInput from '../Form/FormInput';
 import { Field } from 'react-final-form';
 
 import { getTodaysDate } from '../../utils/date';
-import { DEFAULT_PARAM, CREATE_EVENT_FORM } from '../../const';
+import { DEFAULT, CREATE_EVENT_FORM } from '../../const';
 
 const todaysDate = getTodaysDate();
 
-const EventModalContent = ({ errors = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL, handleCancelButton = DEFAULT_PARAM.NULL }) => (
+const EventModalContent = ({ errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL, handleCancelButton = DEFAULT.NULL }) => (
     <FormWrapper
         formType={CREATE_EVENT_FORM}
         initialValues={{ date: todaysDate }}

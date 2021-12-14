@@ -2,10 +2,10 @@ import React from 'react';
 
 import Event from './Event';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const EventItems = ({ userId = DEFAULT_PARAM.NULL, events = DEFAULT_PARAM.NULL, toggleCancelModal = DEFAULT_PARAM.NULL, setCancelEventId = DEFAULT_PARAM.NULL }) => (
-    events.map((event = DEFAULT_PARAM.NULL, index = DEFAULT_PARAM.NULL) => (
+const EventItems = ({ userId = DEFAULT.NULL, events = DEFAULT.NULL, toggleCancelModal = DEFAULT.NULL, setCancelEventId = DEFAULT.NULL }) => (
+    events.map((event = DEFAULT.NULL, index = DEFAULT.NULL) => (
         <Event 
             key={index}
             event={event} 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const NotificationAlt = ({ icon = DEFAULT_PARAM.STRING, topText = DEFAULT_PARAM.STRING, bottomText = DEFAULT_PARAM.STRING }) => (
+const NotificationAlt = ({ icon = DEFAULT.STRING, topText = DEFAULT.STRING, bottomText = DEFAULT.STRING }) => (
     <div>
         <p className="lh-10">{icon}</p>
         <p className="font-bold">{topText}</p>

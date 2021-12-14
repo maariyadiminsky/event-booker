@@ -26,7 +26,7 @@ import {
 import { apiBaseCall, apiBaseParams } from '../../utils/api';
 
 import { 
-    DEFAULT_PARAM,
+    DEFAULT,
     CREATE_AN_EVENT,
     AUTH_PATH,
     CREATE_EVENT_FORM,
@@ -50,16 +50,16 @@ const Events = () => {
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION, { context: getAuthHeaders(token) });
     const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, { context: getAuthHeaders(token) });
 
-    const [eventCreatedTitle, setEventCreatedTitle] = useState(DEFAULT_PARAM.STRING);
-    const [cancelEventId, setCancelEventId] = useState(DEFAULT_PARAM.NULL);
+    const [eventCreatedTitle, setEventCreatedTitle] = useState(DEFAULT.STRING);
+    const [cancelEventId, setCancelEventId] = useState(DEFAULT.NULL);
 
-    const [shouldShowModal, setShouldShowModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
-    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
+    const [shouldShowModal, setShouldShowModal] = useState(DEFAULT.BOOL_FALSE);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(DEFAULT.BOOL_FALSE);
     const [shouldRenderNotification, setShouldRenderNotification] = useShowNotification(eventCreatedTitle);
 
     const [data, setData] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors);
 
-    const handleOnSubmit = async({ title = DEFAULT_PARAM.STRING, description = DEFAULT_PARAM.STRING, price = DEFAULT_PARAM.NULL, date = DEFAULT_PARAM.STRING}) => {
+    const handleOnSubmit = async({ title = DEFAULT.STRING, description = DEFAULT.STRING, price = DEFAULT.NULL, date = DEFAULT.STRING}) => {
         const apiBaseCallParams = {
             ...apiBaseParams,
             queryToCheck: createEvent,
@@ -84,7 +84,7 @@ const Events = () => {
         setLoading(false);
     }
 
-    const handleCreateEventQueryResult = (dataResult = DEFAULT_PARAM.NULL) => {
+    const handleCreateEventQueryResult = (dataResult = DEFAULT.NULL) => {
         if (dataResult && dataResult.createEvent._id && dataResult.createEvent.title) {
             setData([
                 ...data,
@@ -118,7 +118,7 @@ const Events = () => {
         setLoading(false);
     }
 
-    const handleRemoveEventQueryResult = (dataResult = DEFAULT_PARAM.NULL) => {
+    const handleRemoveEventQueryResult = (dataResult = DEFAULT.NULL) => {
         if (dataResult && dataResult.removeEvent && dataResult.removeEvent.title) {
             const eventsWithDeletedEventRemoved = data.filter((event) => event.title !== dataResult.removeEvent.title);
             setData(eventsWithDeletedEventRemoved);

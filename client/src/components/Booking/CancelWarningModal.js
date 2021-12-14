@@ -3,11 +3,11 @@ import React from 'react';
 import CancelWarningModalContent from './CancelWarningModalContent';
 import Modal from '../Modal/Modal';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
 import '../Form/Form.css';
 
-const CancelWarningModal = ({ header = DEFAULT_PARAM.STRING, errors = DEFAULT_PARAM.NULL, toggleModal = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL }) => (
+const CancelWarningModal = ({ header = DEFAULT.STRING, errors = DEFAULT.NULL, toggleModal = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL }) => (
     <Modal 
         header={header}
         content={

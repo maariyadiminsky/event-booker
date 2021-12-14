@@ -2,9 +2,9 @@ import React from 'react';
 
 import FormAlert from '../Form/FormAlert';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const EventAlert = ({ alertType = DEFAULT_PARAM.STRING , title = DEFAULT_PARAM.STRING, eventTitle = DEFAULT_PARAM.STRING, message = DEFAULT_PARAM.STRING }) => (
+const EventAlert = ({ alertType = DEFAULT.STRING , title = DEFAULT.STRING, eventTitle = DEFAULT.STRING, message = DEFAULT.STRING }) => (
     <FormAlert type={alertType}>
         <div>
             <p className="font-semibold">{title}</p>

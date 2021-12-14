@@ -1,21 +1,21 @@
 import React, { createContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { DEFAULT_PARAM, ROOT_PATH } from '../const';
+import { DEFAULT, ROOT_PATH } from '../const';
 
 export const AuthContext = createContext();
 
-export const AuthContextProvider = ({ children = DEFAULT_PARAM.FUNCTION_COMPONENT }) => {
-    const [token = DEFAULT_PARAM.NULL, setToken = DEFAULT_PARAM.NULL] = useState(DEFAULT_PARAM.NULL);
+export const AuthContextProvider = ({ children = DEFAULT.FUNCTION }) => {
+    const [token = DEFAULT.NULL, setToken = DEFAULT.NULL] = useState(DEFAULT.NULL);
     
     // todo: set token with expiration date inside cookie storage
-    const [tokenExpiration = DEFAULT_PARAM.NULL, setTokenExpiration = DEFAULT_PARAM.NULL] = useState(DEFAULT_PARAM.NULL);
-    const [userId = DEFAULT_PARAM.NULL, setUserId = DEFAULT_PARAM.NULL] = useState(DEFAULT_PARAM.NULL);
-    const [path = ROOT_PATH, setPath = DEFAULT_PARAM.NULL] = useState(ROOT_PATH);
+    const [tokenExpiration = DEFAULT.NULL, setTokenExpiration = DEFAULT.NULL] = useState(DEFAULT.NULL);
+    const [userId = DEFAULT.NULL, setUserId = DEFAULT.NULL] = useState(DEFAULT.NULL);
+    const [path = ROOT_PATH, setPath = DEFAULT.NULL] = useState(ROOT_PATH);
 
     const history = useHistory();
     
-    const signInUser = (userId = DEFAULT_PARAM.STRING, token = DEFAULT_PARAM.STRING, tokenExpiration = DEFAULT_PARAM.STRING) => {
+    const signInUser = (userId = DEFAULT.STRING, token = DEFAULT.STRING, tokenExpiration = DEFAULT.STRING) => {
         setUserId(userId);
         setToken(token);
         setTokenExpiration(tokenExpiration);

@@ -1,4 +1,4 @@
-import { DEFAULT_PARAM, DEVELOPMENT, PRODUCTION } from '../const';
+import { DEFAULT, DEVELOPMENT, PRODUCTION } from '../const';
 
 export const findBaseURL = () => {
     if (process.env.NODE_ENV === PRODUCTION) {
@@ -13,15 +13,15 @@ export const findBaseURL = () => {
 // allows me to call only the params I want instead
 // of writing null for each param I don't need--idea from C#.
 export const apiBaseParams = {
-    exitIfTrue: DEFAULT_PARAM.BOOL_FALSE,
-    isMutation: DEFAULT_PARAM.BOOL_FALSE, 
-    setLoadingState: DEFAULT_PARAM.NULL,
-    setErrorState: DEFAULT_PARAM.NULL,
-    handleErrors: DEFAULT_PARAM.NULL,
-    errorCallback: DEFAULT_PARAM.NULL,
-    dataCallback: DEFAULT_PARAM.NULL,
-    query: DEFAULT_PARAM.NULL,
-    queryVariables: DEFAULT_PARAM.NULL,
+    exitIfTrue: DEFAULT.BOOL_FALSE,
+    isMutation: DEFAULT.BOOL_FALSE, 
+    setLoadingState: DEFAULT.NULL,
+    setErrorState: DEFAULT.NULL,
+    handleErrors: DEFAULT.NULL,
+    errorCallback: DEFAULT.NULL,
+    dataCallback: DEFAULT.NULL,
+    query: DEFAULT.NULL,
+    queryVariables: DEFAULT.NULL,
 }
 
 // note: although similar to useAPIQuery it has more options and only called on button press
@@ -32,7 +32,7 @@ export const apiBaseCall = async ({
 }) => {
     if (exitIfTrue) return;
 
-    setLoadingState(DEFAULT_PARAM.BOOL_TRUE);
+    setLoadingState(DEFAULT.BOOL_TRUE);
 
     try {
         const response = await queryToCheck({ variables: queryVariables });

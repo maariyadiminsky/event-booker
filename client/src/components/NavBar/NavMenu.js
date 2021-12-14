@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import NavItem from './NavItem';
 
 import {
-    DEFAULT_PARAM,
+    DEFAULT,
     ROOT_PATH,
     EVENTS_PATH,
     BOOKINGS_PATH,
@@ -13,7 +13,7 @@ import {
     HOME,
 } from '../../const';
 
-const isActiveNavItem = (navItemState = DEFAULT_PARAM.BOOL_FALSE, isMobile = DEFAULT_PARAM.BOOL_FALSE) => {
+const isActiveNavItem = (navItemState = DEFAULT.BOOL_FALSE, isMobile = DEFAULT.BOOL_FALSE) => {
     if (isMobile) return navItemState ? 'active-mobile-nav-item' : 'mobile-nav-item';
 
     return navItemState ? 'active-nav-item' : 'nav-item';
@@ -25,8 +25,8 @@ const authButtonCSS = {
 };
 
 const NavMenu = ({ 
-    pathname = ROOT_PATH, authButtonText = '', isMobile = DEFAULT_PARAM.BOOL_FALSE, 
-    handleOnPathDirect = DEFAULT_PARAM.NULL, handleOnPathAfterSignIn = DEFAULT_PARAM.NULL, handleOnAuth = DEFAULT_PARAM.NULL, toggleMobileMenu = DEFAULT_PARAM.NULL
+    pathname = ROOT_PATH, authButtonText = '', isMobile = DEFAULT.BOOL_FALSE, 
+    handleOnPathDirect = DEFAULT.NULL, handleOnPathAfterSignIn = DEFAULT.NULL, handleOnAuth = DEFAULT.NULL, toggleMobileMenu = DEFAULT.NULL
 }) => {
     const [navItemsActive, setNavItemsActive] = useState({
         home: false,

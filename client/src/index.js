@@ -14,7 +14,7 @@ import {
 
 import App from './pages/App';
 
-import { DEFAULT_PARAM, GRAPHQL_ENDPOINT } from './const';
+import { DEFAULT, GRAPHQL_ENDPOINT } from './const';
 
 import './index.css';
 
@@ -22,7 +22,7 @@ const httpLink = createHttpLink({
     uri: `${process.env.REACT_APP_DEV_EVENT_BOOKER_API_URL}${GRAPHQL_ENDPOINT}`
 });
 
-const errorLink = onError(({ graphQLErrors = DEFAULT_PARAM.NULL, networkError = DEFAULT_PARAM.NULL }) => {
+const errorLink = onError(({ graphQLErrors = DEFAULT.NULL, networkError = DEFAULT.NULL }) => {
     if (graphQLErrors)
       graphQLErrors.forEach(({ message, locations, path }) =>
         console.log(

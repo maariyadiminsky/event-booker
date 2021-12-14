@@ -3,10 +3,10 @@ import React from 'react';
 import { getRandomColor } from '../../utils/colors';
 import { getDateInCorrectFormat } from '../../utils/date';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const BookingItems = ({ bookings = DEFAULT_PARAM.NULL, openCancelModal = DEFAULT_PARAM.NULL }) => (
-    bookings.map(({ _id = DEFAULT_PARAM.STRING, event: { title = DEFAULT_PARAM.STRING, date = DEFAULT_PARAM.STRING }}) => {
+const BookingItems = ({ bookings = DEFAULT.NULL, openCancelModal = DEFAULT.NULL }) => (
+    bookings.map(({ _id = DEFAULT.STRING, event: { title = DEFAULT.STRING, date = DEFAULT.STRING }}) => {
         const color = getRandomColor();
         return (
             <div 

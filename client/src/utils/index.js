@@ -1,8 +1,8 @@
-import { DEFAULT_PARAM } from '../const';
+import { DEFAULT } from '../const';
 
 // so elements with multiple event handlers aren't unnecessarily 
 // called more than once(ie. SyntheticEvent Bubbling)
-export const shouldStopEventPropagationTry = (event = DEFAULT_PARAM.NULL) => {
+export const shouldStopEventPropagationTry = (event = DEFAULT.NULL) => {
     if (event.target === event.currentTarget) {
         event.stopPropagation();
 
@@ -12,7 +12,7 @@ export const shouldStopEventPropagationTry = (event = DEFAULT_PARAM.NULL) => {
     return false;
 }
 
-export const sortQueryData = (dataFromQuery = DEFAULT_PARAM.UNDEFINED, isBooking = DEFAULT_PARAM.BOOL_FALSE) => {
+export const sortQueryData = (dataFromQuery = DEFAULT.UNDEFINED, isBooking = DEFAULT.BOOL_FALSE) => {
     // sort data after making a copy
     const mutableData = [...dataFromQuery];
 

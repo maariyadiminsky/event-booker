@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 
-import { DEFAULT_PARAMS } from '../const';
+import { DEFAULTS } from '../const';
 
 export const useIsFirstRender = () => {
-    const isFirstRender = useRef(DEFAULT_PARAMS.BOOL_TRUE);
+    const isFirstRender = useRef(DEFAULTS.BOOL_TRUE);
 
     useEffect(() => {
         isFirstRender.current = false;

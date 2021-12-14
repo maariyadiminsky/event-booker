@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { DEFAULT_PARAM } from '../../../const';
+import { DEFAULT } from '../../../const';
 
-const HomeImage = ({ className =  DEFAULT_PARAM.STRING }) => (
+const HomeImage = ({ className =  DEFAULT.STRING }) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 400 300"

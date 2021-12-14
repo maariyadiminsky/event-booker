@@ -2,29 +2,29 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { shouldStopEventPropagationTry } from '../../utils';
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
 import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
-const defaultHeaderClass = (headerClass = DEFAULT_PARAM.STRING) => headerClass ? headerClass : 'pb-3 text-center text-3xl text-green-400 font-semibold';
-const defaultButtonClass = (buttonClass = DEFAULT_PARAM.STRING) => buttonClass ? buttonClass : 'text-white bg-green-400 font-semibold hover:bg-green-300 transition duration-300';
+const defaultHeaderClass = (headerClass = DEFAULT.STRING) => headerClass ? headerClass : 'pb-3 text-center text-3xl text-green-400 font-semibold';
+const defaultButtonClass = (buttonClass = DEFAULT.STRING) => buttonClass ? buttonClass : 'text-white bg-green-400 font-semibold hover:bg-green-300 transition duration-300';
 
 const Modal = ({ 
-    header = DEFAULT_PARAM.STRING, content = DEFAULT_PARAM.STRING, 
-    cancelButtonText = DEFAULT_PARAM.STRING, confirmButtonText = DEFAULT_PARAM.STRING, 
-    handleConfirm = DEFAULT_PARAM.NULL, handleCancelModal = DEFAULT_PARAM.NULL, 
-    customSubmitButtons = DEFAULT_PARAM.NULL,
-    hideSubmitButtons = DEFAULT_PARAM.BOOL_FALSE,
-    headerClass = DEFAULT_PARAM.STRING, buttonClass = DEFAULT_PARAM.STRING,
+    header = DEFAULT.STRING, content = DEFAULT.STRING, 
+    cancelButtonText = DEFAULT.STRING, confirmButtonText = DEFAULT.STRING, 
+    handleConfirm = DEFAULT.NULL, handleCancelModal = DEFAULT.NULL, 
+    customSubmitButtons = DEFAULT.NULL,
+    hideSubmitButtons = DEFAULT.BOOL_FALSE,
+    headerClass = DEFAULT.STRING, buttonClass = DEFAULT.STRING,
     startHeight = 20
 }) => {
-    const handleCancel = (event = DEFAULT_PARAM.NULL) => {
+    const handleCancel = (event = DEFAULT.NULL) => {
         if (shouldStopEventPropagationTry(event)) {
             handleCancelModal();
         }
     }
 
-    const handleConfirmButton = (event = DEFAULT_PARAM.NULL) => {
+    const handleConfirmButton = (event = DEFAULT.NULL) => {
         if (shouldStopEventPropagationTry(event)) {
             handleConfirm();
         }

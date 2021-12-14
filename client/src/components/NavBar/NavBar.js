@@ -8,7 +8,7 @@ import NavItem from './NavItem';
 import NavMobileButton from './NavMobileButton';
 
 import {
-    DEFAULT_PARAM,
+    DEFAULT,
     ROOT_PATH,
     AUTH_PATH,
     SIGN_IN,
@@ -20,9 +20,9 @@ import logo from './logo.png';
 import './NavBar.css';
 
 const NavBar = () => {
-    const { pathname = DEFAULT_PARAM } = useLocation();
-    const [hasUserSignedIn = DEFAULT_PARAM.BOOL_FALSE, setHasUserSignedIn = DEFAULT_PARAM.NULL] = useState(false);
-    const [shouldOpenMobileMenu = DEFAULT_PARAM.BOOL_FALSE, setShouldOpenMobileMenu = DEFAULT_PARAM.NULL] = useState(false);
+    const { pathname = DEFAULT } = useLocation();
+    const [hasUserSignedIn = DEFAULT.BOOL_FALSE, setHasUserSignedIn = DEFAULT.NULL] = useState(false);
+    const [shouldOpenMobileMenu = DEFAULT.BOOL_FALSE, setShouldOpenMobileMenu = DEFAULT.NULL] = useState(false);
 
     const { 
         token,

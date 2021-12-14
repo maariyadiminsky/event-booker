@@ -25,7 +25,7 @@ import {
 
 import {
     BOOK_AN_EVENT,
-    DEFAULT_PARAM,
+    DEFAULT,
     CREATE_BOOKING_FORM,
     QUERY_POLICY_NETWORK_ONLY,
     EVENTS_LOWERCASE,
@@ -46,18 +46,18 @@ const Bookings = () => {
     const [createBooking] = useMutation(CREATE_BOOKING_MUTATION, { context: getAuthHeaders(token) });
     const [cancelBooking] = useMutation(CANCEL_BOOKING_MUTATION, { context: getAuthHeaders(token) });
 
-    const isEventsQueryAuthEndpoint = DEFAULT_PARAM.BOOL_FALSE;
-    const isBookingsQueryAuthEndpoint = DEFAULT_PARAM.BOOL_TRUE;
-    const shouldStopLoadingIfEventsEmpty = DEFAULT_PARAM.BOOL_TRUE;
-    const [events] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors, DEFAULT_PARAM.NULL, isEventsQueryAuthEndpoint, shouldStopLoadingIfEventsEmpty);
+    const isEventsQueryAuthEndpoint = DEFAULT.BOOL_FALSE;
+    const isBookingsQueryAuthEndpoint = DEFAULT.BOOL_TRUE;
+    const shouldStopLoadingIfEventsEmpty = DEFAULT.BOOL_TRUE;
+    const [events] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors, DEFAULT.NULL, isEventsQueryAuthEndpoint, shouldStopLoadingIfEventsEmpty);
     const [bookings, setBookings] = useAPIQuery(bookingsQuery, BOOKINGS_LOWERCASE, loading, setLoading, setErrors, token, isBookingsQueryAuthEndpoint);
     
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
-    const [cancelBookingId, setCancelBookingId] = useState(DEFAULT_PARAM.NULL);
-    const [shouldShowModal, setShouldShowModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
-    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
+    const [cancelBookingId, setCancelBookingId] = useState(DEFAULT.NULL);
+    const [shouldShowModal, setShouldShowModal] = useState(DEFAULT.BOOL_FALSE);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(DEFAULT.BOOL_FALSE);
 
-    const handleOnSubmit = async({ event = DEFAULT_PARAM.NULL }) => {
+    const handleOnSubmit = async({ event = DEFAULT.NULL }) => {
         const apiBaseCallParams = {
             ...apiBaseParams,
             queryToCheck: createBooking,
@@ -93,7 +93,7 @@ const Bookings = () => {
         await apiBaseCall(apiBaseCallParams);
     }
 
-    const handleCreateBookingResult = (data = DEFAULT_PARAM.NULL) => {
+    const handleCreateBookingResult = (data = DEFAULT.NULL) => {
         if (data && data.createBooking._id) {
             setBookings([
                 ...bookings,
@@ -105,7 +105,7 @@ const Bookings = () => {
         }
     }
 
-    const handleCancelBookingResult = (data = DEFAULT_PARAM.NULL) => {
+    const handleCancelBookingResult = (data = DEFAULT.NULL) => {
         if (data && data.cancelBooking && data.cancelBooking.title) {
             const bookingsWithCanceledBookingRemoved = bookings.filter((booking) => booking.event.title !== data.cancelBooking.title);
             setBookings(bookingsWithCanceledBookingRemoved);
@@ -113,14 +113,14 @@ const Bookings = () => {
         }
     }
 
-    const openCancelModal = (bookingId = DEFAULT_PARAM.NULL) => {
+    const openCancelModal = (bookingId = DEFAULT.NULL) => {
         setCancelBookingId(bookingId);
         toggleCancelModal();
     }
 
     const toggleCancelModal = () => setShouldShowCancelModal(!shouldShowCancelModal);
 
-    const toggleModal = (formType = DEFAULT_PARAM.NULL) => {
+    const toggleModal = (formType = DEFAULT.NULL) => {
         setBookingModalType(formType);
         setShouldShowModal(!shouldShowModal);
     }

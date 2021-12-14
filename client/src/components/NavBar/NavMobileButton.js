@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const NavMobileButton = ({ handleOnClick = DEFAULT_PARAM.NULL }) => (
+const NavMobileButton = ({ handleOnClick = DEFAULT.NULL }) => (
     <div className="md:hidden flex px-10">
         <button 
             className="outline-none"

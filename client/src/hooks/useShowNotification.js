@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import { DEFAULT_PARAM } from '../const';
+import { DEFAULT } from '../const';
 
-export const useShowNotification = (title = DEFAULT_PARAM.STRING, timeToShow = 2500) => {
-    const [shouldRenderNotification, setShouldRenderNotification] = useState(DEFAULT_PARAM.BOOL_FALSE);
+export const useShowNotification = (title = DEFAULT.STRING, timeToShow = 2500) => {
+    const [shouldRenderNotification, setShouldRenderNotification] = useState(DEFAULT.BOOL_FALSE);
 
     useEffect(() => {    
         if (title && shouldRenderNotification) {

@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
 import FormError from './FormError';
 
-const defaultLabelClass = (labelClass = DEFAULT_PARAM.STRING) => labelClass ? labelClass : 'text-white text-2xl font-semibold mb-2';
-const defaultInputClass = (inputClass = DEFAULT_PARAM.STRING) => inputClass ? inputClass : 'text-center text-green-600 text-2xl py-4 px-3';
+const defaultLabelClass = (labelClass = DEFAULT.STRING) => labelClass ? labelClass : 'text-white text-2xl font-semibold mb-2';
+const defaultInputClass = (inputClass = DEFAULT.STRING) => inputClass ? inputClass : 'text-center text-green-600 text-2xl py-4 px-3';
 
 const FormInput = ({ 
-    label = DEFAULT_PARAM.STRING, input = DEFAULT_PARAM.NULL, meta: { 
-        touched = DEFAULT_PARAM.BOOL_FALSE, submitFailed = DEFAULT_PARAM.BOOL_TRUE, error = DEFAULT_PARAM.STRING
-    }, labelClass = DEFAULT_PARAM.STRING, inputClass = DEFAULT_PARAM.STRING
+    label = DEFAULT.STRING, input = DEFAULT.NULL, meta: { 
+        touched = DEFAULT.BOOL_FALSE, submitFailed = DEFAULT.BOOL_TRUE, error = DEFAULT.STRING
+    }, labelClass = DEFAULT.STRING, inputClass = DEFAULT.STRING
 }) => {
     let hasBeenTouchedAndHasError = (touched || submitFailed) && error;
     

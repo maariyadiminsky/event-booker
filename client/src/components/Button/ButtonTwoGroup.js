@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { DEFAULT_PARAM, SUBMIT, NEVERMIND } from '../../const';
+import { DEFAULT, SUBMIT, NEVERMIND } from '../../const';
 
-const ButtonTwoGroup = ({ defaultClass = DEFAULT_PARAM.STRING, confirmText = SUBMIT, cancelText = NEVERMIND, handleCancel = DEFAULT_PARAM.NULL, handleConfirm = DEFAULT_PARAM.NULL }) => (
+const ButtonTwoGroup = ({ defaultClass = DEFAULT.STRING, confirmText = SUBMIT, cancelText = NEVERMIND, handleCancel = DEFAULT.NULL, handleConfirm = DEFAULT.NULL }) => (
     <div className="flex flex-wrap justify-center items-center space-x-5 pt-5">
         <button 
             onClick={handleCancel} 

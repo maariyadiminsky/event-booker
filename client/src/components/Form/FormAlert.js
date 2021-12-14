@@ -2,9 +2,9 @@ import React from 'react';
 
 import { getColorForAlertType } from '../../utils/colors';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const FormAlert = ({ type = DEFAULT_PARAM.STRING, children = DEFAULT_PARAM.FUNCTION_COMPONENT }) => {
+const FormAlert = ({ type = DEFAULT.STRING, children = DEFAULT.FUNCTION }) => {
     const color = getColorForAlertType(type);
     
     return (

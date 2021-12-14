@@ -4,9 +4,9 @@ import { Field } from 'react-final-form';
 import FormWrapper from '../Form/FormWrapper';
 import FormOptions from '../Form/FormOptions';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const BookingModalContent = ({ eventOptions = DEFAULT_PARAM.NULL, formType = DEFAULT_PARAM.STRING, errors = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL, handleCancelButton = DEFAULT_PARAM.NULL }) => (
+const BookingModalContent = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.STRING, errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL, handleCancelButton = DEFAULT.NULL }) => (
     <FormWrapper
         formType={formType}
         errors={errors}

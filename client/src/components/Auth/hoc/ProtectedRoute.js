@@ -6,10 +6,10 @@ import { AuthContext } from '../../../context/AuthContext';
 import { 
     ROOT_PATH, 
     AUTH_PATH, 
-    DEFAULT_PARAM 
+    DEFAULT 
 } from '../../../const';
 
-const ProtectedRoute = ({ path = ROOT_PATH, component = DEFAULT_PARAM.FUNCTION_COMPONENT, exact = DEFAULT_PARAM.BOOL_TRUE, isAuthRoute = DEFAULT_PARAM.BOOL_FALSE }) => {
+const ProtectedRoute = ({ path = ROOT_PATH, component = DEFAULT.FUNCTION, exact = DEFAULT.BOOL_TRUE, isAuthRoute = DEFAULT.BOOL_FALSE }) => {
     const { token } = useContext(AuthContext);
 
     // no need to render this page if user already signed in

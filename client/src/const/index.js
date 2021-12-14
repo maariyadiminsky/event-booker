@@ -56,13 +56,13 @@ export const SUBMIT = 'Submit';
 export const NEVERMIND = 'Nevermind';
 
 // default param types
-export const DEFAULT_PARAM = {
+export const DEFAULT = {
     STRING: null,
     NUMBER: null,
     ARRAY: [],
     BOOL_FALSE: false,
     BOOL_TRUE: true,
-    FUNCTION_COMPONENT: () => null,
+    FUNCTION: () => null,
     NULL: null,
     UNDEFINED: undefined,
 };

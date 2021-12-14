@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { DEFAULT_PARAM } from '../../const';
+import { DEFAULT } from '../../const';
 
-const Button = ({ children = DEFAULT_PARAM.NULL, handleOnClick = DEFAULT_PARAM.NULL, buttonCSS = DEFAULT_PARAM.STRING }) => (
+const Button = ({ children = DEFAULT.NULL, handleOnClick = DEFAULT.NULL, buttonCSS = DEFAULT.STRING }) => (
     <div onClick={handleOnClick} className={buttonCSS}>{children}</div>
 );
 
