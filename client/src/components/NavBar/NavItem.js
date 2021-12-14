@@ -15,7 +15,7 @@ const NavItem = ({ children = DEFAULT.FUNCTION, buttonPath = ROOT_PATH, classNam
 NavItem.propTypes = {
     className: PropTypes.string,
     buttonPath: PropTypes.string.isRequired,
-    handleOnClick: PropTypes.func.isRequired,
+    handleOnClick: PropTypes.func,
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node,

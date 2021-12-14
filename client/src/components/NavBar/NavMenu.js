@@ -84,7 +84,7 @@ NavMenu.propTypes = {
     handleOnPathDirect: PropTypes.func.isRequired,
     handleOnPathAfterSignIn: PropTypes.func.isRequired,
     handleOnAuth: PropTypes.func.isRequired,
-    toggleMobileMenu: PropTypes.func.isRequired,
+    toggleMobileMenu: PropTypes.func,
 };
 
 export default NavMenu;
