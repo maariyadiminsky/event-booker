@@ -5,14 +5,14 @@ import FormErrors from './FormErrors';
 import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
 import { validateForm } from '../../utils/auth';
-import { ERROR_COLOR, SUCCESS_COLOR } from '../../const';
+import { DEFAULT_PARAM, SUBMIT, NEVERMIND, ERROR_COLOR, SUCCESS_COLOR, } from '../../const';
 
-const buttonColor = (isCancelModal) => isCancelModal ? ERROR_COLOR : SUCCESS_COLOR;
+const buttonColor = (isCancelModal = DEFAULT_PARAM.BOOL_FALSE) => isCancelModal ? ERROR_COLOR : SUCCESS_COLOR;
 const FormWrapper = ({ 
-    children, errors, formType = '', initialValues = null,
-    handleOnSubmit, handleCancelButton = null, formCSS = 'form-wrapper', formContainerCSS = 'form-container',
-    shouldValidate = true, shouldResetOnSubmit = false, isCancelModal = false,
-    topContent=null, confirmButtonText = 'Submit', cancelButtonText = 'Nevermind',
+    children = DEFAULT_PARAM.FUNCTION_COMPONENT, errors = DEFAULT_PARAM.NULL, formType = DEFAULT_PARAM.STRING, initialValues = DEFAULT_PARAM.NULL,
+    handleOnSubmit = DEFAULT_PARAM.NULL, handleCancelButton = DEFAULT_PARAM.NULL, formCSS = 'form-wrapper', formContainerCSS = 'form-container',
+    shouldValidate = DEFAULT_PARAM.BOOL_TRUE, shouldResetOnSubmit = DEFAULT_PARAM.BOOL_FALSE, isCancelModal = DEFAULT_PARAM.BOOL_FALSE,
+    topContent=DEFAULT_PARAM.NULL, confirmButtonText = SUBMIT, cancelButtonText = NEVERMIND,
  }) => {
     const renderErrors = () => errors && errors.length > 0 && (
         <FormErrors errors={errors} />
@@ -27,7 +27,7 @@ const FormWrapper = ({
         />
     );
 
-    const handleSubmitResetTry = (handleSubmit, form) => shouldResetOnSubmit ? (
+    const handleSubmitResetTry = (handleSubmit = DEFAULT_PARAM.NULL, form = DEFAULT_PARAM.NULL) => shouldResetOnSubmit ? (
         async(event) => {
             await handleSubmit(event);
             form.reset();
@@ -37,9 +37,9 @@ const FormWrapper = ({
     return (
         <Form 
             initialValues={initialValues ? initialValues : null}
-            validate={shouldValidate && formType ? (fields) => validateForm(fields, formType) : null}
+            validate={shouldValidate && formType ? (fields = DEFAULT_PARAM.UNDEFINED) => validateForm(fields, formType) : null}
             onSubmit={handleOnSubmit}>
-            {({ handleSubmit, form }) => (
+            {({ handleSubmit = DEFAULT_PARAM.NULL, form = DEFAULT_PARAM.NULL }) => (
                 <div className={formCSS}>
                     <form
                         onSubmit={handleSubmitResetTry(handleSubmit, form)} 

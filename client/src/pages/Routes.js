@@ -14,18 +14,15 @@ import {
   BOOKINGS_PATH,
 } from '../const';
 
-const Routes = () => {
-
-  return (
-    <div>
-        <Switch>
-            <Route path={ROOT_PATH} exact component={Home}/> 
-            <ProtectedRoute path={AUTH_PATH} component={Auth} isAuthRoute />
-            <Route path={EVENTS_PATH} component={Events} />
-            <ProtectedRoute path={BOOKINGS_PATH} component={Bookings} />
-        </Switch>
-      </div>
-  );
-}
+const Routes = () => (
+  <div>
+      <Switch>
+          <Route path={ROOT_PATH} exact component={Home}/> 
+          <ProtectedRoute path={AUTH_PATH} component={Auth} isAuthRoute />
+          <Route path={EVENTS_PATH} component={Events} />
+          <ProtectedRoute path={BOOKINGS_PATH} component={Bookings} />
+      </Switch>
+    </div>
+);
 
 export default Routes;

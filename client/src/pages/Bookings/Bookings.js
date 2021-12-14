@@ -24,6 +24,8 @@ import {
 } from '../../utils/auth';
 
 import {
+    BOOK_AN_EVENT,
+    DEFAULT_PARAM,
     CREATE_BOOKING_FORM,
     QUERY_POLICY_NETWORK_ONLY,
     EVENTS_LOWERCASE,
@@ -44,18 +46,18 @@ const Bookings = () => {
     const [createBooking] = useMutation(CREATE_BOOKING_MUTATION, { context: getAuthHeaders(token) });
     const [cancelBooking] = useMutation(CANCEL_BOOKING_MUTATION, { context: getAuthHeaders(token) });
 
-    const isEventsQueryAuthEndpoint = false;
-    const isBookingsQueryAuthEndpoint = true;
-    const shouldStopLoadingIfEventsEmpty = true;
-    const [events] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors, null, isEventsQueryAuthEndpoint, shouldStopLoadingIfEventsEmpty);
+    const isEventsQueryAuthEndpoint = DEFAULT_PARAM.BOOL_FALSE;
+    const isBookingsQueryAuthEndpoint = DEFAULT_PARAM.BOOL_TRUE;
+    const shouldStopLoadingIfEventsEmpty = DEFAULT_PARAM.BOOL_TRUE;
+    const [events] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors, DEFAULT_PARAM.NULL, isEventsQueryAuthEndpoint, shouldStopLoadingIfEventsEmpty);
     const [bookings, setBookings] = useAPIQuery(bookingsQuery, BOOKINGS_LOWERCASE, loading, setLoading, setErrors, token, isBookingsQueryAuthEndpoint);
     
     const [bookingModalType, setBookingModalType] = useState(CREATE_BOOKING_FORM);
-    const [cancelBookingId, setCancelBookingId] = useState(null);
-    const [shouldShowModal, setShouldShowModal] = useState(false);
-    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
+    const [cancelBookingId, setCancelBookingId] = useState(DEFAULT_PARAM.NULL);
+    const [shouldShowModal, setShouldShowModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
 
-    const handleOnSubmit = async({ event }) => {
+    const handleOnSubmit = async({ event = DEFAULT_PARAM.NULL }) => {
         const apiBaseCallParams = {
             ...apiBaseParams,
             queryToCheck: createBooking,
@@ -91,7 +93,7 @@ const Bookings = () => {
         await apiBaseCall(apiBaseCallParams);
     }
 
-    const handleCreateBookingResult = (data) => {
+    const handleCreateBookingResult = (data = DEFAULT_PARAM.NULL) => {
         if (data && data.createBooking._id) {
             setBookings([
                 ...bookings,
@@ -103,7 +105,7 @@ const Bookings = () => {
         }
     }
 
-    const handleCancelBookingResult = (data) => {
+    const handleCancelBookingResult = (data = DEFAULT_PARAM.NULL) => {
         if (data && data.cancelBooking && data.cancelBooking.title) {
             const bookingsWithCanceledBookingRemoved = bookings.filter((booking) => booking.event.title !== data.cancelBooking.title);
             setBookings(bookingsWithCanceledBookingRemoved);
@@ -111,14 +113,14 @@ const Bookings = () => {
         }
     }
 
-    const openCancelModal = (bookingId = null) => {
+    const openCancelModal = (bookingId = DEFAULT_PARAM.NULL) => {
         setCancelBookingId(bookingId);
         toggleCancelModal();
     }
 
     const toggleCancelModal = () => setShouldShowCancelModal(!shouldShowCancelModal);
 
-    const toggleModal = (formType = null) => {
+    const toggleModal = (formType = DEFAULT_PARAM.NULL) => {
         setBookingModalType(formType);
         setShouldShowModal(!shouldShowModal);
     }
@@ -159,7 +161,7 @@ const Bookings = () => {
                         <CreateButtonSquare
                             className='relative animate-pulse flex flex-wrap sm:justify-center md:justify-end text-right content-right h-64 w-72 max-h-64 bg-gradient-to-r from-green-500 to-green-400 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer'
                             onClick={() => toggleModal(CREATE_BOOKING_FORM)}
-                            text='Book an Event'
+                            text={BOOK_AN_EVENT}
                         />
                         {renderBookings()}
                     </div>

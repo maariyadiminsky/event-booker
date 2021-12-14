@@ -26,6 +26,8 @@ import {
 import { apiBaseCall, apiBaseParams } from '../../utils/api';
 
 import { 
+    DEFAULT_PARAM,
+    CREATE_AN_EVENT,
     AUTH_PATH,
     CREATE_EVENT_FORM,
     REMOVE_EVENT_FORM,
@@ -48,16 +50,16 @@ const Events = () => {
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION, { context: getAuthHeaders(token) });
     const [removeEvent] = useMutation(REMOVE_EVENT_MUTATION, { context: getAuthHeaders(token) });
 
-    const [eventCreatedTitle, setEventCreatedTitle] = useState('');
-    const [cancelEventId, setCancelEventId] = useState(null);
+    const [eventCreatedTitle, setEventCreatedTitle] = useState(DEFAULT_PARAM.STRING);
+    const [cancelEventId, setCancelEventId] = useState(DEFAULT_PARAM.NULL);
 
-    const [shouldShowModal, setShouldShowModal] = useState(false);
-    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(false);
+    const [shouldShowModal, setShouldShowModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
+    const [shouldShowCancelModal, setShouldShowCancelModal] = useState(DEFAULT_PARAM.BOOL_FALSE);
     const [shouldRenderNotification, setShouldRenderNotification] = useShowNotification(eventCreatedTitle);
 
     const [data, setData] = useAPIQuery(eventsQuery, EVENTS_LOWERCASE, loading, setLoading, setErrors);
 
-    const handleOnSubmit = async({ title, description, price, date }) => {
+    const handleOnSubmit = async({ title = DEFAULT_PARAM.STRING, description = DEFAULT_PARAM.STRING, price = DEFAULT_PARAM.NULL, date = DEFAULT_PARAM.STRING}) => {
         const apiBaseCallParams = {
             ...apiBaseParams,
             queryToCheck: createEvent,
@@ -82,7 +84,7 @@ const Events = () => {
         setLoading(false);
     }
 
-    const handleCreateEventQueryResult = (dataResult) => {
+    const handleCreateEventQueryResult = (dataResult = DEFAULT_PARAM.NULL) => {
         if (dataResult && dataResult.createEvent._id && dataResult.createEvent.title) {
             setData([
                 ...data,
@@ -116,8 +118,8 @@ const Events = () => {
         setLoading(false);
     }
 
-    const handleRemoveEventQueryResult = (dataResult) => {
-        if (dataResult.removeEvent && dataResult.removeEvent.title) {
+    const handleRemoveEventQueryResult = (dataResult = DEFAULT_PARAM.NULL) => {
+        if (dataResult && dataResult.removeEvent && dataResult.removeEvent.title) {
             const eventsWithDeletedEventRemoved = data.filter((event) => event.title !== dataResult.removeEvent.title);
             setData(eventsWithDeletedEventRemoved);
             toggleCancelModal();
@@ -183,7 +185,7 @@ const Events = () => {
                 <CreateButtonRectangle
                     className={`${!shouldRenderNotification && !shouldShowModal && 'animate-float'} max-w-2xl m-auto py-8 bg-gradient-to-r from-green-400 to-green-300 hover:from-green-400 hover:to-green-400 border-2 border-green-300 container shadow-lg rounded cursor-pointer`}
                     onClick={toggleModal}
-                    text='Create an Event'
+                    text={CREATE_AN_EVENT}
                 />
                 {renderEventCreatedConfirmation()}
                 <div className="overflow-y-scroll max-h-screen md:px-20 pb-20 max-w-3xl m-auto">

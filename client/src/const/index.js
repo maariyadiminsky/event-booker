@@ -18,6 +18,9 @@ export const QUERY_POLICY_NETWORK_ONLY = 'network-only';
 export const SWITCH_SIGN_UP_TEXT = 'Don\'t have an account yet?';
 export const SWITCH_SIGN_IN_TEXT = 'Already have an account?';
 export const BOOKINGS_NEED_EVENTS = 'Events must be created to book them!';
+export const CREATE_AN_EVENT = 'Create an Event';
+export const BOOK_AN_EVENT = 'Book an Event';
+export const YES_IM_SURE = 'Yes I\'m sure';
 
 // server endpoint
 export const GRAPHQL_ENDPOINT = '/graphql';
@@ -37,6 +40,7 @@ export const BOOKINGS_LOWERCASE = 'bookings';
 export const EVENTS_LOWERCASE = 'events';
 
 // alert types
+export const WHITE_COLOR = 'white';
 export const SUCCESS_COLOR = 'green';
 export const WARNING_COLOR = 'yellow';
 export const ERROR_COLOR = 'red';
@@ -46,3 +50,19 @@ export const SUCCESS = 'success';
 export const WARNING = 'warning';
 export const ERROR = 'error';
 export const INFORMATIVE = 'informative';
+
+// misc 
+export const SUBMIT = 'Submit';
+export const NEVERMIND = 'Nevermind';
+
+// default param types
+export const DEFAULT_PARAM = {
+    STRING: null,
+    NUMBER: null,
+    ARRAY: [],
+    BOOL_FALSE: false,
+    BOOL_TRUE: true,
+    FUNCTION_COMPONENT: () => null,
+    NULL: null,
+    UNDEFINED: undefined,
+};

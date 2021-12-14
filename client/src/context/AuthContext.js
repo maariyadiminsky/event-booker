@@ -1,20 +1,21 @@
 import React, { createContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { ROOT_PATH } from '../const';
+import { DEFAULT_PARAM, ROOT_PATH } from '../const';
 
 export const AuthContext = createContext();
 
-export const AuthContextProvider = ({ children }) => {
-    const [token, setToken] = useState(null);
-    // todo: store tokenExpiration in localStorage so doesn't reset on refresh
-    const [tokenExpiration, setTokenExpiration] = useState(null);
-    const [userId, setUserId] = useState(null);
-    const [path, setPath] = useState('');
+export const AuthContextProvider = ({ children = DEFAULT_PARAM.FUNCTION_COMPONENT }) => {
+    const [token = DEFAULT_PARAM.NULL, setToken = DEFAULT_PARAM.NULL] = useState(DEFAULT_PARAM.NULL);
+    
+    // todo: set token with expiration date inside cookie storage
+    const [tokenExpiration = DEFAULT_PARAM.NULL, setTokenExpiration = DEFAULT_PARAM.NULL] = useState(DEFAULT_PARAM.NULL);
+    const [userId = DEFAULT_PARAM.NULL, setUserId = DEFAULT_PARAM.NULL] = useState(DEFAULT_PARAM.NULL);
+    const [path = ROOT_PATH, setPath = DEFAULT_PARAM.NULL] = useState(ROOT_PATH);
 
     const history = useHistory();
     
-    const signInUser = (userId, token, tokenExpiration) => {
+    const signInUser = (userId = DEFAULT_PARAM.STRING, token = DEFAULT_PARAM.STRING, tokenExpiration = DEFAULT_PARAM.STRING) => {
         setUserId(userId);
         setToken(token);
         setTokenExpiration(tokenExpiration);

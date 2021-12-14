@@ -2,14 +2,21 @@ import { useState, useEffect } from 'react';
 
 import { isDateBeforeToday, isSameAsToday } from '../utils/date';
 
-import { WARNING_COLOR, ERROR_COLOR } from '../const';
+import { 
+    DEFAULT_PARAM, 
+    WARNING_COLOR, 
+    ERROR_COLOR,
+    WHITE_COLOR,
+} from '../const';
+
+export const DEFAULT_NOTIFICATION = {
+    shouldRender: DEFAULT_PARAM.BOOL_FALSE,
+    color: WHITE_COLOR,
+    text: DEFAULT_PARAM.STRING,
+};
 
 export const useNotificationBasedOnDate = (date) => {
-    const [notification, setNotification] = useState({
-        shouldRender: false,
-        color: 'white',
-        text: '',
-    });
+    const [notification, setNotification] = useState(DEFAULT_NOTIFICATION);
 
     useEffect(() => {
         if (isSameAsToday(date)) {

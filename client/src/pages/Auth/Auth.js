@@ -12,6 +12,7 @@ import { CREATE_USER_MUTATION, SIGN_IN_QUERY } from './queries';
 import { handleErrors } from '../../utils/auth';
 
 import { 
+    DEFAULT_PARAM,
     SIGN_IN,
     SIGN_UP,
     SWITCH_SIGN_UP_TEXT,
@@ -21,16 +22,16 @@ import {
 } from '../../const';
 
 const Auth = () => {
-    const [isSignInForm, setIsSignInForm] = useState(true);
-    const [serverErrors, setServerErrors] = useState([]);
-    const [hasCreatedNewUser, setHasCreatedNewUser] = useState(false);
+    const [isSignInForm, setIsSignInForm] = useState(DEFAULT_PARAM.BOOL_TRUE);
+    const [serverErrors, setServerErrors] = useState(DEFAULT_PARAM.ARRAY);
+    const [hasCreatedNewUser, setHasCreatedNewUser] = useState(DEFAULT_PARAM.BOOL_FALSE);
 
     const { signInUser } = useContext(AuthContext);
 
     const [createUser] = useMutation(CREATE_USER_MUTATION);
     const signInQuery = useQuery(SIGN_IN_QUERY, { skip: true });
 
-    const handleOnSubmit = async({ email, password }) => {
+    const handleOnSubmit = async({ email = DEFAULT_PARAM.STRING, password = DEFAULT_PARAM.STRING }) => {
         try {
             const formType = findFormType();
             const variables = { email, password };

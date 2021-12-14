@@ -6,13 +6,13 @@ import NotificationPing from '../Notification/NotificationPing';
 
 import { useNotificationBasedOnDate } from '../../hooks/useNotificationBasedOnDate';
 import { getDateInCorrectFormat } from '../../utils/date';
-import { WARNING_COLOR } from '../../const';
+import { DEFAULT_PARAM, WARNING_COLOR } from '../../const';
 
 const Event = ({ 
-    toggleCancelModal, 
-    setCancelEventId,
-    userId, 
-    event: { _id, title, description, price, date, user }
+    toggleCancelModal = DEFAULT_PARAM.NULL, 
+    setCancelEventId = DEFAULT_PARAM.NULL,
+    userId = DEFAULT_PARAM.NULL, 
+    event: { _id = DEFAULT_PARAM.NULL, title = DEFAULT_PARAM.STRING, description = DEFAULT_PARAM.STRING, price = DEFAULT_PARAM.NULL, date = DEFAULT_PARAM.STRING, user = DEFAULT_PARAM.NULL }
 }) => {
     const [notification] = useNotificationBasedOnDate(date);
 

@@ -8,25 +8,26 @@ import NavItem from './NavItem';
 import NavMobileButton from './NavMobileButton';
 
 import {
+    DEFAULT_PARAM,
     ROOT_PATH,
     AUTH_PATH,
     SIGN_IN,
     SIGN_OUT,
 } from '../../const';
 
-import './NavBar.css';
-
 import logo from './logo.png';
 
+import './NavBar.css';
+
 const NavBar = () => {
-    const { pathname } = useLocation();
-    const [hasUserSignedIn, setHasUserSignedIn] = useState(false);
-    const [shouldOpenMobileMenu, setShouldOpenMobileMenu] = useState(false);
+    const { pathname = DEFAULT_PARAM } = useLocation();
+    const [hasUserSignedIn = DEFAULT_PARAM.BOOL_FALSE, setHasUserSignedIn = DEFAULT_PARAM.NULL] = useState(false);
+    const [shouldOpenMobileMenu = DEFAULT_PARAM.BOOL_FALSE, setShouldOpenMobileMenu = DEFAULT_PARAM.NULL] = useState(false);
 
     const { 
-        token, 
+        token,
         signOutUser,
-        path: [, setPath]
+        path: [, setPath],
     } = useContext(AuthContext);
 
     useEffect(() => {
@@ -49,9 +50,9 @@ const NavBar = () => {
         }
     }
 
-    const setDirectPathTry = (path) => token ? path : AUTH_PATH;
+    const setDirectPathTry = (path = ROOT_PATH) => token ? path : AUTH_PATH;
 
-    const setPathIfUserSignsInSuccessfully = (pathToSet) => {
+    const setPathIfUserSignsInSuccessfully = (pathToSet = ROOT_PATH) => {
         if (shouldOpenMobileMenu) {
             toggleMobileMenu();
         }

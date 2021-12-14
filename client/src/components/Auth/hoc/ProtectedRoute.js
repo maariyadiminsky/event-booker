@@ -3,9 +3,13 @@ import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 
-import { AUTH_PATH } from '../../../const';
+import { 
+    ROOT_PATH, 
+    AUTH_PATH, 
+    DEFAULT_PARAM 
+} from '../../../const';
 
-const ProtectedRoute = ({ path, component, exact = true, isAuthRoute = false }) => {
+const ProtectedRoute = ({ path = ROOT_PATH, component = DEFAULT_PARAM.FUNCTION_COMPONENT, exact = DEFAULT_PARAM.BOOL_TRUE, isAuthRoute = DEFAULT_PARAM.BOOL_FALSE, }) => {
     const { token } = useContext(AuthContext);
 
     // no need to render this page if user already signed in

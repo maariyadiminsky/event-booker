@@ -1,13 +1,14 @@
 import {
+    DEFAULT_PARAM,
     SIGN_IN_FORM,
     SIGN_UP_FORM,
     CREATE_EVENT_FORM
 } from '../const'
 
-const mutationCallbackTry = (isMutation, mutationCallback) => {
+const mutationCallbackTry = (isMutation = DEFAULT_PARAM.BOOL_FALSE, mutationCallback = DEFAULT_PARAM.NULL) => {
     if (isMutation && mutationCallback) mutationCallback();
 }
-export const handleErrors = (response, callback, mutationCallback = null, isMutation = false) => {
+export const handleErrors = (response = DEFAULT_PARAM.UNDEFINED, callback = DEFAULT_PARAM.NULL, mutationCallback = DEFAULT_PARAM.NULL, isMutation = DEFAULT_PARAM.BOOL_FALSE) => {
     if (!response) {
         mutationCallbackTry(isMutation, mutationCallback);
 
@@ -24,7 +25,7 @@ export const handleErrors = (response, callback, mutationCallback = null, isMuta
     }
 }
 
-export const getAuthHeaders = (token) => ({
+export const getAuthHeaders = (token = DEFAULT_PARAM.NULL) => ({
     headers: {
         'Authorization': `Bearer ${token}`
     }
@@ -32,14 +33,14 @@ export const getAuthHeaders = (token) => ({
 
 export const validateForm = ({ 
     // sign in / sign up forms
-    email, 
-    password,
+    email = DEFAULT_PARAM.STRING, 
+    password = DEFAULT_PARAM.STRING,
 
     // create event form
-    title, 
-    description, 
-    price, 
-    date
+    title = DEFAULT_PARAM.STRING, 
+    description = DEFAULT_PARAM.STRING, 
+    price = DEFAULT_PARAM.NULL, 
+    date = DEFAULT_PARAM.STRING
 }, formType) => {
     let errors = {};
 

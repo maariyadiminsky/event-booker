@@ -1,4 +1,5 @@
 import {
+    DEFAULT_PARAM,
     SUCCESS_COLOR,
     WARNING_COLOR,
     ERROR_COLOR,
@@ -12,7 +13,7 @@ import {
 const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
 export const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
-export const getColorForAlertType = (type) => {
+export const getColorForAlertType = (type = DEFAULT_PARAM.STRING) => {
     switch(type) {
         case SUCCESS:
             return SUCCESS_COLOR;

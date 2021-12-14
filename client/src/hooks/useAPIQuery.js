@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react';
 
 import { sortQueryData } from '../utils';
 import { handleErrors } from '../utils/auth';
-import { BOOKINGS_LOWERCASE } from '../const';
+import { DEFAULT_PARAM, BOOKINGS_LOWERCASE } from '../const';
 
-export const useAPIQuery = (query, dataKey, loading, setLoading, setErrors, token = null, isAuthEndpoint = false, stopLoadingIfEmpty = false, shouldSort = true) => {
-    const [data, setData] = useState(null);
+export const useAPIQuery = (
+    query = DEFAULT_PARAM.UNDEFINED, dataKey = DEFAULT_PARAM.STRING, loading = DEFAULT_PARAM.BOOL_FALSE, 
+    setLoading = DEFAULT_PARAM.NULL, setErrors = DEFAULT_PARAM.NULL, token = DEFAULT_PARAM.NULL, 
+    isAuthEndpoint = DEFAULT_PARAM.BOOL_FALSE, stopLoadingIfEmpty = DEFAULT_PARAM.BOOL_FALSE, shouldSort = DEFAULT_PARAM.BOOL_TRUE
+) => {
+    const [data, setData] = useState(DEFAULT_PARAM.NULL);
 
     useEffect(() => {
         if (isAuthEndpoint && !token) return;

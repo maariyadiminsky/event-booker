@@ -1,13 +1,15 @@
 import React from 'react';
 
+import { DEFAULT_PARAM, YES_IM_SURE } from '../../const';
+
 import FormWrapper from '../Form/FormWrapper';
 
-const CancelWarningModalContent = ({ errors, handleOnSubmit, handleCancelButton }) => (
+const CancelWarningModalContent = ({ errors = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL, handleCancelButton = DEFAULT_PARAM.NULL, }) => (
     <FormWrapper
         errors={errors}
         handleOnSubmit={handleOnSubmit}
         handleCancelButton={handleCancelButton}
-        confirmButtonText={'Yes I\'m sure'}
+        confirmButtonText={YES_IM_SURE}
         shouldValidate={false}
         isCancelModal
     >

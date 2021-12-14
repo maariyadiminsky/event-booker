@@ -4,11 +4,11 @@ import Loader from '../Loader';
 import BookingModalContent from './BookingModalContent';
 import Modal from '../Modal/Modal';
 
-import { BOOKINGS_NEED_EVENTS } from '../../const';
+import { DEFAULT_PARAM, BOOKINGS_NEED_EVENTS, BOOK_AN_EVENT } from '../../const';
 
 import '../Form/Form.css';
 
-const BookingModal = ({ eventOptions, formType, toggleModal, errors, handleOnSubmit }) => {
+const BookingModal = ({ eventOptions = DEFAULT_PARAM.NULL, formType = DEFAULT_PARAM.STRING, errors = DEFAULT_PARAM.NULL, toggleModal = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL, }) => {
     const renderModalContent = () => {
         if (!eventOptions) {
             return <Loader height={0} />;
@@ -35,7 +35,7 @@ const BookingModal = ({ eventOptions, formType, toggleModal, errors, handleOnSub
 
     return (
         <Modal 
-            header="Book an Event"
+            header={BOOK_AN_EVENT}
             content={renderModalContent()}
             handleCancelModal={toggleModal}
             headerClass="form-header"
