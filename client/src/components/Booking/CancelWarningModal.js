@@ -7,7 +7,7 @@ import { DEFAULT_PARAM } from '../../const';
 
 import '../Form/Form.css';
 
-const CancelWarningModal = ({ header = DEFAULT_PARAM.STRING, errors = DEFAULT_PARAM.NULL, toggleModal = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL, }) => (
+const CancelWarningModal = ({ header = DEFAULT_PARAM.STRING, errors = DEFAULT_PARAM.NULL, toggleModal = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL }) => (
     <Modal 
         header={header}
         content={

@@ -9,7 +9,7 @@ import {
     DEFAULT_PARAM 
 } from '../../../const';
 
-const ProtectedRoute = ({ path = ROOT_PATH, component = DEFAULT_PARAM.FUNCTION_COMPONENT, exact = DEFAULT_PARAM.BOOL_TRUE, isAuthRoute = DEFAULT_PARAM.BOOL_FALSE, }) => {
+const ProtectedRoute = ({ path = ROOT_PATH, component = DEFAULT_PARAM.FUNCTION_COMPONENT, exact = DEFAULT_PARAM.BOOL_TRUE, isAuthRoute = DEFAULT_PARAM.BOOL_FALSE }) => {
     const { token } = useContext(AuthContext);
 
     // no need to render this page if user already signed in

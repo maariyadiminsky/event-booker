@@ -4,7 +4,7 @@ import { DEFAULT_PARAM, YES_IM_SURE } from '../../const';
 
 import FormWrapper from '../Form/FormWrapper';
 
-const CancelWarningModalContent = ({ errors = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL, handleCancelButton = DEFAULT_PARAM.NULL, }) => (
+const CancelWarningModalContent = ({ errors = DEFAULT_PARAM.NULL, handleOnSubmit = DEFAULT_PARAM.NULL, handleCancelButton = DEFAULT_PARAM.NULL }) => (
     <FormWrapper
         errors={errors}
         handleOnSubmit={handleOnSubmit}

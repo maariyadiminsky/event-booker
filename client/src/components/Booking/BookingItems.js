@@ -5,7 +5,7 @@ import { getDateInCorrectFormat } from '../../utils/date';
 
 import { DEFAULT_PARAM } from '../../const';
 
-const BookingItems = ({ bookings = DEFAULT_PARAM.NULL, openCancelModal = DEFAULT_PARAM.NULL, }) => (
+const BookingItems = ({ bookings = DEFAULT_PARAM.NULL, openCancelModal = DEFAULT_PARAM.NULL }) => (
     bookings.map(({ _id = DEFAULT_PARAM.STRING, event: { title = DEFAULT_PARAM.STRING, date = DEFAULT_PARAM.STRING }}) => {
         const color = getRandomColor();
         return (

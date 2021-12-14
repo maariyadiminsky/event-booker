@@ -5,7 +5,7 @@ import FormErrors from './FormErrors';
 import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
 import { validateForm } from '../../utils/auth';
-import { DEFAULT_PARAM, SUBMIT, NEVERMIND, ERROR_COLOR, SUCCESS_COLOR, } from '../../const';
+import { DEFAULT_PARAM, SUBMIT, NEVERMIND, ERROR_COLOR, SUCCESS_COLOR } from '../../const';
 
 const buttonColor = (isCancelModal = DEFAULT_PARAM.BOOL_FALSE) => isCancelModal ? ERROR_COLOR : SUCCESS_COLOR;
 const FormWrapper = ({ 
