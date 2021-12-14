@@ -36,7 +36,7 @@ const NavBar = () => {
         } else if (!token && hasUserSignedIn) {
             setHasUserSignedIn(false);
         }
-    }, [token, hasUserSignedIn])
+    }, [token, hasUserSignedIn, setHasUserSignedIn])
 
     // either sign them in or set the path to route them too if signed in successfully
     const handleAuthButton = () => {
