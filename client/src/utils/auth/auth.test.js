@@ -31,13 +31,10 @@ describe('mutationCallbackTry', () => {
 });
 
 describe('validateForm', () => {
-    let formValidation1;
-    beforeAll(() => {
-        formValidation1 = {
-            email: 'Email must be included.',
-            password: 'Please provide a password.'
-        };
-    })
+    const formValidation1 = {
+        email: 'Email must be included.',
+        password: 'Please provide a password.'
+    };
 
     it('returns empty object if form type doesn\'t exist', () => {
         const input = validateForm(DEFAULT.OBJECT, 'A Non-existing Form');
