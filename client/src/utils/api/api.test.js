@@ -25,7 +25,7 @@ describe('apiBaseCall', () => {
 });
 
 describe('findBaseUrl', () => {
-    it('returns correct api url during development', async() => {
+    it('returns correct api url', async() => {
         const input = findBaseURL();
         let output;
 
