@@ -1,9 +1,31 @@
-import { findBaseURL } from './';
-import { TEST, DEVELOPMENT, PRODUCTION, DEFAULT } from '../../const';
+import { 
+    findBaseURL, 
+    apiBaseCall, 
+    apiBaseParams
+} from './';
+import { 
+    TEST, 
+    DEVELOPMENT, 
+    PRODUCTION, 
+    DEFAULT 
+} from '../../const';
 
-// todo: add test for apiBaseCall
+describe('apiBaseCall', () => {
+    it('exit if truthy value is true', async() => {
+        const params = {
+            ...apiBaseParams,
+            exitIfTrue: true
+        };
+
+        const input = await apiBaseCall(params);
+        const output = undefined;
+
+        expect(input).toEqual(output);
+    });
+});
+
 describe('findBaseUrl', () => {
-    it('it returns correct api url during development', async() => {
+    it('returns correct api url during development', async() => {
         const input = findBaseURL();
         let output;
 

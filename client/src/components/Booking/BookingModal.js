@@ -8,7 +8,7 @@ import { DEFAULT, BOOK_AN_EVENT } from '../../const';
 
 import '../Form/Form.css';
 
-const BookingModal = ({ eventOptions = DEFAULT.NULL, errors = DEFAULT.NULL, formType = DEFAULT.STRING, toggleModal = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL }) => (
+const BookingModal = ({ eventOptions = DEFAULT.NULL, errors = DEFAULT.NULL, formType = DEFAULT.STRING, toggleModal = DEFAULT.FUNCTION, handleOnSubmit = DEFAULT.FUNCTION }) => (
     <Modal 
         header={BOOK_AN_EVENT}
         content={

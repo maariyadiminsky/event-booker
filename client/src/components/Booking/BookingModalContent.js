@@ -9,7 +9,7 @@ import Loader from '../Loader';
 
 import { DEFAULT, BOOKINGS_NEED_EVENTS } from '../../const';
 
-const BookingModalContent = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.STRING, errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL, handleCancelButton = DEFAULT.NULL }) => {
+const BookingModalContent = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.STRING, errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.FUNCTION, handleCancelButton = DEFAULT.FUNCTION }) => {
     if (!eventOptions) {
         return <Loader height={0} />;
     }

@@ -25,12 +25,12 @@ export const apiBaseParams = {
 }
 
 // note: although similar to useAPIQuery it has more options and only called on button press
-export const apiBaseCall = async ({
+export const apiBaseCall = async({
     exitIfTrue = apiBaseParams.exitIfTrue, queryToCheck = apiBaseParams.queryToCheck, queryVariables = apiBaseParams.queryVariables, 
     setLoadingState = apiBaseParams.setLoadingState, handleErrors = apiBaseParams.handleErrors, setErrorState = apiBaseParams.setErrorState, 
     errorCallback = apiBaseParams.errorCallback, isMutation = apiBaseParams.isMutation, dataCallback = apiBaseParams.dataCallback
 }) => {
-    if (exitIfTrue) return;
+    if (exitIfTrue) return Promise.resolve();
 
     setLoadingState(DEFAULT.BOOL_TRUE);
 
