@@ -1,6 +1,4 @@
 import { 
-    mutationCallbackTry, 
-    handleErrors, 
     getAuthHeaders, 
     validateForm 
 } from './';
@@ -91,14 +89,3 @@ describe('getAuthHeaders', () => {
         expect(input).toEqual(output);
     });
 });
-
-// describe('mutationCallbackTry', () => {
-//     test('it runs the callback if is a mutaton and callback exists', async() => {
-//         const isMutation = true;
-//         const callBackResult = 'Works!';
-//         const callback = jest.fn(() => callBackResult);
-
-//         const result = await mutationCallbackTry(isMutation, callback);
-//         expect(result).toBe(callBackResult);
-//     })
-// });
