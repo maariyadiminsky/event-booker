@@ -6,7 +6,9 @@ import {
 } from '../../const'
 
 export const mutationCallbackTry = (isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
-    if (isMutation && mutationCallback) mutationCallback();
+    if (isMutation && mutationCallback) {
+        return mutationCallback();
+    }
 }
 export const handleErrors = (response = DEFAULT.UNDEFINED, callback = DEFAULT.NULL, mutationCallback = DEFAULT.NULL, isMutation = DEFAULT.BOOL_FALSE) => {
     if (!response) {

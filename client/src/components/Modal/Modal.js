@@ -13,7 +13,7 @@ const defaultButtonClass = (buttonClass = DEFAULT.STRING) => buttonClass ? butto
 const Modal = ({ 
     header = DEFAULT.STRING, content = DEFAULT.STRING, 
     cancelButtonText = DEFAULT.STRING, confirmButtonText = DEFAULT.STRING, 
-    handleConfirm = DEFAULT.NULL, handleCancelModal = DEFAULT.NULL, 
+    handleOnSubmit = DEFAULT.NULL, handleCancelModal = DEFAULT.NULL, 
     customSubmitButtons = DEFAULT.NULL,
     hideSubmitButtons = DEFAULT.BOOL_FALSE,
     headerClass = DEFAULT.STRING, buttonClass = DEFAULT.STRING,
@@ -27,7 +27,7 @@ const Modal = ({
 
     const handleConfirmButton = (event = DEFAULT.NULL) => {
         if (shouldStopEventPropagationTry(event)) {
-            handleConfirm();
+            handleOnSubmit();
         }
     }
 
@@ -67,7 +67,7 @@ Modal.propTypes = {
     header: PropTypes.string.isRequired,
     cancelButtonText: PropTypes.string,
     confirmButtonText: PropTypes.string,
-    handleConfirm: PropTypes.func.isRequired,
+    handleOnSubmit: PropTypes.func.isRequired,
     handleCancelModal: PropTypes.func.isRequired,
     hideSubmitButtons: PropTypes.bool.isRequired,
     content: PropTypes.oneOfType([
