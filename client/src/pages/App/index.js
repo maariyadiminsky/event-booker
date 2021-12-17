@@ -1,6 +1,6 @@
 import React from 'react';
-import Routes from './Routes';
-import NavBar from '../components/NavBar/NavBar';
+import Routes from '../Routes';
+import NavBar from '../../components/NavBar/NavBar';
 
 const App = () => (
   <div className="bg-gray-100 min-h-screen">
