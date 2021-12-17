@@ -10,7 +10,7 @@ import {
     INFORMATIVE
 } from '../../const';
 
-const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
+export const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
 export const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 export const getColorForAlertType = (type = DEFAULT.STRING) => {

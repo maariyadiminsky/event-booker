@@ -63,7 +63,7 @@ describe('validateForm', () => {
 });
 
 describe('getAuthHeaders', () => {
-    test('returns correct header with token', () => {
+    it('returns correct header with token', () => {
         const token = generateRandomString();
         const input = getAuthHeaders(token);
         const output = {
@@ -80,7 +80,7 @@ describe('getAuthHeaders', () => {
         expect(input).toEqual(output);
         expect(input).not.toEqual(incorrectOutput);
     });
-    test('returns header with null token if nothing passed in', () => {
+    it('returns header with null token if nothing passed in', () => {
         const input = getAuthHeaders();
         const output = {
             headers: {

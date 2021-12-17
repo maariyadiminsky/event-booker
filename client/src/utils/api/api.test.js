@@ -3,7 +3,7 @@ import { TEST, DEVELOPMENT, PRODUCTION, DEFAULT } from '../../const';
 
 // todo: add test for apiBaseCall
 describe('findBaseUrl', () => {
-    test('it returns correct api url during development', async() => {
+    it('it returns correct api url during development', async() => {
         const input = findBaseURL();
         let output;
 
