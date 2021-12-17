@@ -2,7 +2,7 @@ import {
     getAuthHeaders, 
     validateForm 
 } from './';
-import { generateRandomString } from '../../tests/utils';
+import { generateRandomString } from '../../tests/utils/misc';
 import { 
     SIGN_IN_FORM, 
     SIGN_UP_FORM, 

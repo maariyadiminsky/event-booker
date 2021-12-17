@@ -57,5 +57,3 @@ export * from '@testing-library/react'
 
 // override render method
 export { customRender as render }
-
-export const generateRandomString = () => Math.random().toString(36).substr(2, 5);

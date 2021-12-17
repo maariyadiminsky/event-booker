@@ -1,5 +1,5 @@
-import { render, screen } from '../utils';
-import App from '../../pages/App';
+import { render, screen } from '../../tests/utils';
+import App from './';
 import {
     EVENTS,
     BOOKINGS,
@@ -8,7 +8,7 @@ import {
 } from '../../const';
 
 
-describe('App', () => {
+describe('<App />', () => {
     test('renders App component', () => {
         render(<App />);
 
