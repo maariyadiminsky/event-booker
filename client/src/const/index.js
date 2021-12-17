@@ -66,6 +66,7 @@ export const DEFAULT = {
     STRING: '',
     NUMBER: null,
     ARRAY: [],
+    OBJECT: {},
     BOOL_FALSE: false,
     BOOL_TRUE: true,
     FUNCTION: () => null,

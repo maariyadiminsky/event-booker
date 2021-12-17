@@ -5,7 +5,7 @@ import {
     CREATE_EVENT_FORM
 } from '../../const'
 
-const mutationCallbackTry = (isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
+export const mutationCallbackTry = (isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
     if (isMutation && mutationCallback) mutationCallback();
 }
 export const handleErrors = (response = DEFAULT.UNDEFINED, callback = DEFAULT.NULL, mutationCallback = DEFAULT.NULL, isMutation = DEFAULT.BOOL_FALSE) => {
