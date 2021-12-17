@@ -7,7 +7,6 @@ import {
     ROOT_PATH
 } from '../../const';
 
-
 describe('<App />', () => {
     test('renders App component', () => {
         render(<App />);

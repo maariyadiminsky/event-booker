@@ -1,7 +1,7 @@
-import { render, screen } from '../utils';
-import Home from '../../pages/Home/Home';
+import { render, screen } from '../../tests/utils';
+import Home from './';
 
-describe('Home', () => {
+describe('<Home />', () => {
     test('renders Home component', () => {
         render(<Home />);
 
