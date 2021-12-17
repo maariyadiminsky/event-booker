@@ -8,7 +8,7 @@ import {
     WARNING,
     ERROR,
     INFORMATIVE
-} from '../const';
+} from '../../const';
 
 const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
 export const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];

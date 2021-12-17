@@ -1,4 +1,4 @@
-import { DEFAULT, DEVELOPMENT, PRODUCTION } from '../const';
+import { DEFAULT, DEVELOPMENT, PRODUCTION } from '../../const';
 
 export const findBaseURL = () => {
     if (process.env.NODE_ENV === PRODUCTION) {

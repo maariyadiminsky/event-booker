@@ -35,6 +35,7 @@ const client = new ApolloClient({
   link: from([errorLink, httpLink]),
 });
 
+// todo: remove apollo provider and use MockedProvider
 const Providers = ({ children }) => (
   <ApolloProvider client={client}>
     <BrowserRouter>

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { DEFAULT } from '../const';
+import { DEFAULT } from '../../const';
 
 export const getTodaysDate = () => moment.utc().format('YYYY-MM-DD');
 

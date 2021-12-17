@@ -43,6 +43,7 @@ export const CREATE_BOOKING_FORM = 'Create Booking Form';
 export const DELETE_BOOKING_FORM = 'Delete Booking Form';
 
 // other
+export const TEST = 'test';
 export const DEVELOPMENT = 'development';
 export const PRODUCTION = 'production';
 export const BOOKINGS_LOWERCASE = 'bookings';
@@ -62,7 +63,7 @@ export const INFORMATIVE = 'informative';
 
 // default param types
 export const DEFAULT = {
-    STRING: null,
+    STRING: '',
     NUMBER: null,
     ARRAY: [],
     BOOL_FALSE: false,

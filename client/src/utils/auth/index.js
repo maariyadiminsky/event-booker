@@ -3,7 +3,7 @@ import {
     SIGN_IN_FORM,
     SIGN_UP_FORM,
     CREATE_EVENT_FORM
-} from '../const'
+} from '../../const'
 
 const mutationCallbackTry = (isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
     if (isMutation && mutationCallback) mutationCallback();
