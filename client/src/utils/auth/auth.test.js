@@ -73,7 +73,7 @@ describe('getAuthHeaders', () => {
         };
         const incorrectOutput = {
             headers: {
-                'Authorization': 'Bearer randomdsfs'
+                'Authorization': `Bearer ${generateRandomString()}`
             }
         };
 
