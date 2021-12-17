@@ -33,7 +33,7 @@ describe('validateForm', () => {
         expect(input).toEqual(output);
     });
 
-    it('returns correct errors depending on formType', () => {
+    it('returns correct validation errors depending on formType', () => {
         const inputSignInForm = validateForm(DEFAULT.OBJECT, SIGN_IN_FORM);
         const inputSignUpForm = validateForm(DEFAULT.OBJECT, SIGN_UP_FORM);
         const inputCreateEventForm = validateForm(DEFAULT.OBJECT, CREATE_EVENT_FORM);
@@ -46,7 +46,7 @@ describe('validateForm', () => {
         expect(inputCreateEventForm).not.toEqual(formValidation1);
     });
 
-    it('returns only items that need to be validated', () => {
+    it('returns only validation errors that are needed', () => {
         const input = validateForm(DEFAULT.OBJECT, SIGN_IN_FORM);
 
         const passWordExists = {
