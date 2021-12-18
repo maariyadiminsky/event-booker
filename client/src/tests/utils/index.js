@@ -36,6 +36,7 @@ import '@testing-library/jest-dom';
 //   link: from([errorLink, httpLink]),
 // });
 
+// todo: Use MockedProvider instead passing mocked data for components that use it
 const Providers = ({ children }) => (
   <BrowserRouter>
     <AuthContextProvider>
