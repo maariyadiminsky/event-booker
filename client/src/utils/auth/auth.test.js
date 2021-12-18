@@ -9,8 +9,7 @@ import {
     SIGN_IN_FORM, 
     SIGN_UP_FORM, 
     CREATE_EVENT_FORM,
-    ERROR_DATA_NO_RESPONSE,
-    ERROR_SERVER_ERROR
+    ERROR_DATA_NO_RESPONSE
 } from '../../const';
 
 const generalFn = () => 'Works!';
@@ -58,7 +57,6 @@ describe('mutationCallbackTry', () => {
 
         expect(mutationCallbackTry).toHaveBeenCalledWith(isMutation, callback);
         expect(inputNoCallback).toBe(outputNoCallback);
-
     })
 });
 
@@ -92,15 +90,14 @@ describe('handleErrors', () => {
 
     it ('calls a callback that handles errors if errors exist', async() => {
         let errorsState = [];
-        const setErrors = (errors) => {
+        const setErrors = jest.fn((errors) => {
             errorsState = [...errorsState, ...errors];
-        }
+        });
         const serverError = 'A server error';
         const response = {
             errors: [serverError]
         };
-        // callback typically sets the errors in state but in this case
-        // I'm making sure if the callback runs and handles existing errors;
+        // callback typically sets the errors in state
         const callback = jest.fn((errors) => {
             if (errors) setErrors(errors);
 

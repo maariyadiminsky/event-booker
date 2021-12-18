@@ -21,7 +21,10 @@ export const handleErrors = (response = DEFAULT.UNDEFINED, callback = DEFAULT.NU
         throw new Error(ERROR_DATA_NO_RESPONSE(isMutation));
     } else if (response.errors && response.errors.length > 0) {
         mutationCallbackTry(isMutation, mutationCallback);
-        return callback(response.errors);
+        
+        callback(response.errors);
+
+        return response.errors;
     } else if (response.status && response.status !== 200 && response.status !== 201) {
         mutationCallbackTry(isMutation, mutationCallback);
 

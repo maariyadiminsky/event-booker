@@ -37,13 +37,23 @@ export const apiBaseCall = async({
     try {
         const response = await queryToCheck({ variables: queryVariables });
 
-        handleErrors(response, setErrorState, errorCallback, isMutation);
+        const errors = await handleErrors(response, setErrorState, errorCallback, isMutation);
 
-        const { data, loading } = response;
+        if (response) {
+            const { data, loading } = response;
 
-        dataCallback(data);
-
-        setLoadingState(loading);
+            dataCallback(data);
+    
+            setLoadingState(loading);
+    
+            return {
+                data,
+                loading,
+                errors
+            }
+        } else {
+            return Promise.resolve({});
+        }
     } catch(err) {
         console.log(err);
         throw err;
