@@ -99,7 +99,8 @@ describe('handleErrors', () => {
         const response = {
             errors: [serverError]
         };
-        // callback typically sets the errors in state
+        // callback typically sets the errors in state but in this case
+        // I'm making sure if the callback runs and handles existing errors;
         const callback = jest.fn((errors) => {
             if (errors) setErrors(errors);
 
