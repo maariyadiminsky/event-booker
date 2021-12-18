@@ -2,7 +2,9 @@ import {
     DEFAULT,
     SIGN_IN_FORM,
     SIGN_UP_FORM,
-    CREATE_EVENT_FORM
+    CREATE_EVENT_FORM,
+    ERROR_DATA_NO_RESPONSE,
+    ERROR_SERVER_ERROR
 } from '../../const'
 
 export const mutationCallbackTry = (isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
@@ -16,16 +18,14 @@ export const handleErrors = (response = DEFAULT.UNDEFINED, callback = DEFAULT.NU
     if (!response) {
         mutationCallbackTry(isMutation, mutationCallback);
 
-        throw new Error(`Data ${isMutation? 'mutation' : 'retrieval'} failed with no response!`);
+        throw new Error(ERROR_DATA_NO_RESPONSE(isMutation));
     } else if (response.errors && response.errors.length > 0) {
         mutationCallbackTry(isMutation, mutationCallback);
-        callback(response.errors);
-
-        return;
+        return callback(response.errors);
     } else if (response.status && response.status !== 200 && response.status !== 201) {
         mutationCallbackTry(isMutation, mutationCallback);
 
-        throw new Error(`Data ${isMutation? 'mutation' : 'retrieval'} failed with server status code: ${response.status}.`);
+        throw new Error(ERROR_SERVER_ERROR(isMutation, response.status));
     }
 }
 

@@ -1,4 +1,5 @@
 import { 
+    handleErrors,
     getAuthHeaders, 
     validateForm 
 } from './';
@@ -7,16 +8,19 @@ import {
     DEFAULT,
     SIGN_IN_FORM, 
     SIGN_UP_FORM, 
-    CREATE_EVENT_FORM
+    CREATE_EVENT_FORM,
+    ERROR_DATA_NO_RESPONSE,
+    ERROR_SERVER_ERROR
 } from '../../const';
 
+const generalFn = () => 'Works!';
 describe('mutationCallbackTry', () => { 
     let mutationCallbackTry;
     let callback;
     let isMutation;
     beforeEach(() => {
         isMutation = true;
-        callback = jest.fn(() => 'Works!');
+        callback = jest.fn(generalFn);
 
         mutationCallbackTry = jest.fn((isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
             if (isMutation && mutationCallback) {
@@ -35,7 +39,7 @@ describe('mutationCallbackTry', () => {
         expect(input).toBe(output);
     })
 
-    it('it doesn\'t call callback if it\'s not a mutation and/or callback doesn\t exist', () => {
+    it('doesn\'t call callback if it\'s not a mutation and/or callback doesn\'t exist', () => {
         // no mutation but callback exists
         isMutation = false;
 
@@ -58,9 +62,54 @@ describe('mutationCallbackTry', () => {
     })
 });
 
-// describe('handleErrors', () => {
- 
-// });
+describe('handleErrors', () => {
+    let callback;
+    let isMutation;
+    let response;
+
+    beforeEach(() => {
+        callback = generalFn;
+        isMutation = false;
+    })
+
+    it ('throws an error if no response came through', async() => {
+        const input = () => handleErrors(response, callback, isMutation);
+        const output = new Error(ERROR_DATA_NO_RESPONSE(isMutation));
+        const incorrectOutput = new Error('Some random unrelated error!');
+        
+        expect(input).toThrow(output);
+        expect(input).not.toThrow(incorrectOutput);
+    });
+
+    it ('throws an error if there are no errors but status is neither 200 nor 201', async() => {
+        const input = () => handleErrors(response, callback, isMutation);
+        const output = new Error(ERROR_DATA_NO_RESPONSE(isMutation));
+        const incorrectOutput = new Error('Some random unrelated error!');
+        
+        expect(input).toThrow(output);
+        expect(input).not.toThrow(incorrectOutput);
+    });
+
+    it ('calls a callback that handles errors if errors exist', async() => {
+        let errorsState = [];
+        const setErrors = (errors) => {
+            errorsState = [...errorsState, ...errors];
+        }
+        const serverError = 'A server error';
+        const response = {
+            errors: [serverError]
+        };
+        // callback typically sets the errors in state
+        const callback = jest.fn((errors) => {
+            if (errors) setErrors(errors);
+
+            return errors;
+        });
+        const input = handleErrors(response, callback, isMutation);
+        
+        expect(input).toContain(errorsState[0]);
+    });
+});
 
 describe('validateForm', () => {
     const formValidation1 = {

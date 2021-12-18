@@ -31,6 +31,9 @@ export const ACCOUNT_CREATED_MESSAGE = 'Account successfully created!';
 export const SIGN_IN_MESSAGE = 'Please sign in to continue.';
 export const SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE = 'Please sign in or create an account.';
 
+export const ERROR_DATA_NO_RESPONSE = (isMutation) => `Data ${isMutation? 'mutation' : 'retrieval'} failed with no response!`;
+export const ERROR_SERVER_ERROR = (isMutation, status) => `Data ${isMutation? 'mutation' : 'retrieval'} failed with server status code: ${status}.`
+
 // icons
 export const CONFETTI_ICON = '🎉';
 
