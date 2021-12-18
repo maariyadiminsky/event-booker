@@ -9,6 +9,8 @@ export const mutationCallbackTry = (isMutation = DEFAULT.BOOL_FALSE, mutationCal
     if (isMutation && mutationCallback) {
         return mutationCallback();
     }
+
+    return;
 }
 export const handleErrors = (response = DEFAULT.UNDEFINED, callback = DEFAULT.NULL, mutationCallback = DEFAULT.NULL, isMutation = DEFAULT.BOOL_FALSE) => {
     if (!response) {

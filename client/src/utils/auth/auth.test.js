@@ -11,24 +11,56 @@ import {
 } from '../../const';
 
 describe('mutationCallbackTry', () => { 
-    it('calls callback when it\'s a mutation and callback exists', () => {
-        const isMutation = true;
-        const callbackResult = 'Works!';
-        const callback = jest.fn(() => callbackResult);
+    let mutationCallbackTry;
+    let callback;
+    let isMutation;
+    beforeEach(() => {
+        isMutation = true;
+        callback = jest.fn(() => 'Works!');
 
-        const mutationCallbackTry = jest.fn((isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
+        mutationCallbackTry = jest.fn((isMutation = DEFAULT.BOOL_FALSE, mutationCallback = DEFAULT.NULL) => {
             if (isMutation && mutationCallback) {
                 return mutationCallback();
             }
         });
+    })
 
-        const output = mutationCallbackTry(isMutation, callback);
+    it('calls callback when it\'s a mutation and callback exists', () => {
+        const isMutation = true;
+        const input = mutationCallbackTry(isMutation, callback);
+        const output = 'Works!';
 
         expect(mutationCallbackTry).toHaveBeenCalledWith(isMutation, callback);
         expect(mutationCallbackTry).toHaveBeenCalledTimes(1);
-        expect(output).toBe(callbackResult);
+        expect(input).toBe(output);
+    })
+
+    it('it doesn\'t call callback if it\'s not a mutation and/or callback doesn\t exist', () => {
+        // no mutation but callback exists
+        isMutation = false;
+
+        const inputNoMutation = mutationCallbackTry(isMutation, callback);
+        const outputNoMutation = DEFAULT.UNDEFINED;
+
+        expect(mutationCallbackTry).toHaveBeenCalledWith(isMutation, callback);
+        expect(inputNoMutation).toBe(outputNoMutation);
+
+        // mutation but callback doesn't exist
+        isMutation = true;
+        callback = null;
+
+        const inputNoCallback = mutationCallbackTry(isMutation, callback);
+        const outputNoCallback = DEFAULT.UNDEFINED;
+
+        expect(mutationCallbackTry).toHaveBeenCalledWith(isMutation, callback);
+        expect(inputNoCallback).toBe(outputNoCallback);
+
     })
 });
+
+// describe('handleErrors', () => {
+ 
+// });
 
 describe('validateForm', () => {
     const formValidation1 = {
