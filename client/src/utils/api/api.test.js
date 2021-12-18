@@ -97,7 +97,6 @@ describe('apiBaseCall', () => {
 
         try {
             await apiBaseCall(params);
-            console.log('here 2');
         } catch(error) {
             expect(error.message).toEqual(output);
         }
