@@ -46,7 +46,7 @@ describe('apiBaseCall', () => {
         const response = {
             data: null,
             loading: false,
-            errors: ['no data server error']
+            errors: ['server error: no data!']
         }
         const handleErrors = jest.fn(() => {
             setErrorState(response.errors);
