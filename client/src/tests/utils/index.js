@@ -46,8 +46,10 @@ const Providers = ({ children }) => (
 );
 
 const customRender = (ui, options) => {
-  if (options && options.route) {
-    window.history.pushState({}, '', options.route);
+  if (options) {
+    if (options.route) {
+      window.history.pushState({}, '', options.route);
+    }
   }
   
   return render(ui, { wrapper: Providers, ...options })
