@@ -2,7 +2,7 @@ import { render, screen } from '../../tests/utils';
 import Home from './';
 
 describe('<Home />', () => {
-    test('renders Home component', () => {
+    it('renders Home component', () => {
         render(<Home />);
 
         const createNewExperiencesText = screen.getByText(/Create unique experiences/i);
