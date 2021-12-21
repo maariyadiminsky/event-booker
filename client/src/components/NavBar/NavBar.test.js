@@ -12,12 +12,12 @@ import { isActiveNavItem } from './NavMenu';
 
 describe('<NavBar />', () => {
     it('renders component with all nav items', () => {
-        render(<NavBar />);
+        const { getByText, queryByText } = render(<NavBar />);
 
-        const homeButtonDiv = screen.getByText(HOME);
-        const eventsButtonDiv = screen.getByText(EVENTS);
-        const bookingsButtonDiv = screen.getByText(BOOKINGS);
-        const nonExistentButtonDiv = screen.queryByText('someRandomButtonDiv');
+        const homeButtonDiv = getByText(HOME);
+        const eventsButtonDiv = getByText(EVENTS);
+        const bookingsButtonDiv = getByText(BOOKINGS);
+        const nonExistentButtonDiv = queryByText('someRandomButtonDiv');
 
         expect(homeButtonDiv).toBeInTheDocument();
         expect(eventsButtonDiv).toBeInTheDocument();
@@ -26,24 +26,24 @@ describe('<NavBar />', () => {
     });
 
     it('renders mobile menu if user clicks mobile menu icon', () => {
-        render(<NavBar />);
+        const { getByRole, getAllByText } = render(<NavBar />);
 
-        const mobileMenuButton = screen.getByRole('button');
+        const mobileMenuButton = getByRole('button');
         expect(mobileMenuButton.className).toBe('outline-none');
 
-        let homeButtons = screen.getAllByText(HOME);
-        let eventButtons = screen.getAllByText(EVENTS);
+        let homeButtons = getAllByText(HOME);
+        let eventButtons = getAllByText(EVENTS);
 
         expect(homeButtons.length).toBe(1);
         expect(eventButtons.length).toBe(1);
 
         userEvent.click(mobileMenuButton);
 
-        homeButtons = screen.getAllByText(HOME);
+        homeButtons = getAllByText(HOME);
         const mobileHomeButton = homeButtons.length > 1 ? homeButtons[1] : null;
         const mobileHomeButtonClassName = mobileHomeButton ? mobileHomeButton.className : '';
 
-        eventButtons = screen.getAllByText(EVENTS);
+        eventButtons = getAllByText(EVENTS);
         const mobileEventButton = eventButtons.length > 1 ? eventButtons[1] : null;
         const mobileEventButtonClassName = mobileEventButton ? mobileEventButton.className : '';
 
@@ -59,10 +59,10 @@ describe('<NavBar />', () => {
     });
 
     it('sets correct button to active when clicked', () => {
-        render(<NavBar />);
+        const { getByText } = render(<NavBar />);
 
-        const homeButtonDiv = screen.getByText(HOME);
-        const eventButtonDiv = screen.getByText(EVENTS);
+        const homeButtonDiv = getByText(HOME);
+        const eventButtonDiv = getByText(EVENTS);
 
         expect(homeButtonDiv.className).toBe(isActiveNavItem(true, false));
         expect(eventButtonDiv.className).toBe(isActiveNavItem(false, false));

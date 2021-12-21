@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '../../../tests/utils';
+import { render } from '../../../tests/utils';
 import userEvent from '@testing-library/user-event';
 
 import { MOCK } from '../../../const';

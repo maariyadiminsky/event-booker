@@ -3,7 +3,11 @@ import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { shouldStopEventPropagationTry } from '../../utils';
-import { DEFAULT } from '../../const';
+import { 
+    DEFAULT, 
+    NEVERMIND, 
+    SUBMIT 
+} from '../../const';
 
 import ButtonTwoGroup from '../Button/ButtonTwoGroup';
 
@@ -12,8 +16,8 @@ const defaultButtonClass = (buttonClass = DEFAULT.STRING) => buttonClass ? butto
 
 const Modal = ({ 
     header = DEFAULT.STRING, content = DEFAULT.STRING, 
-    cancelButtonText = DEFAULT.STRING, confirmButtonText = DEFAULT.STRING, 
-    handleOnSubmit = DEFAULT.NULL, handleCancelModal = DEFAULT.NULL, 
+    cancelButtonText = NEVERMIND, confirmButtonText = SUBMIT, 
+    handleOnSubmit = DEFAULT.FUNCTION, handleCancelModal = DEFAULT.FUNCTION, 
     customSubmitButtons = DEFAULT.NULL,
     hideSubmitButtons = DEFAULT.BOOL_FALSE,
     headerClass = DEFAULT.STRING, buttonClass = DEFAULT.STRING,
@@ -38,7 +42,7 @@ const Modal = ({
                 confirmText={confirmButtonText}
                 cancelText={cancelButtonText}
                 handleCancel={handleCancel}
-                handleConfirmButton={handleConfirmButton}
+                handleConfirm={handleConfirmButton}
             />
         );
 
@@ -69,7 +73,7 @@ Modal.propTypes = {
     confirmButtonText: PropTypes.string,
     handleOnSubmit: PropTypes.func.isRequired,
     handleCancelModal: PropTypes.func.isRequired,
-    hideSubmitButtons: PropTypes.bool.isRequired,
+    hideSubmitButtons: PropTypes.bool,
     content: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node,
@@ -79,7 +83,7 @@ Modal.propTypes = {
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node,
         PropTypes.func
-    ]).isRequired,
+    ]),
 };
 
 export default Modal;
