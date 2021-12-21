@@ -7,7 +7,7 @@ import NavItem from './';
 
 describe('<NavItem />', () => {
     it('renders NavItem component', () => {
-        render(
+        const { getByRole, getByTestId } = render(
             <NavItem
                 buttonPath={MOCK.PATH}
                 className={MOCK.CLASS}
@@ -16,8 +16,8 @@ describe('<NavItem />', () => {
             </NavItem>
         );
 
-        const button = screen.getByRole('link');
-        const innerDiv = screen.getByTestId('nav-item')
+        const button = getByRole('link');
+        const innerDiv = getByTestId('nav-item')
 
         expect(button.textContent).toBe(MOCK.BUTTON_TEXT);
         expect(button).toHaveAttribute('href', MOCK.PATH);
@@ -26,7 +26,7 @@ describe('<NavItem />', () => {
 
     it('calls callback when clicked', () => {
         const handleOnClick = jest.fn(() => MOCK.WORKS_TEXT);
-        render(
+        const { getByRole } = render(
             <NavItem
                 handleOnClick={handleOnClick}
                 className={MOCK.CLASS}
@@ -35,7 +35,7 @@ describe('<NavItem />', () => {
             </NavItem>
         );
 
-        const button = screen.getByRole('link');
+        const button = getByRole('link');
 
         userEvent.click(button);
 

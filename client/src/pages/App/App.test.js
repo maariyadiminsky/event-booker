@@ -10,7 +10,7 @@ import {
 import App from './';
 
 describe('<App />', () => {
-    it('renders App component', () => {
+    it('renders component', () => {
         const { getByText } = render(<App />);
 
         // if navbar renders its safe to assume App component is rendered

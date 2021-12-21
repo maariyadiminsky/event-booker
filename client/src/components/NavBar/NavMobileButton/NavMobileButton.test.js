@@ -8,11 +8,9 @@ import NavMobileButton from './';
 describe('<NavMobileButton />', () => {
     it('calls callback when clicked', () => {
         const handleOnClick = jest.fn(() => MOCK.WORKS_TEXT);
-        render(
-            <NavMobileButton handleOnClick={handleOnClick} />
-        );
+        const { getByRole } = render(<NavMobileButton handleOnClick={handleOnClick} />);
 
-        const button = screen.getByRole('button');
+        const button = getByRole('button');
 
         userEvent.click(button);
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BookingModalContent from './BookingModalContent';
-import Modal from '../Modal/Modal';
+import Modal from '../Modal';
 
 import { DEFAULT, BOOK_AN_EVENT } from '../../const';
 

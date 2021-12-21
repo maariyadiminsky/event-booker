@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CancelWarningModalContent from './CancelWarningModalContent';
-import Modal from '../Modal/Modal';
+import Modal from '../Modal';
 
 import { DEFAULT } from '../../const';
 

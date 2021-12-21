@@ -7,7 +7,7 @@ import NotificationAlt from './';
 describe('<NotificationAlt />', () => {
     it('renders component with correct icon and text', () => {
         const icon = '🔥';
-        render(
+        const { getByText } = render(
             <NotificationAlt 
                 icon={icon}
                 topText={ACCOUNT_CREATED_MESSAGE}
@@ -15,9 +15,9 @@ describe('<NotificationAlt />', () => {
             />
         );
 
-        const iconElement = screen.getByText(icon);
-        const topTextElement = screen.getByText(ACCOUNT_CREATED_MESSAGE);
-        const bottomTextElement = screen.getByText(SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE);
+        const iconElement = getByText(icon);
+        const topTextElement = getByText(ACCOUNT_CREATED_MESSAGE);
+        const bottomTextElement = getByText(SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE);
 
         expect(iconElement).toBeInTheDocument();
         expect(topTextElement).toBeInTheDocument();

@@ -27,7 +27,7 @@ describe('<NavMenu />', () => {
     });
 
     it('renders component with all nav items', () => {
-        render(
+        const { getByText, queryByText } = render(
             <NavMenu 
                 pathname={MOCK.PATH}
                 authButtonText={MOCK.BUTTON_TEXT}
@@ -38,11 +38,11 @@ describe('<NavMenu />', () => {
             />
         );
 
-        const homeButtonDiv = screen.getByText(HOME);
-        const eventsButtonDiv = screen.getByText(EVENTS);
-        const bookingsButtonDiv = screen.getByText(BOOKINGS);
-        const authButtonDiv = screen.getByText(MOCK.BUTTON_TEXT);
-        const nonExistentButtonDiv = screen.queryByText('someRandomButtonDiv');
+        const homeButtonDiv = getByText(HOME);
+        const eventsButtonDiv = getByText(EVENTS);
+        const bookingsButtonDiv = getByText(BOOKINGS);
+        const authButtonDiv = getByText(MOCK.BUTTON_TEXT);
+        const nonExistentButtonDiv = queryByText('someRandomButtonDiv');
 
         expect(homeButtonDiv).toBeInTheDocument();
         expect(eventsButtonDiv).toBeInTheDocument();
@@ -52,7 +52,7 @@ describe('<NavMenu />', () => {
     });
 
     it('sets correct nav item active on render', () => {
-        render(
+        const { getByRole } = render(
             <NavMenu 
                 pathname={MOCK.PATH}
                 authButtonText={MOCK.BUTTON_TEXT}
@@ -63,9 +63,9 @@ describe('<NavMenu />', () => {
             />
         );
 
-        const homeButton = screen.getByRole('link', { name: HOME });
-        const eventsButton = screen.getByRole('link', { name: EVENTS });
-        const bookingsButton = screen.getByRole('link', { name: BOOKINGS });
+        const homeButton = getByRole('link', { name: HOME });
+        const eventsButton = getByRole('link', { name: EVENTS });
+        const bookingsButton = getByRole('link', { name: BOOKINGS });
 
         expect(homeButton.className).toBe(ACTIVE);
         expect(eventsButton.className).toBe(DEFAULT.STRING);
@@ -73,7 +73,7 @@ describe('<NavMenu />', () => {
     })
 
     it('is aware when mobile menu is requested', () => {
-        render(
+        const { getByText } = render(
             <NavMenu 
                 isMobile
                 pathname={MOCK.PATH}
@@ -85,7 +85,7 @@ describe('<NavMenu />', () => {
             />
         );
 
-        const homeButtonDiv = screen.getByText(HOME);
+        const homeButtonDiv = getByText(HOME);
 
         expect(homeButtonDiv.className).toBe(isActiveNavItem(false, true));
     })
