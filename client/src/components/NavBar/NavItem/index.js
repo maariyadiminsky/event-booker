@@ -2,11 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { DEFAULT, ROOT_PATH } from '../../const';
+import { DEFAULT, ROOT_PATH } from '../../../const';
 
 const NavItem = ({ children = DEFAULT.FUNCTION, buttonPath = ROOT_PATH, className = DEFAULT.STRING, handleOnClick = DEFAULT.NULL }) => (
     <NavLink to={buttonPath} onClick={handleOnClick}>
-        <div className={className}>
+        <div data-testid="nav-item" className={className}>
             {children}
         </div>
     </NavLink> 
@@ -14,7 +14,7 @@ const NavItem = ({ children = DEFAULT.FUNCTION, buttonPath = ROOT_PATH, classNam
 
 NavItem.propTypes = {
     className: PropTypes.string,
-    buttonPath: PropTypes.string.isRequired,
+    buttonPath: PropTypes.string,
     handleOnClick: PropTypes.func,
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),

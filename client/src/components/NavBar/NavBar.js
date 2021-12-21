@@ -20,7 +20,7 @@ import logo from './logo.png';
 import './NavBar.css';
 
 const NavBar = () => {
-    const { pathname = DEFAULT } = useLocation();
+    const { pathname = ROOT_PATH } = useLocation();
     const [hasUserSignedIn = DEFAULT.BOOL_FALSE, setHasUserSignedIn = DEFAULT.NULL] = useState(false);
     const [shouldOpenMobileMenu = DEFAULT.BOOL_FALSE, setShouldOpenMobileMenu = DEFAULT.NULL] = useState(false);
 

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import NavItem from './NavItem';
+import NavItem from '../NavItem';
 
 import {
     DEFAULT,
@@ -12,9 +12,9 @@ import {
     EVENTS,
     BOOKINGS,
     HOME,
-} from '../../const';
+} from '../../../const';
 
-const isActiveNavItem = (navItemState = DEFAULT.BOOL_FALSE, isMobile = DEFAULT.BOOL_FALSE) => {
+export const isActiveNavItem = (navItemState = DEFAULT.BOOL_FALSE, isMobile = DEFAULT.BOOL_FALSE) => {
     if (isMobile) return navItemState ? 'active-mobile-nav-item' : 'mobile-nav-item';
 
     return navItemState ? 'active-nav-item' : 'nav-item';

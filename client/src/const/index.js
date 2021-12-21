@@ -47,6 +47,7 @@ export const DELETE_BOOKING_FORM = 'Delete Booking Form';
 
 // other
 export const TEST = 'test';
+export const ACTIVE = 'active';
 export const DEVELOPMENT = 'development';
 export const PRODUCTION = 'production';
 export const BOOKINGS_LOWERCASE = 'bookings';
@@ -63,6 +64,17 @@ export const SUCCESS = 'success';
 export const WARNING = 'warning';
 export const ERROR = 'error';
 export const INFORMATIVE = 'informative';
+
+// elements
+export const DIV = 'DIV';
+
+// mock data for testing 
+export const MOCK = {
+    WORKS_TEXT: 'Works!',
+    PATH: '/somePath',
+    CLASS: 'some-class',
+    BUTTON_TEXT: 'ClickMe',
+}
 
 // default param types
 export const DEFAULT = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
 const NavMobileButton = ({ handleOnClick = DEFAULT.NULL }) => (
     <div className="md:hidden flex px-10">

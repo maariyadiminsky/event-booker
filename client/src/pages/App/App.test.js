@@ -1,34 +1,40 @@
 import { render, screen } from '../../tests/utils';
-import App from './';
 import {
     EVENTS,
     BOOKINGS,
     HOME,
-    ROOT_PATH
+    ROOT_PATH,
+    DIV
 } from '../../const';
+
+import App from './';
 
 describe('<App />', () => {
     it('renders App component', () => {
-        const wrapper = render(<App />);
+        const { getByText } = render(<App />);
 
         // if navbar renders its safe to assume App component is rendered
-        const eventsLinkInNavbar = wrapper.getByText(EVENTS);
-        const bookingsLinkInNavbar = wrapper.getByText(BOOKINGS);
-        const homeLinkInNavbar = wrapper.getByText(HOME);
+        const eventsLinkInNavbar = getByText(EVENTS);
+        const bookingsLinkInNavbar = getByText(BOOKINGS);
+        const homeLinkInNavbar = getByText(HOME);
 
         expect(eventsLinkInNavbar).toBeInTheDocument();
+        expect(eventsLinkInNavbar.tagName).toBe(DIV);
         expect(bookingsLinkInNavbar).toBeInTheDocument();
+        expect(bookingsLinkInNavbar.tagName).toBe(DIV);
         expect(homeLinkInNavbar).toBeInTheDocument();
+        expect(homeLinkInNavbar.tagName).toBe(DIV);
 
-        const someRenderLink = wrapper.queryByText('someRandomLink');
+        const someRenderLink = screen.queryByText('someRandomLink');
         expect(someRenderLink).not.toBeInTheDocument();
     });
 
     it('renders Home Component by default', () => {
-        const wrapper = render(<App />, { route: ROOT_PATH });
+        const { getByText } = render(<App />, { route: ROOT_PATH });
 
-        const textFromHomePage = wrapper.getByText(/Create unique experiences/i);
+        const textFromHomePage = getByText(/Create unique experiences/i);
 
         expect(textFromHomePage).toBeInTheDocument();
+        expect(textFromHomePage.tagName).toBe(DIV);
     });
 });
