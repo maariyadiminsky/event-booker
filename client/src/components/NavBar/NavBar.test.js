@@ -2,13 +2,8 @@ import { render, screen } from '../../tests/utils';
 import userEvent from '@testing-library/user-event';
 
 import { 
-    MOCK,
-    DEFAULT,
-    ROOT_PATH,
     EVENTS,
     BOOKINGS,
-    EVENTS_PATH,
-    BOOKINGS_PATH,
     HOME,
 } from '../../const';
 

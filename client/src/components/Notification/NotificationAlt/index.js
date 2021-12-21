@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
 const NotificationAlt = ({ icon = DEFAULT.STRING, topText = DEFAULT.STRING, bottomText = DEFAULT.STRING }) => (
     <div>
