@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 
-import NavMenu from './NavMenu';
-import NavItem from './NavItem';
-import NavMobileButton from './NavMobileButton';
+import NavMenu from '../NavMenu';
+import NavItem from '../NavItem';
+import NavMobileButton from '../NavMobileButton';
 
 import {
     DEFAULT,
@@ -13,11 +13,11 @@ import {
     AUTH_PATH,
     SIGN_IN,
     SIGN_OUT,
-} from '../../const';
+} from '../../../const';
 
-import logo from './logo.png';
+import logo from '../logo.png';
 
-import './NavBar.css';
+import '../NavBar.css';
 
 const NavBar = () => {
     const { pathname = ROOT_PATH } = useLocation();

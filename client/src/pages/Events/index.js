@@ -8,7 +8,7 @@ import Loader from '../../components/Loader';
 import CreateButtonRectangle from '../../components/Button/CreateButtonRectangle';
 import EventItems from '../../components/Event/EventItems';
 import EventModal from '../../components/Event/EventModal';
-import CancelWarningModal from '../../components/Booking/CancelWarningModal';
+import CancelWarningModal from '../../components/Modal/CancelWarningModal';
 import EventAlert from '../../components/Event/EventAlert';
 
 import { useLoadingAndErrors } from '../../hooks/useLoadingAndErrors';

@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import Loader from '../../components/Loader';
 import BookingModal from '../../components/Booking/BookingModal';
 import BookingItems from '../../components/Booking/BookingItems';
-import CancelWarningModal from '../../components/Booking/CancelWarningModal';
+import CancelWarningModal from '../../components/Modal/CancelWarningModal';
 import CreateButtonSquare from '../../components/Button/CreateButtonSquare';
 
 import { 

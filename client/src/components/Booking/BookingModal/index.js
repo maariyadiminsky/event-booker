@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import BookingModalContent from './BookingModalContent';
-import Modal from '../Modal';
+import BookingModalContent from '../BookingModalContent';
+import Modal from '../../Modal/Modal';
 
-import { DEFAULT, BOOK_AN_EVENT } from '../../const';
+import { DEFAULT, BOOK_AN_EVENT } from '../../../const';
 
-import '../Form/Form.css';
+import '../../Form/Form.css';
 
 const BookingModal = ({ eventOptions = DEFAULT.NULL, errors = DEFAULT.NULL, formType = DEFAULT.STRING, toggleModal = DEFAULT.FUNCTION, handleOnSubmit = DEFAULT.FUNCTION }) => (
     <Modal 
@@ -38,7 +38,11 @@ BookingModal.propTypes = {
             }).isRequired,
         })
     ),
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.arrayOf(
+        PropTypes.shape({
+            message: PropTypes.string
+        })
+    ),
     formType: PropTypes.string.isRequired,
     toggleModal: PropTypes.func.isRequired,
     handleOnSubmit: PropTypes.func.isRequired,

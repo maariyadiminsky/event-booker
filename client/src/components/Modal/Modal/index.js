@@ -2,14 +2,14 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
-import { shouldStopEventPropagationTry } from '../../utils';
+import { shouldStopEventPropagationTry } from '../../../utils';
 import { 
     DEFAULT, 
     NEVERMIND, 
     SUBMIT 
-} from '../../const';
+} from '../../../const';
 
-import ButtonTwoGroup from '../Button/ButtonTwoGroup';
+import ButtonTwoGroup from '../../Button/ButtonTwoGroup';
 
 const defaultHeaderClass = (headerClass = DEFAULT.STRING) => headerClass ? headerClass : 'pb-3 text-center text-3xl text-green-400 font-semibold';
 const defaultButtonClass = (buttonClass = DEFAULT.STRING) => buttonClass ? buttonClass : 'text-white bg-green-400 font-semibold hover:bg-green-300 transition duration-300';

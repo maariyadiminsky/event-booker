@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import EventModalContent from '../EventModalContent';
-import Modal from '../../Modal';
+import Modal from '../../Modal/Modal';
 
 import { DEFAULT, CREATE_AN_EVENT } from '../../../const';
 

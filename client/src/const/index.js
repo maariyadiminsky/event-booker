@@ -78,6 +78,38 @@ export const MOCK = {
     PATH: '/somePath',
     CLASS: 'some-class',
     BUTTON_TEXT: 'ClickMe',
+    events: [
+        {
+            _id: '0',
+            title: 'Sushi Event',
+            description: 'Meet others who love sushi!',
+            price: 70,
+            date: '2021-09-15T00:00:00.000Z',
+            user: {
+                _id: '1'
+            }
+        },
+        {
+            _id: '1',
+            title: 'Car Event',
+            description: 'Meet others who love cars!',
+            price: 25,
+            date: '2021-09-16T00:00:00.000Z',
+            user: {
+                _id: '2'
+            }
+        },
+        {
+            _id: '2',
+            title: 'Concert Event',
+            description: 'Meet others who love music!',
+            price: 200,
+            date: '2021-09-17T00:00:00.000Z',
+            user: {
+                _id: '1'
+            }
+        }
+    ]
 }
 
 // default param types

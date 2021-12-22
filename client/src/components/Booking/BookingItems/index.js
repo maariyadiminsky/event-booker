@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Booking from './Booking';
+import Booking from '../Booking';
 
-import { getRandomColor } from '../../utils/colors';
+import { getRandomColor } from '../../../utils/colors';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
 const BookingItems = ({ bookings = DEFAULT.NULL, openCancelModal = DEFAULT.NULL }) => (
     bookings && bookings.map(({ _id = DEFAULT.STRING, event: { title = DEFAULT.STRING, date = DEFAULT.STRING }}) => (

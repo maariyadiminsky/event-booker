@@ -2,13 +2,14 @@ import React from 'react';
 import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
-import FormWrapper from '../Form/FormWrapper';
-import FormOptions from '../Form/FormOptions';
+import FormWrapper from '../../Form/FormWrapper';
+import FormOptions from '../../Form/FormOptions';
 
-import Loader from '../Loader';
+import Loader from '../../Loader';
 
-import { DEFAULT, BOOKINGS_NEED_EVENTS } from '../../const';
+import { DEFAULT, BOOKINGS_NEED_EVENTS } from '../../../const';
 
+export const noEventsExistText = () => `⚠ ${BOOKINGS_NEED_EVENTS}`;
 const BookingModalContent = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.STRING, errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.FUNCTION, handleCancelButton = DEFAULT.FUNCTION }) => {
     if (!eventOptions) {
         return <Loader height={0} />;
@@ -17,7 +18,7 @@ const BookingModalContent = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.S
     if (eventOptions && eventOptions.length === 0) {
         return (
             <div className="font-light">
-                ⚠ {BOOKINGS_NEED_EVENTS}
+                {noEventsExistText()}
             </div>
         );
     }
@@ -58,7 +59,11 @@ BookingModalContent.propTypes = {
             }).isRequired,
         })
     ),
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.arrayOf(
+        PropTypes.shape({
+            message: PropTypes.string
+        })
+    ),
     formType: PropTypes.string.isRequired,
     handleCancelButton: PropTypes.func.isRequired,
     handleOnSubmit: PropTypes.func.isRequired,

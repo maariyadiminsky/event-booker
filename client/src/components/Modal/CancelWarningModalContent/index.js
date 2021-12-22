@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT, YES_IM_SURE } from '../../const';
+import { DEFAULT, YES_IM_SURE } from '../../../const';
 
-import FormWrapper from '../Form/FormWrapper';
+import FormWrapper from '../../Form/FormWrapper';
 
 const CancelWarningModalContent = ({ errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL, handleCancelButton = DEFAULT.NULL }) => (
     <FormWrapper

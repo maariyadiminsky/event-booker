@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CancelWarningModalContent from './CancelWarningModalContent';
+import CancelWarningModalContent from '../CancelWarningModalContent';
 import Modal from '../Modal';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
-import '../Form/Form.css';
+import '../../Form/Form.css';
 
 const CancelWarningModal = ({ header = DEFAULT.STRING, errors = DEFAULT.NULL, toggleModal = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL }) => (
     <Modal 
