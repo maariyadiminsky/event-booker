@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT, SUBMIT, NEVERMIND } from '../../const';
+import { DEFAULT, SUBMIT, NEVERMIND } from '../../../const';
 
 const ButtonTwoGroup = ({ defaultClass = DEFAULT.STRING, confirmText = SUBMIT, cancelText = NEVERMIND, handleCancel = DEFAULT.NULL, handleConfirm = DEFAULT.NULL }) => (
     <div className="flex flex-wrap justify-center items-center space-x-5 pt-5">
@@ -23,8 +23,8 @@ const ButtonTwoGroup = ({ defaultClass = DEFAULT.STRING, confirmText = SUBMIT, c
 
 ButtonTwoGroup.propTypes = {
     defaultClass: PropTypes.string,
-    confirmText: PropTypes.string.isRequired,
-    cancelText: PropTypes.string.isRequired,
+    confirmText: PropTypes.string,
+    cancelText: PropTypes.string,
     handleCancel: PropTypes.func.isRequired,
     handleConfirm: PropTypes.func,
 };

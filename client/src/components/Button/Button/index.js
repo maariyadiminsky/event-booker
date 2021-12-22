@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
 const Button = ({ children = DEFAULT.NULL, handleOnClick = DEFAULT.NULL, buttonCSS = DEFAULT.STRING }) => (
-    <div onClick={handleOnClick} className={buttonCSS}>{children}</div>
+    <button onClick={handleOnClick} className={buttonCSS}>{children}</button>
 );
 
 Button.propTypes = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
 const CreateButtonSquare = ({ className = DEFAULT.STRING, text = DEFAULT.STRING, onClick = DEFAULT.NULL }) => (
     <div className={className} onClick={onClick}>
