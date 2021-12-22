@@ -74,6 +74,7 @@ export const DIV = 'DIV';
 
 // mock data for testing 
 export const MOCK = {
+    TOKEN: '62jdfkj5',
     NAME: 'SomeName',
     WORKS_TEXT: 'Works!',
     PATH: '/somePath',
