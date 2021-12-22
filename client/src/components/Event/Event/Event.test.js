@@ -1,15 +1,19 @@
 import { render } from '../../../tests/utils';
-
-import { REMOVE_BUTTON_TEXT } from '../../../const';
+import userEvent from '@testing-library/user-event';
 
 import { getDateInCorrectFormat } from '../../../utils/date';
+import { setNotificationCSS } from '../../Notification/Notification';
+
+import { 
+    REMOVE_BUTTON_TEXT,
+    WARNING_COLOR,
+    ERROR_COLOR,
+    TODAY,
+    EXPIRED
+} from '../../../const';
 
 import Event from './';
 
-// renders notification if event is for todaysDate
-// --> mock useNotificationBasedOnDate
-// renders notification if event is expired
-// --> mock useNotificationBasedOnDate
 describe('<Event />', () => {
     let toggleCancelModal;
     let setCancelEventId;
@@ -82,7 +86,59 @@ describe('<Event />', () => {
         expect(removeButton).not.toBeInTheDocument();
     });
 
-    it('renders notification if event is for todays date', () => {
+    it('renders expired notification if event is event is before today', () => {
+        const { getByText } = render(
+            <Event 
+                toggleCancelModal={toggleCancelModal}
+                setCancelEventId={setCancelEventId}
+                userId='2'
+                event={event}
+            />
+        );
 
+        const expiredNotification = getByText(EXPIRED);
+
+        expect(expiredNotification).toBeInTheDocument();
+        expect(expiredNotification.className).toBe(setNotificationCSS(ERROR_COLOR));
+    });
+
+    it('renders today notification if event is happening today', () => {
+        const eventToday = {
+            ...event,
+            date: `${new Date().toISOString()}`,
+        };
+        const { getByText } = render(
+            <Event 
+                toggleCancelModal={toggleCancelModal}
+                setCancelEventId={setCancelEventId}
+                userId='2'
+                event={eventToday}
+            />
+        );
+
+        const todayNotification = getByText(TODAY);
+
+        expect(todayNotification).toBeInTheDocument();
+        expect(todayNotification.className).toBe(setNotificationCSS(WARNING_COLOR));
+    });
+
+    it('handles callback when user clicks remove', () => {
+        const { getByRole } = render(
+            <Event 
+                toggleCancelModal={toggleCancelModal}
+                setCancelEventId={setCancelEventId}
+                userId='1'
+                event={event}
+            />
+        );
+
+        const removeButton = getByRole('button', { name: REMOVE_BUTTON_TEXT });
+
+        expect(removeButton).toBeInTheDocument();
+
+        userEvent.click(removeButton);
+
+        expect(toggleCancelModal).toHaveBeenCalledTimes(1);
+        expect(setCancelEventId).toHaveBeenCalledTimes(1);
     });
 });

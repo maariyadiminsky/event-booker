@@ -12,8 +12,8 @@ describe('<FormErrors />', () => {
             <FormErrors errors={errorsMock}/>
         );
 
-        const firstErrorDiv = getByText(ERROR_DATA_NO_RESPONSE(true));
-        const secondErrorDiv = getByText(ERROR_SERVER_ERROR(true, 500));
+        const firstErrorDiv = getByText(errorsMock[0].message);
+        const secondErrorDiv = getByText(errorsMock[1].message);
 
         expect(firstErrorDiv).toBeInTheDocument();
         expect(secondErrorDiv).toBeInTheDocument();

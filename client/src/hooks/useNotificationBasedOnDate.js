@@ -7,6 +7,8 @@ import {
     WARNING_COLOR, 
     ERROR_COLOR,
     WHITE_COLOR,
+    EXPIRED,
+    TODAY
 } from '../const';
 
 export const DEFAULT_NOTIFICATION = {
@@ -23,13 +25,13 @@ export const useNotificationBasedOnDate = (date) => {
             setNotification({
                 shouldRender: true,
                 color: WARNING_COLOR,
-                text: 'Today'
+                text: TODAY
             })
         } else if (isDateBeforeToday(date)) {
             setNotification({
                 shouldRender: true,
                 color: ERROR_COLOR,
-                text: 'Expired'
+                text: EXPIRED
             })
         }
     }, [date])

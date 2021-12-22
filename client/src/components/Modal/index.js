@@ -71,7 +71,7 @@ Modal.propTypes = {
     header: PropTypes.string.isRequired,
     cancelButtonText: PropTypes.string,
     confirmButtonText: PropTypes.string,
-    handleOnSubmit: PropTypes.func.isRequired,
+    handleOnSubmit: PropTypes.func,
     handleCancelModal: PropTypes.func.isRequired,
     hideSubmitButtons: PropTypes.bool,
     content: PropTypes.oneOfType([

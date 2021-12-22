@@ -16,7 +16,7 @@ describe('<Modal />', () => {
 
     let portalRoot;
 
-    beforeEach(() => {
+    beforeAll(() => {
         contentMock = <div>{MOCK.WORKS_TEXT}</div>;
         handleOnSubmit = jest.fn();
         handleCancelModal = jest.fn();

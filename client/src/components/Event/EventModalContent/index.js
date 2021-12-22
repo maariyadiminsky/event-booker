@@ -61,7 +61,11 @@ const EventModalContent = ({ errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.NUL
 );
 
 EventModalContent.propTypes = {
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.arrayOf(
+        PropTypes.shape({
+            message: PropTypes.string
+        })
+    ),
     handleCancelButton: PropTypes.func.isRequired,
     handleOnSubmit: PropTypes.func.isRequired,
 };
