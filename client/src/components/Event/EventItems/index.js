@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Event from './Event';
+import Event from '../Event';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
 const EventItems = ({ userId = DEFAULT.NULL, events = DEFAULT.NULL, toggleCancelModal = DEFAULT.NULL, setCancelEventId = DEFAULT.NULL }) => (
     events.map((event = DEFAULT.NULL, index = DEFAULT.NULL) => (

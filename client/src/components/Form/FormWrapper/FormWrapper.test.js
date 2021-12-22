@@ -28,10 +28,11 @@ describe('<FormWrapper />', () => {
     it('renders component', () => {
         const { getByText } = render(
             <FormWrapper
-                children={children}
                 topContent={topContentMock}
                 handleOnSubmit={handleOnSubmit}
-            />
+            >
+                {children}
+            </FormWrapper>
         );
 
         const childrenContent = getByText(MOCK.WORKS_TEXT);
@@ -46,11 +47,12 @@ describe('<FormWrapper />', () => {
 
         const { getByText } = render(
             <FormWrapper
-                children={children}
                 topContent={topContentMock}
                 handleOnSubmit={handleOnSubmit}
                 errors={errorsMock}
-            />
+            >
+                {children}
+            </FormWrapper>
         );
 
         const firstErrorDiv = getByText(ERROR_DATA_NO_RESPONSE(true));
@@ -65,11 +67,12 @@ describe('<FormWrapper />', () => {
 
         const { getByRole } = render(
             <FormWrapper
-                children={children}
                 topContent={topContentMock}
                 handleOnSubmit={handleOnSubmit}
                 handleCancelButton={handleCancelButton}
-            />
+            >
+                {children}
+            </FormWrapper>
         );
 
         const cancelButton = getByRole('button', { name: NEVERMIND });

@@ -1,12 +1,12 @@
 import React from 'react';
+import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
-import FormWrapper from '../Form/FormWrapper';
-import FormInput from '../Form/FormInput';
-import { Field } from 'react-final-form';
+import FormWrapper from '../../Form/FormWrapper';
+import FormInput from '../../Form/FormInput';
 
-import { getTodaysDate } from '../../utils/date';
-import { DEFAULT, CREATE_EVENT_FORM } from '../../const';
+import { getTodaysDate } from '../../../utils/date';
+import { DEFAULT, CREATE_EVENT_FORM } from '../../../const';
 
 const todaysDate = getTodaysDate();
 

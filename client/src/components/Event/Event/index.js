@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '../Button/Button';
-import Notification from '../Notification/Notification';
-import NotificationPing from '../Notification/NotificationPing';
+import Button from '../../Button/Button';
+import Notification from '../../Notification/Notification';
+import NotificationPing from '../../Notification/NotificationPing';
 
-import { useNotificationBasedOnDate } from '../../hooks/useNotificationBasedOnDate';
-import { getDateInCorrectFormat } from '../../utils/date';
-import { DEFAULT, WARNING_COLOR } from '../../const';
+import { useNotificationBasedOnDate } from '../../../hooks/useNotificationBasedOnDate';
+import { getDateInCorrectFormat } from '../../../utils/date';
+import { 
+    DEFAULT,
+    WARNING_COLOR, 
+    REMOVE_BUTTON_TEXT 
+} from '../../../const';
 
 const Event = ({ 
     toggleCancelModal = DEFAULT.NULL, 
@@ -15,7 +19,7 @@ const Event = ({
     userId = DEFAULT.NULL, 
     event: { _id = DEFAULT.NULL, title = DEFAULT.STRING, description = DEFAULT.STRING, price = DEFAULT.NULL, date = DEFAULT.STRING, user = DEFAULT.NULL }
 }) => {
-    const [notification] = useNotificationBasedOnDate(date);
+    const [ notification ] = useNotificationBasedOnDate(date);
 
     const openCancelModal = () => {
         setCancelEventId(_id);
@@ -32,7 +36,7 @@ const Event = ({
             handleOnClick={openCancelModal}
             buttonCSS='absolute bottom-10 right-5 text-center align-center text-sm font-thin bg-red-400 hover:bg-red-300 rounded-sm text-white px-2 py-1'
         >
-            ✏️ Remove
+            {REMOVE_BUTTON_TEXT}
         </Button>
     );
 

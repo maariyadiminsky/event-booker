@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import EventModalContent from './EventModalContent';
-import Modal from '../Modal';
+import EventModalContent from '../EventModalContent';
+import Modal from '../../Modal';
 
-import { DEFAULT, CREATE_AN_EVENT } from '../../const';
+import { DEFAULT, CREATE_AN_EVENT } from '../../../const';
 
-import '../Form/Form.css';
+import '../../Form/Form.css';
 
 const EventModal = ({ errors = DEFAULT.NULL, toggleModal = DEFAULT.NULL, handleOnSubmit = DEFAULT.NULL }) => (
     <Modal 

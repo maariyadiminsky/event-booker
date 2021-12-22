@@ -9,8 +9,9 @@ describe('<FormAlert />', () => {
         const { getByRole } = render(
             <FormAlert
                 type={ERROR}
-                children={<div>{MOCK.WORKS_TEXT}</div>}
-            />
+            >
+                <div>{MOCK.WORKS_TEXT}</div>
+            </FormAlert>
         );
 
         const alertDiv = getByRole('alert');
