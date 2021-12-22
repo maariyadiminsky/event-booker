@@ -70,6 +70,7 @@ export const DIV = 'DIV';
 
 // mock data for testing 
 export const MOCK = {
+    NAME: 'SomeName',
     WORKS_TEXT: 'Works!',
     PATH: '/somePath',
     CLASS: 'some-class',

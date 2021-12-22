@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT } from '../../const';
+import { DEFAULT } from '../../../const';
 
-import FormError from './FormError';
+import FormError from '../FormError';
 
 const FormErrors = ({ errors = DEFAULT.NULL }) => (
     errors.map(({ message = DEFAULT.STRING }, index = DEFAULT.NULL) => (
@@ -12,7 +12,11 @@ const FormErrors = ({ errors = DEFAULT.NULL }) => (
 );
 
 FormErrors.propTypes = {
-    errors: PropTypes.arrayOf(PropTypes.string).isRequired
+    errors: PropTypes.arrayOf(
+        PropTypes.shape({
+            message: PropTypes.string
+        })
+    ).isRequired
 };
 
 export default FormErrors;

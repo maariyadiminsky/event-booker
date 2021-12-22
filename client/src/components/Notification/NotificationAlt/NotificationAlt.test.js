@@ -1,4 +1,4 @@
-import { render, screen } from '../../../tests/utils';
+import { render } from '../../../tests/utils';
 
 import { ACCOUNT_CREATED_MESSAGE, SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE } from '../../../const';
 

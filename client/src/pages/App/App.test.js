@@ -1,4 +1,4 @@
-import { render, screen } from '../../tests/utils';
+import { render } from '../../tests/utils';
 import {
     EVENTS,
     BOOKINGS,
@@ -11,7 +11,7 @@ import App from './';
 
 describe('<App />', () => {
     it('renders component', () => {
-        const { getByText } = render(<App />);
+        const { getByText, queryByText } = render(<App />);
 
         // if navbar renders its safe to assume App component is rendered
         const eventsLinkInNavbar = getByText(EVENTS);
@@ -25,7 +25,7 @@ describe('<App />', () => {
         expect(homeLinkInNavbar).toBeInTheDocument();
         expect(homeLinkInNavbar.tagName).toBe(DIV);
 
-        const someRenderLink = screen.queryByText('someRandomLink');
+        const someRenderLink = queryByText('someRandomLink');
         expect(someRenderLink).not.toBeInTheDocument();
     });
 

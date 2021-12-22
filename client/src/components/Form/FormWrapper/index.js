@@ -2,11 +2,11 @@ import React from 'react';
 import { Form } from 'react-final-form';
 import PropTypes from 'prop-types';
 
-import FormErrors from './FormErrors';
-import ButtonTwoGroup from '../Button/ButtonTwoGroup';
+import FormErrors from '../FormErrors';
+import ButtonTwoGroup from '../../Button/ButtonTwoGroup';
 
-import { validateForm } from '../../utils/auth';
-import { DEFAULT, SUBMIT, NEVERMIND, ERROR_COLOR, SUCCESS_COLOR } from '../../const';
+import { validateForm } from '../../../utils/auth';
+import { DEFAULT, SUBMIT, NEVERMIND, ERROR_COLOR, SUCCESS_COLOR } from '../../../const';
 
 const buttonColor = (isCancelModal = DEFAULT.BOOL_FALSE) => isCancelModal ? ERROR_COLOR : SUCCESS_COLOR;
 const FormWrapper = ({ 
@@ -68,7 +68,11 @@ FormWrapper.propTypes = {
         PropTypes.node,
         PropTypes.func
     ]),
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.arrayOf(
+        PropTypes.shape({
+            message: PropTypes.string
+        })
+    ),
     formType: PropTypes.string,
     initialValues: PropTypes.objectOf(PropTypes.any),
     handleOnSubmit: PropTypes.func.isRequired,
