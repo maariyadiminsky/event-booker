@@ -23,6 +23,7 @@ export const SWITCH_SIGN_IN_TEXT = 'Already have an account?';
 export const BOOKINGS_NEED_EVENTS = 'Events must be created to book them!';
 export const CREATE_AN_EVENT = 'Create an Event';
 export const BOOK_AN_EVENT = 'Book an Event';
+export const ARE_YOU_SURE = 'Are you sure?';
 export const YES_IM_SURE = 'Yes I\'m sure';
 export const CANCEL_BOOKING = 'Cancel Booking';
 export const SUBMIT = 'Submit';

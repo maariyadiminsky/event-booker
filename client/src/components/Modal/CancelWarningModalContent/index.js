@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT, YES_IM_SURE } from '../../../const';
+import { DEFAULT, YES_IM_SURE, ARE_YOU_SURE } from '../../../const';
 
 import FormWrapper from '../../Form/FormWrapper';
 
@@ -14,7 +14,7 @@ const CancelWarningModalContent = ({ errors = DEFAULT.NULL, handleOnSubmit = DEF
         shouldValidate={false}
         isCancelModal
     >
-        <div className="text-center text-gray-400 text-2xl pb-4 px-3">Are you sure?</div>
+        <div className="text-center text-gray-400 text-2xl pb-4 px-3">{ARE_YOU_SURE}</div>
     </FormWrapper>
 );
 
