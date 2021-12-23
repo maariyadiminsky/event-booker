@@ -34,6 +34,9 @@ export const SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE = 'Please sign in or create an ac
 export const REMOVE_BUTTON_TEXT = '✏️ Remove';
 export const EXPIRED = 'Expired';
 export const TODAY = 'Today';
+export const START_HERE ='Start Here';
+export const CREATE_UNIQUE_EXPERIENCES = 'Create unique experiences'
+export const SHARE_AND_BOOK_EVENTS = 'Share and book events at the palm of your hand.';
 
 export const ERROR_DATA_NO_RESPONSE = (isMutation) => `Data ${isMutation? 'mutation' : 'retrieval'} failed with no response!`;
 export const ERROR_SERVER_ERROR = (isMutation, status) => `Data ${isMutation? 'mutation' : 'retrieval'} failed with server status code: ${status}.`

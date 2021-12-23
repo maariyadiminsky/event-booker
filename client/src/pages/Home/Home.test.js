@@ -1,16 +1,24 @@
 import { render } from '../../tests/utils';
-import Home from './';
+
+import { 
+    EVENTS_PATH,
+    CREATE_UNIQUE_EXPERIENCES, 
+    SHARE_AND_BOOK_EVENTS 
+} from '../../const';
+
+import Home, { buttonText } from './';
 
 describe('<Home />', () => {
     it('renders Home component', () => {
-        const { getByText } = render(<Home />);
+        const { getByRole, getByText } = render(<Home />);
 
-        const createNewExperiencesText = getByText(/Create unique experiences/i);
-        const shareAndBookEventsText = getByText(/Share and book events at the palm of your hand/i);
-        const startHereButton = getByText(/Start Here/i);
+        const createNewExperiencesText = getByText(CREATE_UNIQUE_EXPERIENCES);
+        const shareAndBookEventsText = getByText(SHARE_AND_BOOK_EVENTS);
+        const startHereButton = getByRole('link', { name: buttonText() });
 
         expect(createNewExperiencesText).toBeInTheDocument();
         expect(shareAndBookEventsText).toBeInTheDocument();
         expect(startHereButton).toBeInTheDocument();
+        expect(startHereButton).toHaveAttribute('href', EVENTS_PATH);
     });
 });
