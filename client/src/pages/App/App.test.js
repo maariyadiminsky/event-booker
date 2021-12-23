@@ -13,7 +13,6 @@ describe('<App />', () => {
     it('renders component', () => {
         const { getByText, queryByText } = render(<App />);
 
-        // if navbar renders its safe to assume App component is rendered
         const eventsLinkInNavbar = getByText(EVENTS);
         const bookingsLinkInNavbar = getByText(BOOKINGS);
         const homeLinkInNavbar = getByText(HOME);

@@ -123,6 +123,6 @@ describe('useAPIQuery', () => {
             params.isAuthEndpoint, params.stopLoadingIfEmpty, params.shouldSort
         ));
 
-        expect(Utils.sortQueryData).toHaveBeenCalledTimes(2);
+        expect(utils.sortQueryData).toHaveBeenCalledTimes(2);
     })
 });
