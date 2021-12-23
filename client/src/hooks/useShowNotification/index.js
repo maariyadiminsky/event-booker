@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { DEFAULT } from '../const';
+import { DEFAULT } from '../../const';
 
 export const useShowNotification = (title = DEFAULT.STRING, timeToShow = 2500) => {
     const [shouldRenderNotification, setShouldRenderNotification] = useState(DEFAULT.BOOL_FALSE);

@@ -1,11 +1,11 @@
-import  { render } from '../../tests/utils';
+import  { render } from '../../../tests/utils';
 import userEvent from '@testing-library/user-event';
 
 import { 
     MOCK, 
     BOOK_AN_EVENT,
     NEVERMIND
-} from '../../const';
+} from '../../../const';
 
 import Modal from './';
 

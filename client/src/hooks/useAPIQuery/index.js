@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { sortQueryData } from '../utils';
-import { handleErrors } from '../utils/auth';
-import { DEFAULT, BOOKINGS_LOWERCASE } from '../const';
+import { sortQueryData } from '../../utils';
+import { handleErrors } from '../../utils/auth';
+import { DEFAULT, BOOKINGS_LOWERCASE } from '../../const';
 
 export const useAPIQuery = (
     query = DEFAULT.UNDEFINED, dataKey = DEFAULT.STRING, loading = DEFAULT.BOOL_FALSE, 
@@ -12,7 +12,9 @@ export const useAPIQuery = (
     const [data, setData] = useState(DEFAULT.NULL);
 
     useEffect(() => {
-        if (isAuthEndpoint && !token) return;
+        if (isAuthEndpoint && !token) {
+            return [data, setData];
+        }
         
         if (!data && query) {
             if (!loading && query.loading) {

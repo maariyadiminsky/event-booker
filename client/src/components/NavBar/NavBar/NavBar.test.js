@@ -1,14 +1,14 @@
-import { render } from '../../tests/utils';
+import { render } from '../../../tests/utils';
 import userEvent from '@testing-library/user-event';
 
 import { 
     EVENTS,
     BOOKINGS,
     HOME,
-} from '../../const';
+} from '../../../const';
 
-import NavBar from './NavBar';
-import { isActiveNavItem } from './NavMenu';
+import NavBar from './';
+import { isActiveNavItem } from '../NavMenu';
 
 describe('<NavBar />', () => {
     it('renders component with all nav items', () => {

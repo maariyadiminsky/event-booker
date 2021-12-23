@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { DEFAULT } from '../const';
+import { DEFAULT } from '../../const';
 
 export const useLoadingAndErrors = () => {
     const [loading, setLoading] = useState(DEFAULT.BOOL_FALSE);
