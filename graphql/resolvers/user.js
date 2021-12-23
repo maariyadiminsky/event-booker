@@ -3,8 +3,8 @@ const {
     findUserByEmail, 
     createNewUser,
     validateUser 
-} = require("../../utils/user");
-const { findEventsData } = require("../../utils/event");
+} = require('../../utils/user');
+const { findEventsData } = require('../../utils/event');
 
 module.exports = {
     signIn: async({ email, password }) => {
@@ -35,7 +35,7 @@ module.exports = {
         try {
             const hasUserExist = await findUserByEmail(email);
 
-            if (hasUserExist) throw new Error("A user with that email already exists!");
+            if (hasUserExist) throw new Error('A user with that email already exists!');
 
             const user = await createNewUser(email, password);
 
