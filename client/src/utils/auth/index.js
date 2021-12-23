@@ -38,6 +38,14 @@ export const getAuthHeaders = (token = DEFAULT.NULL) => ({
     }
 });
 
+export const VALIDATION_ERRORS = {
+    EMAIL: 'Email must be included.',
+    PASSWORD: 'Please provide a password.',
+    TITLE: 'Title is required.',
+    DESCRIPTION: 'Please provide a short description.',
+    PRICE: 'Price is required.',
+    DATE: 'Date is required.'
+};
 export const validateForm = ({ 
     // sign in / sign up forms
     email = DEFAULT.STRING, 
@@ -55,28 +63,28 @@ export const validateForm = ({
         case SIGN_IN_FORM:
         case SIGN_UP_FORM:
             if (!email) {
-                errors.email = 'Email must be included.';
+                errors.email = VALIDATION_ERRORS.EMAIL;
             }
         
             if (!password) {
-                errors.password = 'Please provide a password.';
+                errors.password = VALIDATION_ERRORS.PASSWORD;
             }
             break;
         case CREATE_EVENT_FORM:
             if (!title) {
-                errors.title = 'Title is required.';
+                errors.title = VALIDATION_ERRORS.TITLE;
             }
 
             if(!description) {
-                errors.description = 'Please provide a short description.';
+                errors.description = VALIDATION_ERRORS.DESCRIPTION;
             }
 
             if (!price) {
-                errors.price = 'Price is required.';
+                errors.price = VALIDATION_ERRORS.PRICE;
             }
 
             if (!date) {
-                errors.date = 'Date is required.';
+                errors.date = VALIDATION_ERRORS.DATE;
             }
             break;
         default:

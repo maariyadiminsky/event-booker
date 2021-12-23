@@ -80,6 +80,10 @@ export const MOCK = {
     PATH: '/somePath',
     CLASS: 'some-class',
     BUTTON_TEXT: 'ClickMe',
+    QUERY_TYPE: {
+        CREATE_USER_MUTATION: 'createUser',
+        SIGN_IN_QUERY: 'signIn'
+    },
     events: [
         {
             _id: '0',
