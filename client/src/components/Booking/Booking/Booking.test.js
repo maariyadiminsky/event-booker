@@ -1,6 +1,7 @@
 import { render, screen } from '../../../tests/utils';
 import userEvent from '@testing-library/user-event';
 
+import { CANCEL } from '../../../const';
 import Booking, { getDate } from './';
 
 describe('<Booking />', () => {
@@ -33,7 +34,7 @@ describe('<Booking />', () => {
     });
 
     it('cancels modal when cancel button is clicked', () => {
-        const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+        const cancelButton = screen.getByRole('button', { name: CANCEL });
         
         expect(cancelButton).toBeInTheDocument();
 

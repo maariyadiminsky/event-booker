@@ -1,7 +1,6 @@
 import { render } from '../../../tests/utils';
 
 import { bookingsMockData } from '../../../pages/Bookings/mocks';
-import { eventsMockData } from '../../../pages/Events/mocks';
 
 import BookingItems from './';
 
@@ -16,12 +15,10 @@ describe('<BookingItems />', () => {
             />
         );
 
-        const firstBooking = getByText(eventsMockData[2].title);
-        const secondBooking = getByText(eventsMockData[0].title);
-        const thirdBooking = getByText(eventsMockData[1].title);
+        const firstBooking = getByText(bookingsMockData[0].event.title);
+        const secondBooking = getByText(bookingsMockData[1].event.title);
 
         expect(firstBooking).toBeInTheDocument();
         expect(secondBooking).toBeInTheDocument();
-        expect(thirdBooking).toBeInTheDocument();
     });
 });

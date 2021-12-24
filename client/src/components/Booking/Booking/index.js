@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getDateInCorrectFormat } from '../../../utils/date';
+import { CANCEL } from '../../../const';
 
 export const getDate = (date) => `✨ ${getDateInCorrectFormat(date)}`;
 const Booking = (({ _id, eventTitle, eventDate, color, openCancelModal }) => (
@@ -15,7 +16,7 @@ const Booking = (({ _id, eventTitle, eventDate, color, openCancelModal }) => (
             onClick={() => openCancelModal(_id)}
             className={`absolute inset-x-5 top-5 font-thin text-${color}-50 text-sm text-left`}
         >
-            Cancel
+            {CANCEL}
         </button>
         <div className={`absolute inset-x-5 bottom-5 text-${color}-100 text-4xl font-semibold text-right`}>
             {eventTitle}

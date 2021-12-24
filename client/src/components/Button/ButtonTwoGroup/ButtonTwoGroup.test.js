@@ -1,7 +1,12 @@
 import { render } from '../../../tests/utils';
 import userEvent from '@testing-library/user-event';
 
-import { NEVERMIND, SUBMIT } from '../../../const';
+import { 
+    NEVERMIND, 
+    SUBMIT,
+    CANCEL,
+    CONFIRM 
+} from '../../../const';
 
 import ButtonTwoGroup from './';
 
@@ -34,13 +39,13 @@ describe('<ButtonTwoGroup />', () => {
             <ButtonTwoGroup 
                 handleConfirm={handleConfirm}
                 handleCancel={handleCancel}
-                cancelText='Cancel'
-                confirmText='Confirm'
+                cancelText={CANCEL}
+                confirmText={CONFIRM}
             />
         );
 
-        const confirmButton = getByRole('button', { name: 'Confirm' });
-        const cancelButton = getByRole('button', { name: 'Cancel' });
+        const confirmButton = getByRole('button', { name: CONFIRM });
+        const cancelButton = getByRole('button', { name: CANCEL });
 
         expect(confirmButton).toBeInTheDocument();
         expect(cancelButton).toBeInTheDocument();
@@ -51,13 +56,13 @@ describe('<ButtonTwoGroup />', () => {
             <ButtonTwoGroup 
                 handleConfirm={handleConfirm}
                 handleCancel={handleCancel}
-                cancelText='Cancel'
-                confirmText='Confirm'
+                cancelText={CANCEL}
+                confirmText={CONFIRM}
             />
         );
 
-        const confirmButton = getByRole('button', { name: 'Confirm' });
-        const cancelButton = getByRole('button', { name: 'Cancel' });
+        const confirmButton = getByRole('button', { name: CONFIRM });
+        const cancelButton = getByRole('button', { name: CANCEL });
 
         expect(confirmButton).toBeInTheDocument();
         expect(cancelButton).toBeInTheDocument();

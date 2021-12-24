@@ -1,10 +1,15 @@
-import { render,fireEvent } from '../../tests/utils';
+import { render, fireEvent } from '../../tests/utils';
 import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
 
 import { AuthContext } from '../../context/AuthContext';
 
-import { mocks, eventsMockData } from './mocks';
+import { 
+    mocks,
+    eventsMockData,
+    newEvent,
+    eventToCancel
+} from './mocks';
 import { VALIDATION_ERRORS } from '../../utils/auth';
 import { 
     MOCK,
@@ -102,13 +107,6 @@ describe('<Events />', () => {
     });
 
     it('creates an event then displays notification and render it within the list', async () => {
-        const newEvent = {
-            userId: '0',
-            title: 'Movie Event',
-            description: 'Meet others who love movies!',
-            price: 70,
-            date: '2021-09-20',
-        };
         const mocksData = [...mocks(MOCK.QUERY_TYPE.EVENTS_QUERY), ...mocks(MOCK.QUERY_TYPE.CREATE_EVENT_MUTATION, newEvent)];
         const { findByText, findByLabelText } = render(authWrapper(
             <MockedProvider mocks={mocksData} addTypename={false}>
@@ -150,11 +148,11 @@ describe('<Events />', () => {
 
         userEvent.click(submitModalButton);
 
-        const successNotification = await findByText('Success');
         const firstEvent = await findByText(eventsMockData[0].title);
         const secondEvent = await findByText(eventsMockData[1].title);
         const thirdEvent = await findByText(eventsMockData[2].title);
         const newEventEl = await findByText(newEvent.title);
+        const successNotification = await findByText('Success');
 
         expect(successNotification).toBeInTheDocument();
         expect(firstEvent).toBeInTheDocument();
@@ -164,13 +162,14 @@ describe('<Events />', () => {
     });
 
     it('allows creator of event to remove event', async() => {
+        const mocksData = [...mocks(MOCK.QUERY_TYPE.EVENTS_QUERY), ...mocks(MOCK.QUERY_TYPE.REMOVE_EVENT_MUTATION, { eventId: eventToCancel._id })];
         const { findByText, findByRole } = render(authWrapper(
-            <MockedProvider mocks={mocks(MOCK.QUERY_TYPE.EVENTS_QUERY)} addTypename={false}>
+            <MockedProvider mocks={mocksData} addTypename={false}>
                 <Events />
             </MockedProvider>
         ));
 
-        const eventCreatedByUser = await findByText(eventsMockData[1].title);
+        const eventCreatedByUser = await findByText(eventToCancel.title);
         const removeEventButton = await findByRole('button', { name: REMOVE_BUTTON_TEXT });
 
         expect(eventCreatedByUser).toBeInTheDocument();

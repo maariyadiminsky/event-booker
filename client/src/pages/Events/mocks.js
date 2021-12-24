@@ -3,7 +3,7 @@ import {
     CREATE_EVENT_MUTATION, 
     REMOVE_EVENT_MUTATION 
 } from './queries';
-import { DEFAULT, MOCK } from '../../const';
+import { MOCK, DEFAULT } from '../../const';
 
 export const mocks = (queryType, variables = DEFAULT.NULL) => {
     let query;
@@ -42,30 +42,42 @@ const getServerMockData = (queryType) => {
         case MOCK.QUERY_TYPE.EVENTS_QUERY:
             return {
                 events: eventsMockData
-            }
+            };
         case MOCK.QUERY_TYPE.CREATE_EVENT_MUTATION:
             return {
-                createEvent: {
-                    _id: '0',
-                    title: 'Movie Event',
-                    description: 'Meet others who love moves!',
-                    price: 70,
-                    date: '2021-09-20T00:00:00.000Z',
-                    user: {
-                        _id: '1'
-                    }
-                },
+                createEvent: createNewEvent(true)
             }
         case MOCK.QUERY_TYPE.REMOVE_EVENT_MUTATION:
             return {
                 removeEvent: {
-                    title: MOCK.NAME
+                    title: eventToCancel.title
                 }
-            }
+            };
         default:
             return {}
     }
 }
+
+export const createNewEvent = (shouldIncludeId = false) => {
+    const event = shouldIncludeId ? { _id: '3', ...newEvent } : { ...newEvent };
+
+    delete event.userId;
+
+    return {
+        ...event,
+        user: {
+            _id: '1'
+        }
+    };
+}
+
+export const newEvent = {
+    userId: '0',
+    title: 'Movie Event',
+    description: 'Meet others who love movies!',
+    price: 70,
+    date: '2021-09-20'
+};
 
 export const eventsMockData = [
     {
@@ -99,3 +111,5 @@ export const eventsMockData = [
         }
     }
 ];
+
+export const eventToCancel = eventsMockData[1];

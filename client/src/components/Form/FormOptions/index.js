@@ -6,7 +6,6 @@ import { getDateInCorrectFormat } from '../../../utils/date';
 import { DEFAULT } from '../../../const';
 
 export const getEventNameForBooking = (title = DEFAULT.STRING, price = DEFAULT.NULL, date = DEFAULT.STRING) => `${title} @ $${price} - (${getDateInCorrectFormat(date)})`;
-
 const FormOptions = ({ name = DEFAULT.STRING, options = DEFAULT.NULL, onChange = DEFAULT.NULL, isBooking = DEFAULT.BOOL_FALSE }) => {
     const renderOptionsName = (title = DEFAULT.STRING, price = DEFAULT.NULL, date = DEFAULT.STRING) => isBooking ? getEventNameForBooking(title, price, date) : title;
 

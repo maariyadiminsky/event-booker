@@ -38,6 +38,8 @@ export const TODAY = 'Today';
 export const START_HERE ='Start Here';
 export const CREATE_UNIQUE_EXPERIENCES = 'Create unique experiences'
 export const SHARE_AND_BOOK_EVENTS = 'Share and book events at the palm of your hand.';
+export const CANCEL = 'Cancel';
+export const CONFIRM = 'Confirm';
 
 export const ERROR_DATA_NO_RESPONSE = (isMutation) => `Data ${isMutation? 'mutation' : 'retrieval'} failed with no response!`;
 export const ERROR_SERVER_ERROR = (isMutation, status) => `Data ${isMutation? 'mutation' : 'retrieval'} failed with server status code: ${status}.`
@@ -84,6 +86,7 @@ export const MOCK = {
     PATH: '/somePath',
     CLASS: 'some-class',
     BUTTON_TEXT: 'ClickMe',
+    SELECTOR: 'combobox',
     QUERY_TYPE: {
         CREATE_USER_MUTATION: 'createUser',
         SIGN_IN_QUERY: 'signIn',

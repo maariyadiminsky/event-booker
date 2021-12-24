@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import { getDateInCorrectFormat } from '../../../utils/date';
 import { setNotificationCSS } from '../../Notification/Notification';
+import { eventsMockData } from '../../../pages/Events/mocks';
 
 import { 
     REMOVE_BUTTON_TEXT,
@@ -22,17 +23,7 @@ describe('<Event />', () => {
     beforeAll(() => {
         toggleCancelModal = jest.fn();
         setCancelEventId = jest.fn();
-
-        event = {
-            _id: '0',
-            title: 'Sushi Event',
-            description: 'Spend time with other sushi lovers',
-            price: 70,
-            date: '2021-09-15T00:00:00.000Z',
-            user: { 
-                _id: '1'
-            }
-        }
+        event = eventsMockData[0];
     });
 
     it('renders component', () => {
