@@ -88,7 +88,10 @@ export const MOCK = {
         SIGN_IN_QUERY: 'signIn',
         CREATE_EVENT_MUTATION: 'createEvent',
         REMOVE_EVENT_MUTATION: 'removeEvent',
-        EVENTS_QUERY: 'events'
+        EVENTS_QUERY: 'events',
+        CREATE_BOOKING_MUTATION: 'createBooking',
+        CANCEL_BOOKING_MUTATION: 'cancelBooking',
+        BOOKINGS_QUERY: 'bookings'
     }
 }
 

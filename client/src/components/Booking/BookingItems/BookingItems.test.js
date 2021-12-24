@@ -1,5 +1,6 @@
 import { render } from '../../../tests/utils';
 
+import { bookingsMockData } from '../../../pages/Bookings/mocks';
 import { eventsMockData } from '../../../pages/Events/mocks';
 
 import BookingItems from './';
@@ -7,24 +8,10 @@ import BookingItems from './';
 describe('<BookingItems />', () => {
     it('renders component', () => {
         const openCancelModal = jest.fn();
-        const bookings = [
-            {
-                _id: '0',
-                event: eventsMockData[2]
-            },
-            {
-                _id: '1',
-                event: eventsMockData[0]
-            },
-            {
-                _id: '2',
-                event: eventsMockData[1]
-            },
-        ];
 
         const { getByText } = render(
             <BookingItems 
-                bookings={bookings}
+                bookings={bookingsMockData}
                 openCancelModal={openCancelModal}
             />
         );
