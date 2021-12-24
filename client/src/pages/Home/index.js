@@ -21,9 +21,9 @@ const Home = () => (
                 {SHARE_AND_BOOK_EVENTS}
             </div>
             <Link to={EVENTS_PATH}>
-                <div className="mt-7 py-3 px-8 md:text-xl sm:text-2xl font-semibold text-white bg-green-400 rounded hover:bg-green-300 transition duration-300">
+                <button className="mt-7 py-3 px-8 md:text-xl sm:text-2xl font-semibold text-white bg-green-400 rounded hover:bg-green-300 transition duration-300">
                     {buttonText()}
-                </div>
+                </button>
             </Link>
         </div>
         <div className="transform sm:scale-125 sm:mt-20 sm:mx-auto">

@@ -20,12 +20,12 @@ const mocks = (queryType) => {
     }
 
     return setup(query, queryType);
-}
+};
 
 const setup = (query, queryType) => ([
     {
         request: {
-            query: query,
+            query,
             variables: { email, password }
         },
         result: {

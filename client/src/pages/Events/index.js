@@ -137,6 +137,7 @@ const Events = () => {
     const toggleModal = () => {
         if (!token || !userId) {
             history.push(AUTH_PATH);
+            return;
         }
 
         setShouldShowModal(!shouldShowModal);

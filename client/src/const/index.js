@@ -85,40 +85,11 @@ export const MOCK = {
     BUTTON_TEXT: 'ClickMe',
     QUERY_TYPE: {
         CREATE_USER_MUTATION: 'createUser',
-        SIGN_IN_QUERY: 'signIn'
-    },
-    events: [
-        {
-            _id: '0',
-            title: 'Sushi Event',
-            description: 'Meet others who love sushi!',
-            price: 70,
-            date: '2021-09-15T00:00:00.000Z',
-            user: {
-                _id: '1'
-            }
-        },
-        {
-            _id: '1',
-            title: 'Car Event',
-            description: 'Meet others who love cars!',
-            price: 25,
-            date: '2021-09-16T00:00:00.000Z',
-            user: {
-                _id: '2'
-            }
-        },
-        {
-            _id: '2',
-            title: 'Concert Event',
-            description: 'Meet others who love music!',
-            price: 200,
-            date: '2021-09-17T00:00:00.000Z',
-            user: {
-                _id: '1'
-            }
-        }
-    ]
+        SIGN_IN_QUERY: 'signIn',
+        CREATE_EVENT_MUTATION: 'createEvent',
+        REMOVE_EVENT_MUTATION: 'removeEvent',
+        EVENTS_QUERY: 'events'
+    }
 }
 
 // default param types

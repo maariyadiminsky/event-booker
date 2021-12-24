@@ -1,12 +1,11 @@
 import React from 'react';
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history';
-import { render, screen } from '../../../../tests/utils';
+import { render } from '../../../../tests/utils';
 import { AuthContext } from '../../../../context/AuthContext';
 
 import { 
     MOCK, 
-    ROOT_PATH,
     AUTH_PATH,
     BOOKINGS_PATH 
 } from '../../../../const';
