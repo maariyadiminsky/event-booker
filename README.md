@@ -1,6 +1,6 @@
 # :sparkles: Event Booker
 
-| [What You Can Do](#what-you-can-do) | [Setup(5 min)](#setup5-minutes) | [Tests](#toests) |
+| [What You Can Do](#what-you-can-do) | [Setup(5 min)](#setup5-minutes) | [Tests](#tests) |
 
 A fullstack event booker app created with React, Node, GraphQL, and MongoDB—complete with authentication, a responsive design and several other features listed below.
 
