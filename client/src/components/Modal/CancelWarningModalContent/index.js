@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT, YES_IM_SURE, ARE_YOU_SURE } from '../../../const';
+import { 
+    DEFAULT, 
+    YES_IM_SURE, 
+    ARE_YOU_SURE 
+} from '../../../const';
 
 import FormWrapper from '../../Form/FormWrapper';
 

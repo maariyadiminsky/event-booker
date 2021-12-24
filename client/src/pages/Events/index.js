@@ -33,7 +33,8 @@ import {
     REMOVE_EVENT_FORM,
     SUCCESS,
     QUERY_POLICY_NETWORK_ONLY,
-    EVENTS_LOWERCASE
+    EVENTS_LOWERCASE,
+    REMOVE_EVENT
 } from '../../const';
 
 const Events = () => {
@@ -154,7 +155,7 @@ const Events = () => {
 
     const renderCancelBookingModal = () => shouldShowCancelModal && (
         <CancelWarningModal
-            header="Remove Event"
+            header={REMOVE_EVENT}
             errors={errors}
             toggleModal={toggleCancelModal}
             handleOnSubmit={handleRemoveEvent}

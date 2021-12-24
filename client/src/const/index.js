@@ -32,6 +32,7 @@ export const ACCOUNT_CREATED_MESSAGE = 'Account successfully created!';
 export const SIGN_IN_MESSAGE = 'Please sign in to continue.';
 export const SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE = 'Please sign in or create an account.';
 export const REMOVE_BUTTON_TEXT = '✏️ Remove';
+export const REMOVE_EVENT = 'Remove Event';
 export const EXPIRED = 'Expired';
 export const TODAY = 'Today';
 export const START_HERE ='Start Here';

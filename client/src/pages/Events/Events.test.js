@@ -10,7 +10,10 @@ import {
     MOCK,
     CREATE_AN_EVENT,
     SUBMIT,
-    NEVERMIND
+    NEVERMIND,
+    REMOVE_BUTTON_TEXT,
+    ARE_YOU_SURE,
+    YES_IM_SURE
 } from '../../const';
 
 import Events from './';
@@ -59,14 +62,11 @@ describe('<Events />', () => {
     });
 
     it('displays client errors in form if they exist', async () => {
-        const { container, findByText, findByLabelText } = render(authWrapper(
+        const { findByText, findByLabelText } = render(authWrapper(
             <MockedProvider mocks={mocks(MOCK.QUERY_TYPE.EVENTS_QUERY)} addTypename={false}>
                 <Events />
             </MockedProvider>
         ));
-
-        const loaderElement = container.firstChild.children[0];
-        expect(loaderElement.className).toBe(loaderFirstChildClass);
 
         const createEventButton = await findByText(CREATE_AN_EVENT);
 
@@ -110,14 +110,11 @@ describe('<Events />', () => {
             date: '2021-09-20',
         };
         const mocksData = [...mocks(MOCK.QUERY_TYPE.EVENTS_QUERY), ...mocks(MOCK.QUERY_TYPE.CREATE_EVENT_MUTATION, newEvent)];
-        const { container, findByText, getByLabelText,findByLabelText } = render(authWrapper(
+        const { findByText, findByLabelText } = render(authWrapper(
             <MockedProvider mocks={mocksData} addTypename={false}>
                 <Events />
             </MockedProvider>
         ));
-
-        const loaderElement = container.firstChild.children[0];
-        expect(loaderElement.className).toBe(loaderFirstChildClass);
 
         const createEventButton = await findByText(CREATE_AN_EVENT);
 
@@ -164,5 +161,31 @@ describe('<Events />', () => {
         expect(secondEvent).toBeInTheDocument();
         expect(thirdEvent).toBeInTheDocument();
         expect(newEventEl).toBeInTheDocument();
+    });
+
+    it('allows creator of event to remove event', async() => {
+        const { findByText, findByRole } = render(authWrapper(
+            <MockedProvider mocks={mocks(MOCK.QUERY_TYPE.EVENTS_QUERY)} addTypename={false}>
+                <Events />
+            </MockedProvider>
+        ));
+
+        const eventCreatedByUser = await findByText(eventsMockData[1].title);
+        const removeEventButton = await findByRole('button', { name: REMOVE_BUTTON_TEXT });
+
+        expect(eventCreatedByUser).toBeInTheDocument();
+        expect(removeEventButton).toBeInTheDocument();
+
+        userEvent.click(removeEventButton);
+
+        const areYouSureYouWantToCancelModalMessage = await findByText(ARE_YOU_SURE);
+        const submitCancelEventButton = await findByRole('button', { name: YES_IM_SURE });
+
+        expect(areYouSureYouWantToCancelModalMessage).toBeInTheDocument();
+        expect(submitCancelEventButton).toBeInTheDocument();
+        
+        userEvent.click(submitCancelEventButton);
+
+        expect(eventCreatedByUser).not.toBeInTheDocument();
     });
 });

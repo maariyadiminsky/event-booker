@@ -85,7 +85,7 @@ export const eventsMockData = [
         price: 25,
         date: '2021-09-16T00:00:00.000Z',
         user: {
-            _id: '2'
+            _id: '0'
         }
     },
     {
