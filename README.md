@@ -1,6 +1,6 @@
 # :sparkles: Event Booker
 
-| [What You Can Do](#what-you-can-do) | [Setup(5 min)](#setup5-minutes) | [Todo](#todo) |
+| [What You Can Do](#what-you-can-do) | [Setup(5 min)](#setup5-minutes) | [Tests](#toests) |
 
 A fullstack event booker app created with React, Node, GraphQL, and MongoDB—complete with authentication, a responsive design and several other features listed below.
 
@@ -58,7 +58,7 @@ A fullstack event booker app created with React, Node, GraphQL, and MongoDB—co
     * First terminal:  `yarn install` then `yarn start`. Make sure MongoDB is successfully connected and your server is running successfully.
     * Second terminal: go into the `client` folder then `yarn install` and `yarn start`. Make sure frontend server is running successfully.
 
-## Todo
-* Users should be able to share events and bookings they’ve made.
-* Instead of not rendering booking that exists with a deleted event, delete that booking on the backend
-* Add more tests
+## Tests
+* `yarn test a` to test all files at once
+* `yarn test -- [component/page/utils method name].test.js` to test a specific file.
+
