@@ -3,40 +3,8 @@ import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from '../../context/AuthContext';
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-  from
-} from '@apollo/client';
-import { onError } from '@apollo/client/link/error';
-
-import { GRAPHQL_ENDPOINT } from '../../const';
-
 import '@testing-library/jest-dom';
 
-// const httpLink = createHttpLink({
-//   uri: `${process.env.REACT_APP_DEV_EVENT_BOOKER_API_URL}${GRAPHQL_ENDPOINT}`
-// });
-
-// const errorLink = onError(({ graphQLErrors, networkError }) => {
-//   if (graphQLErrors)
-//     graphQLErrors.forEach(({ message, locations, path }) =>
-//       console.log(
-//         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-//       ),
-//     );
-
-//   if (networkError) console.log(`[Network error]: ${networkError}`);
-// });
-// const cache = new InMemoryCache();
-// const client = new ApolloClient({
-//   cache,
-//   link: from([errorLink, httpLink]),
-// });
-
-// todo: Use MockedProvider instead passing mocked data for components that use it
 const Providers = ({ children }) => (
   <BrowserRouter>
     <AuthContextProvider>
