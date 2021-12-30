@@ -59,6 +59,5 @@ A fullstack event booker app created with React, Node, GraphQL, and MongoDB—co
     * Second terminal: go into the `client` folder then `yarn install` and `yarn start`. Make sure frontend server is running successfully.
 
 ## Tests
-* `yarn test` to test all files.
+* `yarn test a` to test all files.
 * `yarn test -- [component/page/utils method name].test.js` to test a specific file.
-
