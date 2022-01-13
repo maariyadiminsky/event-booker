@@ -10,11 +10,10 @@ import {
   } from '@apollo/client';
   import { onError } from '@apollo/client/link/error';
 
-  import { AuthContextProvider } from './context/AuthContext';
+import { AuthContextProvider } from '@modules/common/context/AuthContext';
+import { DEFAULT, GRAPHQL_ENDPOINT } from '@modules/common/const';
 
-import App from './pages/App';
-
-import { DEFAULT, GRAPHQL_ENDPOINT } from './const';
+import App from '@modules/app/App';
 
 import './index.css';
 

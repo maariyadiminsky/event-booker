@@ -1,9 +1,30 @@
- // jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
-import axios from 'axios';
-import { findBaseURL } from './utils/api';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthContextProvider } from '../../context/AuthContext';
 
-axios.defaults.baseURL = findBaseURL();
+import '@testing-library/jest-dom';
+
+const Providers = ({ children }) => (
+  <BrowserRouter>
+    <AuthContextProvider>
+      {children}
+    </AuthContextProvider>
+  </BrowserRouter>
+);
+
+const customRender = (ui, options) => {
+  if (options) {
+    if (options.route) {
+      window.history.pushState({}, '', options.route);
+    }
+  }
+  
+  return render(ui, { wrapper: Providers, ...options })
+}
+
+// re-export everything
+export * from '@testing-library/react'
+
+// override render method
+export { customRender as render }
