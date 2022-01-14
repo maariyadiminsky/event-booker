@@ -15,7 +15,7 @@ dotenv.config({ path: './.env.local'});
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.ORIGIN,
     optionSuccessStatus: 200
 }
 app.use(cors(corsOptions));
