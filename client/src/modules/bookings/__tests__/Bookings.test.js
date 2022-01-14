@@ -1,4 +1,4 @@
-import { render } from '../../tests/utils';
+import { render } from '@modules/app/setupTests';
 import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
 
@@ -8,10 +8,10 @@ import {
     bookingsMockData, 
     createNewBooking,
     newEventForNewBookings
-} from '@modules/bookings/__tests__/mocks';
-import * as EventMocks from '@modules/events/__tests__/mocks';
-import { noEventsExistText } from '@modules/bookings/BookingModalContent';
-import { getEventNameForBooking } from '@modules/form/FormOptions';
+} from '@modules/bookings/mocks';
+import * as EventMocks from '@modules/events/mocks';
+import { noEventsExistText } from '@modules/bookings/components/BookingModalContent';
+import { getEventNameForBooking } from '@modules/common/form/FormOptions';
 import { 
     MOCK, 
     BOOK_AN_EVENT,

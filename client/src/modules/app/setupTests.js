@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthContextProvider } from '../../context/AuthContext';
+import { AuthContextProvider } from '@modules/common/context/AuthContext';
 
 import '@testing-library/jest-dom';
 

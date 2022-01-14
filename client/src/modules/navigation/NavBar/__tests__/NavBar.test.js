@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 import userEvent from '@testing-library/user-event';
 
 import { 
@@ -7,7 +7,7 @@ import {
     HOME,
 } from '@modules/common/const';
 
-import NavBar from '@modules/navigation/components/NavBar';
+import NavBar from '@modules/navigation/NavBar';
 import { isActiveNavItem } from '@modules/navigation/components/NavMenu';
 
 describe('<NavBar />', () => {

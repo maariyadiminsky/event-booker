@@ -11,6 +11,7 @@ import { DEFAULT, BOOKINGS_NEED_EVENTS } from '@modules/common/const';
 
 export const noEventsExistText = () => `⚠ ${BOOKINGS_NEED_EVENTS}`;
 const BookingModalContent = ({ eventOptions = DEFAULT.NULL, formType = DEFAULT.STRING, errors = DEFAULT.NULL, handleOnSubmit = DEFAULT.FUNCTION, handleCancelButton = DEFAULT.FUNCTION }) => {
+    
     if (!eventOptions) {
         return <Loader height={0} />;
     }

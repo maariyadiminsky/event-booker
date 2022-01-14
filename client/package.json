@@ -21,7 +21,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test --verbose",
+    "test": "craco test --verbose --testPathIgnorePatterns=src/modules/events/__tests__/mocks.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,5 +47,10 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@modules(.*)$": "<rootDir>/src/modules$1"
+    } 
   }
 }

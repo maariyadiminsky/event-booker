@@ -16,7 +16,7 @@ import {
 
 const buttonColor = (isCancelModal = DEFAULT.BOOL_FALSE) => isCancelModal ? ERROR_COLOR : SUCCESS_COLOR;
 const FormWrapper = ({ 
-    children = DEFAULT.FUNCTION, errors = DEFAULT.NULL, formType = DEFAULT.STRING, initialValues = DEFAULT.NULL,
+    children = DEFAULT.FUNCTION, errors = DEFAULT.ARRAY, formType = DEFAULT.STRING, initialValues = DEFAULT.NULL,
     handleOnSubmit = DEFAULT.NULL, handleCancelButton = DEFAULT.NULL, formCSS = 'form-wrapper', formContainerCSS = 'form-container',
     shouldValidate = DEFAULT.BOOL_TRUE, shouldResetOnSubmit = DEFAULT.BOOL_FALSE, isCancelModal = DEFAULT.BOOL_FALSE,
     topContent = DEFAULT.NULL, confirmButtonText = SUBMIT, cancelButtonText = NEVERMIND,

@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import { 
     BOOK_AN_EVENT,
@@ -7,9 +7,9 @@ import {
     ERROR_SERVER_ERROR
 } from '@modules/common/const';
 import { getEventNameForBooking } from '@modules/common/form/FormOptions';
-import { eventsMockData } from '@modules/events/__tests__/mocks';
+import { eventsMockData } from '@modules/events/mocks';
 
-import BookingModal from '@modules/bookings/BookingModal';
+import BookingModal from '@modules/bookings/components/BookingModal';
 
 describe('<BookingModal />', () => {
     let toggleModal;

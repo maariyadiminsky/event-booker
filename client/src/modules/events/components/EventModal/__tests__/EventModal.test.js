@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import { CREATE_AN_EVENT } from '@modules/common/const';
 

@@ -1,9 +1,9 @@
-import { render, waitFor } from '../../tests/utils';
+import { render, waitFor } from '@modules/app/setupTests';
 import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
 
 import Auth from '@modules/auth/Auth';
-import mocks, { email, password } from '@modules/auth/__tests__/mocks';
+import mocks, { email, password } from '@modules/auth/mocks';
 import * as AuthUtils from '@modules/common/utils/auth';
 import { 
     MOCK,

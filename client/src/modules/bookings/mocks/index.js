@@ -3,7 +3,7 @@ import {
     CREATE_BOOKING_MUTATION, 
     CANCEL_BOOKING_MUTATION 
 } from '@modules/bookings/queries';
-import { eventsMockData } from '@modules/events/__tests__/mocks';
+import { eventsMockData } from '@modules/events/mocks';
 import { DEFAULT, MOCK } from '@modules/common/const';
 
 export const mocks = (queryType, variables = DEFAULT.NULL) => {

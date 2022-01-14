@@ -1,4 +1,4 @@
-import { render, fireEvent } from '../../tests/utils';
+import { render, fireEvent } from '@modules/app/setupTests';
 import { MockedProvider } from '@apollo/client/testing';
 import userEvent from '@testing-library/user-event';
 
@@ -9,7 +9,7 @@ import {
     eventsMockData,
     newEvent,
     eventToCancel
-} from '@modules/events/__tests__/mocks';
+} from '@modules/events/mocks';
 import { VALIDATION_ERRORS } from '@modules/common/utils/auth';
 import { 
     MOCK,

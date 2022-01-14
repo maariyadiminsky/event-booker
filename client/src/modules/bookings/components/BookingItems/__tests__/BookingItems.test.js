@@ -1,8 +1,8 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
-import { bookingsMockData } from '@modules/bookings/';
+import { bookingsMockData } from '@modules/bookings/mocks';
 
-import BookingItems from '@modules/bookings/BookingItems/__tests__/mocks';
+import BookingItems from '@modules/bookings/components/BookingItems';
 
 describe('<BookingItems />', () => {
     it('renders component', () => {

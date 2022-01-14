@@ -1,9 +1,8 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
-import BookingModalContent, { noEventsExistText } from '@modules/bookings/BookingModalContent';
-
-import { getEventNameForBooking } from '@modules/form/FormOptions';
-import { eventsMockData } from '@modules/events/__tests__/mocks';
+import BookingModalContent, { noEventsExistText } from '@modules/bookings/components/BookingModalContent';
+import { getEventNameForBooking } from '@modules/common/form/FormOptions';
+import { eventsMockData } from '@modules/events/mocks';
 import { 
     CREATE_BOOKING_FORM,
     NEVERMIND,

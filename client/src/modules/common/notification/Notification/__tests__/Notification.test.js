@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import { ERROR_COLOR, ERROR, SUCCESS } from '@modules/common/const';
 

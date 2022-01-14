@@ -1,7 +1,7 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import { MOCK } from '@modules/common/const';
-import { eventsMockData } from '@modules/events/__tests__/mocks';
+import { eventsMockData } from '@modules/events/mocks';
 
 import FormOptions, { getEventNameForBooking } from '@modules/common/form/FormOptions';
 

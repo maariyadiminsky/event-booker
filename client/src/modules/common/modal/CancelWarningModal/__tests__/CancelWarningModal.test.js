@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import { CANCEL_BOOKING, ARE_YOU_SURE } from '@modules/common/const';
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { DEFAULT } from '@modules/common/const';
 
-import FormError from '@modules/common/form/FormErrors';
+import FormError from '@modules/common/form/FormError';
 
 const FormErrors = ({ errors = DEFAULT.NULL }) => (
     errors.map(({ message = DEFAULT.STRING }, index = DEFAULT.NULL) => (

@@ -1,9 +1,9 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 import userEvent from '@testing-library/user-event';
 
 import { getDateInCorrectFormat } from '@modules/common/utils/date';
 import { setNotificationCSS } from '@modules/common/notification/Notification';
-import { eventsMockData } from '@modules/events/__tests__/mocks';
+import { eventsMockData } from '@modules/events/mocks';
 
 import { 
     REMOVE_BUTTON_TEXT,

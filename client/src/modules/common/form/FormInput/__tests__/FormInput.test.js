@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Form, Field } from 'react-final-form';
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import FormInput from '@modules/common/form/FormInput';
 

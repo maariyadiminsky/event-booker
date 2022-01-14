@@ -2,7 +2,7 @@ import {
     colors,
     getRandomColor, 
     getColorForAlertType 
-} from '@modules/common/form/FormAlert/utils/colors';
+} from '@modules/common/utils/colors';
 import {
     SUCCESS_COLOR,
     WARNING_COLOR,

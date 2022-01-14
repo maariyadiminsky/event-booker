@@ -1,13 +1,13 @@
-import { render } from '../../tests/utils';
+import { render } from '@modules/app/setupTests';
 import {
     EVENTS,
     BOOKINGS,
     HOME,
     ROOT_PATH,
     DIV
-} from '@modules/common/';
+} from '@modules/common/const';
 
-import App from '@modules/app';
+import App from '@modules/app/App';
 
 describe('<App />', () => {
     it('renders component', () => {

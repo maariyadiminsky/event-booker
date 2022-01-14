@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import { ACCOUNT_CREATED_MESSAGE, SIGN_IN_OR_CREATE_ACCOUNT_MESSAGE } from '@modules/common/const';
 

@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
 import { ERROR_DATA_NO_RESPONSE, ERROR_SERVER_ERROR } from '@modules/common/const';
 

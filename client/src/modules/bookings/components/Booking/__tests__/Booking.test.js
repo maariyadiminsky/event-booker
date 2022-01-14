@@ -1,8 +1,8 @@
-import { render, screen } from '../../../tests/utils';
+import { render, screen } from '@modules/app/setupTests';
 import userEvent from '@testing-library/user-event';
 
 import { CANCEL } from '@modules/common/const';
-import Booking, { getDate } from '@modules/bookings/Booking';
+import Booking, { getDate } from '@modules/bookings/components/Booking';
 
 describe('<Booking />', () => {
     let openCancelModal;

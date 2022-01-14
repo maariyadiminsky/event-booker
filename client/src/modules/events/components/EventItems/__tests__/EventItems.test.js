@@ -1,6 +1,6 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 
-import { eventsMockData } from '@modules/events/__tests__/mocks';
+import { eventsMockData } from '@modules/events/mocks';
 
 import EventItems from '@modules/events/components/EventItems';
 

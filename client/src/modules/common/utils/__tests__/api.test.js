@@ -1,10 +1,6 @@
 import { handleErrors } from '@modules/common/utils/auth';
 import { hideConsoleLog, showConsoleLog } from '@modules/common/utils/misc';
-import { 
-    findBaseURL, 
-    apiBaseCall, 
-    apiBaseParams
-} from '@modules/common/utils/api';
+import { apiBaseCall, apiBaseParams } from '@modules/common/utils/api';
 import { 
     TEST, 
     DEVELOPMENT, 
@@ -136,26 +132,4 @@ describe('apiBaseCall', () => {
 
         showConsoleLog();
     });
-});
-
-describe('findBaseUrl', () => {
-    it('returns correct api url', async() => {
-        const input = findBaseURL();
-        let output;
-
-        switch(process.env.NODE_ENV) {
-            case DEVELOPMENT:
-                output = process.env.REACT_APP_PROD_EVENT_BOOKER_API_URL;
-                break;
-            case PRODUCTION:
-                output = process.env.REACT_APP_DEV_EVENT_BOOKER_API_URL;
-                break;
-            case TEST:
-            default:
-                output = DEFAULT.STRING;
-                break;
-        }
-
-        expect(input).toBe(output);
-    })
 });

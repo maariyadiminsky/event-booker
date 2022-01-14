@@ -1,4 +1,4 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 import userEvent from '@testing-library/user-event';
 
 import { MOCK } from '@modules/common/const';

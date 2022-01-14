@@ -1,15 +1,14 @@
-import { render } from '../../../tests/utils';
+import { render } from '@modules/app/setupTests';
 import userEvent from '@testing-library/user-event';
 
 import { 
     MOCK, 
-    SUBMIT,
     NEVERMIND,
     ERROR_DATA_NO_RESPONSE, 
     ERROR_SERVER_ERROR
 } from '@modules/common/const';
 
-import FormWrapper from '@modules/common/const/form/FormWrapper';
+import FormWrapper from '@modules/common/form/FormWrapper';
 
 describe('<FormWrapper />', () => {
     let children;
