@@ -13,7 +13,7 @@ import {
 import { AuthContextProvider } from '@modules/common/context/AuthContext';
 import { DEFAULT, GRAPHQL_ENDPOINT } from '@modules/common/const';
 
-import App from '@modules/app/App';
+import App from '@modules/app/App'; 
 
 import './index.css';
 
